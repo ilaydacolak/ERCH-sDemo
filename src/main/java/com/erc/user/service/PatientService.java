@@ -1,15 +1,18 @@
 package com.erc.user.service;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import org.hibernate.Session;
 
 import com.erc.dbconnection.DBConnection;
 import com.erc.entities.PatientDTO;
@@ -21,6 +24,8 @@ public class PatientService {
 	public ArrayList<PatientDTO> getAllPatients() {
 
 		Connection connection = DBConnection.getConnection();
+		
+		
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from patient");
@@ -83,18 +88,21 @@ public class PatientService {
 
 	public PatientDTO savePesonel(PatientDTO patient) {
 		Connection connection = DBConnection.getConnection();
-
+//		Session session = HibernateUtil.getSession();
 		if (patient.getPatientId() == null) {
 			PreparedStatement statement;
 			patient.setPatientId(getNewId());
-			patient.setPatientNo(patientNumber(patient));
-			
+
+//			session.save(patient);
 			try {
-				String SQL = "INSERT INTO patient(tcno,name,surname) " + "VALUES(?,?,?)";
+				String SQL = "INSERT INTO patient(patientid,tcno,name,surname,username) " + "VALUES(?,?,?,?,?)";
 				statement = connection.prepareStatement(SQL);
-				statement.setString(1, patient.getTc());
-				statement.setString(2, patient.getName());
-				statement.setString(3, patient.getSurname());
+				statement.setString(1, patient.getPatientId());
+				statement.setString(2, patient.getTc());
+				statement.setString(3, patient.getName());
+				statement.setString(4, patient.getSurname());
+				statement.setString(5, patient.getUsername());
+				 
 				statement.addBatch();
 				statement.execute();
 				
@@ -135,31 +143,7 @@ public class PatientService {
 		return false;
 	}
 	
-	public String patientNumber (PatientDTO patient) {
-		//Connection connection = DBConnection.getConnection();		
-		//try {
-			//Statement stmt = connection.createStatement();
-			//ResultSet rs = stmt.executeQuery("select patientno from patient where patientno=?");
-			//patient.setPatientId(rs.getString(1));			
-	//	}catch(SQLException e1) {
-		//	e1.printStackTrace();
-		//}
-		Connection connection = DBConnection.getConnection();
-		PreparedStatement statement = null;
-		try {
-			statement = connection.prepareStatement("SELECT patientnumber FROM patientno ORDER BY patientnumber DESC LIMIT 1");
-//			statement = connection.prepareStatement("SELECT LAST_INSERT_ID()");
-//			statement.setString(1, patient.getPatientNo());
-			ResultSet rs = statement.executeQuery();
-			if(rs.next()) {
-				return rs.getString(1);
-			}
-		}catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		return null;
-	}
-	
+
 
 	public PatientDTO updatePatient(PatientDTO patient) {
 		// TODO Auto-generated method stub

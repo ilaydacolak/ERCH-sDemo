@@ -1,11 +1,22 @@
 package com.erc.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="personel")
 public class PersonnelDTO {
+	@Id
+	@Column(name="personelid")
 	private String personid;
+	@Column(name="tcno")
 	private String identificationno;
+	@Column(name="name")
 	private String name;
+	@Column(name="surname")
 	private String lastname;
+	@Column(name="username")
 	private String username;
+	@Column(name="password")
 	private String password;
 
 

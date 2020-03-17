@@ -92,7 +92,7 @@ public class PatientPanel extends JPanel{
 	
 	private void getPatientListFromDB() {
 		// TODO Auto-generated method stub
-		PatientService service = new PatientService();
+		 PatientService service = new PatientService();
 		 ArrayList<PatientDTO> patientList = service.getAllPatients();
 		 tableModel.setDataList(patientList);
 		 table.setModel(tableModel);
