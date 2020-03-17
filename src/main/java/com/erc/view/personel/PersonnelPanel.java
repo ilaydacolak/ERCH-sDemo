@@ -113,8 +113,7 @@ public class PersonnelPanel extends JPanel{
 				
 				PersonelEditor personelEditor = new PersonelEditor();
 				personel = personelEditor.showDialog();
-
-				
+			
 				if (personel != null) {
 					
 					tableModel.getDataList().add(personel);

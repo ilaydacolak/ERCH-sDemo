@@ -20,31 +20,54 @@ public class PersonelService {
 	
 	private PersonnelDTO personel;
 	
-	public ArrayList<PersonnelDTO> getAllPersonels() {
-		
-		Transaction transaction = null;
-		
+	public ArrayList<PersonnelDTO> getAllPersonels() {		
+		Transaction transaction = null;		
 		 try (Session session = HibernateConnection.getSessionFactory().openSession()) {
 	            ArrayList < PersonnelDTO > personel = new ArrayList<PersonnelDTO>();
 	            personel = (ArrayList<PersonnelDTO>) session.createQuery("from PersonnelDTO", PersonnelDTO.class).list();
-	         
-	          //  personel.forEach(s - > System.out.println(s.getFirstName()));
 	            for(PersonnelDTO  personels : personel) {
 	            	System.out.println(personels.getName());
-           	
+	            	System.out.println(personels.getLastname());
+	            	System.out.println(personels.getIdentificationno());       	
 	            }
-	            
+	            return personel;            
 	        } catch (Exception e) {
 	            if (transaction != null) {
 	                transaction.rollback();
 	            }
 	            e.printStackTrace();
 	        }
-		
-		
-		
 		return null;
 	}
+
+	public PersonnelDTO savePersonel(PersonnelDTO personel) {
+		Session session = HibernateConnection.getSessionFactory().openSession();
+		session.beginTransaction();
+		if(personel.getPersonid()== null) {
+			personel.setPersonid(getNewId());
+			
+			session.save(personel);	
+			session.getTransaction().commit();
+			return personel;		
+		}else {
+			return personel;
+		}
+	}	
+	public String getNewId() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString();
+	}
+	public PersonnelDTO updatePatient(PersonnelDTO personel) {
+		Session session = HibernateConnection.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.update(personel);
+		session.getTransaction().commit();
+	
+		return personel;
+	}
+	
+	
+	
 }
 
 
