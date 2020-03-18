@@ -18,8 +18,8 @@ public class PersonnelDTO {
 	private String username;
 	@Column(name="password")
 	private String password;
-	//@Column(name="isactive")
-	//private boolean isActive;
+	@Column(name="isactive")
+	private boolean isActive;
 	@Column(name="bdate")
 	private String bDate;
 
@@ -39,7 +39,7 @@ public class PersonnelDTO {
 	public void setIdentificationno(String identificationno) {
 		this.identificationno = identificationno;
 	}
-	/*
+
 	public boolean isActive() {
 		return isActive;
 	}
@@ -47,7 +47,6 @@ public class PersonnelDTO {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-*/
 	public String getbDate() {
 		return bDate;
 	}

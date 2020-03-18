@@ -182,14 +182,14 @@ public class PersonnelPanel extends JPanel{
 					if (input == 0) {
 					PersonnelDTO personel = tableModel.getDataList().get(selectedRow);
 					PersonelService service = new PersonelService();
-				//	boolean isDeleted = service.deletePersonel(personel);		
-				//	if(isDeleted) {
-					//	tableModel.getDataList().remove(selectedRow);	
-					//	tableModel.fireTableDataChanged();
-					//	JFrame f; 
-					//	f=new JFrame(); 
-					//	JOptionPane.showMessageDialog(f,"Kullanýcý silindi","Mesaj",JOptionPane.PLAIN_MESSAGE); 
-				//	}
+					boolean isDeleted = service.deletePersonel(personel);		
+					if(isDeleted) {
+						tableModel.getDataList().remove(selectedRow);	
+						tableModel.fireTableDataChanged();
+						JFrame f; 
+						f=new JFrame(); 
+						JOptionPane.showMessageDialog(f,"Kullanýcý silindi","Mesaj",JOptionPane.PLAIN_MESSAGE); 
+					}
 					}else if(input == 1){
 						JFrame f; 
 						f=new JFrame(); 

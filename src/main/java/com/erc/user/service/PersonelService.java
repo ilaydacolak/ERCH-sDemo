@@ -25,11 +25,12 @@ public class PersonelService {
 		 try (Session session = HibernateConnection.getSessionFactory().openSession()) {
 	            ArrayList < PersonnelDTO > personel = new ArrayList<PersonnelDTO>();
 	            personel = (ArrayList<PersonnelDTO>) session.createQuery("from PersonnelDTO", PersonnelDTO.class).list();
-	            for(PersonnelDTO  personels : personel) {
-	            	System.out.println(personels.getName());
+	            /*  for(PersonnelDTO  personels : personel) {
+	          	System.out.println(personels.getName());
 	            	System.out.println(personels.getLastname());
-	            	System.out.println(personels.getIdentificationno());       	
-	            }
+	            	System.out.println(personels.getIdentificationno()); 
+	                 	
+	            } */
 	            return personel;            
 	        } catch (Exception e) {
 	            if (transaction != null) {
@@ -44,30 +45,49 @@ public class PersonelService {
 		Session session = HibernateConnection.getSessionFactory().openSession();
 		session.beginTransaction();
 		if(personel.getPersonid()== null) {
-			personel.setPersonid(getNewId());
-			
+			personel.setPersonid(getNewId());			
 			session.save(personel);	
 			session.getTransaction().commit();
 			return personel;		
 		}else {
+			personel = updatePersonel(personel);
 			return personel;
 		}
+		
 	}	
 	public String getNewId() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
-	public PersonnelDTO updatePatient(PersonnelDTO personel) {
-		Session session = HibernateConnection.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.update(personel);
-		session.getTransaction().commit();
-	
-		return personel;
+	public PersonnelDTO updatePersonel(PersonnelDTO personel) {
+		//Session session = HibernateConnection.getSessionFactory().openSession();
+		
+		try (Session session = HibernateConnection.getSessionFactory().openSession()){
+			session.beginTransaction();
+			session.update(personel);
+			session.getTransaction().commit();	
+			return personel;
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return null;
 	}
 	
+	public boolean deletePersonel (PersonnelDTO personel) {
+		if(personel != null) {
+		try (Session session = HibernateConnection.getSessionFactory().openSession()){
+			session.beginTransaction();
+			session.remove(personel);
+			session.getTransaction().commit();	
+			return true;
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    }	
+		}
+		return false;
+	}
 	
-	
+		
 }
 
 

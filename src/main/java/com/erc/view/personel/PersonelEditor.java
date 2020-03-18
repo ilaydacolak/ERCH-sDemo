@@ -1,6 +1,7 @@
 package com.erc.view.personel;
 
 import javax.swing.JPanel;
+import javafx.scene.control.DatePicker;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -9,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.JTextField;
 
@@ -22,6 +24,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.awt.Checkbox;
 import javafx.scene.control.DatePicker;
+import javax.swing.JCheckBox;
 
 public class PersonelEditor extends JPanel {
 	private JTextField textTC;
@@ -32,14 +35,15 @@ public class PersonelEditor extends JPanel {
 	private PersonnelDTO personel;
 	private JDialog dialog = new JDialog();
 	private JTextField textUsername;
+	private JTextField textPassword;
 
 	public PersonelEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
-				0.0, Double.MIN_VALUE };
+				0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel lblTC = new JLabel("TC:");
@@ -114,27 +118,54 @@ public class PersonelEditor extends JPanel {
 		gbc_lblBDate.gridx = 2;
 		gbc_lblBDate.gridy = 10;
 		add(lblBDate, gbc_lblBDate);
-
-		JLabel lblisActive = new JLabel("Aktif:");
-		GridBagConstraints gbc_lblisActive = new GridBagConstraints();
-		gbc_lblisActive.insets = new Insets(0, 0, 5, 5);
-		gbc_lblisActive.gridx = 2;
-		gbc_lblisActive.gridy = 12;
-		add(lblisActive, gbc_lblisActive);
 		
 		/*date = new DatePicker();
 		date.setPromptText("Date of Birth");
 		date.setMaxWidth(300);
-*/
+        */
+		/*
+		UtilDateModel model = new UtilDateModel();
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+		 
+		frame.add(datePicker);
+		*/
+		
+	
+		
+		JLabel lblPassword = new JLabel("Password:");
+		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
+		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPassword.gridx = 2;
+		gbc_lblPassword.gridy = 11;
+		add(lblPassword, gbc_lblPassword);
+		
+		textPassword = new JTextField();
+		GridBagConstraints gbc_textPassword = new GridBagConstraints();
+		gbc_textPassword.insets = new Insets(0, 0, 5, 0);
+		gbc_textPassword.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textPassword.gridx = 5;
+		gbc_textPassword.gridy = 11;
+		add(textPassword, gbc_textPassword);
+		textPassword.setColumns(10);
+		
+		Checkbox checkbox = new Checkbox("Is active?");
+		GridBagConstraints gbc_checkbox = new GridBagConstraints();
+		gbc_checkbox.insets = new Insets(0, 0, 5, 0);
+		gbc_checkbox.gridx = 5;
+		gbc_checkbox.gridy = 13;
+		add(checkbox, gbc_checkbox);
+		
 		JButton btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
+		gbc_btnSave.insets = new Insets(0, 0, 5, 0);
 		gbc_btnSave.gridx = 5;
-		gbc_btnSave.gridy = 14;
+		gbc_btnSave.gridy = 15;
 		add(btnSave, gbc_btnSave);
-
-		btnSave.addActionListener(editorHandler);
-
-		btnSave.setActionCommand("Save");
+		
+				btnSave.addActionListener(editorHandler);
+				
+						btnSave.setActionCommand("Save");
 
 	}
 
@@ -152,6 +183,8 @@ public class PersonelEditor extends JPanel {
 				String name = textName.getText();
 				String surname = textSurname.getText();
 				String username = textUsername.getText();
+				String password = textPassword.getText();
+				
 
 				if (tc.length() == 0) {
 					JFrame f;
@@ -187,6 +220,8 @@ public class PersonelEditor extends JPanel {
 				personel.setName(name);
 				personel.setLastname(surname);
 				personel.setUsername(username);
+				personel.setPassword(password);
+				
 				
 
 				PersonelService service = new PersonelService();
@@ -222,6 +257,7 @@ public class PersonelEditor extends JPanel {
 			textName.setText(personel.getName());
 			textSurname.setText(personel.getLastname());
 			textUsername.setText(personel.getUsername());
+			textPassword.setText(personel.getPassword());
 		}
 
 	}
