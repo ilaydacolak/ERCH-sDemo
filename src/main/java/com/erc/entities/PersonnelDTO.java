@@ -1,5 +1,8 @@
 package com.erc.entities;
 
+import java.util.Date;
+
+
 import javax.persistence.*;
 
 @Entity
@@ -21,7 +24,7 @@ public class PersonnelDTO {
 	@Column(name="isactive")
 	private boolean isActive;
 	@Column(name="bdate")
-	private String bDate;
+	private Date bDate;
 
 
 	public String getPersonid() {
@@ -47,11 +50,11 @@ public class PersonnelDTO {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	public String getbDate() {
+	public Date getbDate() {
 		return bDate;
 	}
 
-	public void setbDate(String bDate) {
+	public void setbDate(Date bDate) {
 		this.bDate = bDate;
 	}
 

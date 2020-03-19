@@ -15,7 +15,7 @@ import java.beans.EventHandler;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-
+import java.util.Date;
 import javax.swing.JTextField;
 import java.time.LocalDate;
 
@@ -42,27 +42,36 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.TilePane;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JCalendar;
+import net.sourceforge.jdatepicker.util.JDatePickerUtil;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.DateModel;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.components.JLocaleChooser;
+import com.toedter.components.JSpinField;
+import com.toedter.calendar.JYearChooser;
 
 public class PersonelEditor extends JPanel {
 	private JTextField textTC;
 	private JTextField textName;
 	private JTextField textSurname;
 	private JCheckBox chckbxBdate;
+	private JDateChooser dateChooser;
 
 	private PersonnelDTO personel;
 	private JDialog dialog = new JDialog();
 	private JTextField textUsername;
-	private JTextField textPassword;
 	private Stage stage;
 	private DatePicker checkInDatePicker;
+	private JTextField textPassword;
 
 	public PersonelEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0,
-				0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 17, 0, 0, 0, 22, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel lblTC = new JLabel("TC:");
@@ -149,7 +158,7 @@ public class PersonelEditor extends JPanel {
 		gbc_lblPassword.gridx = 2;
 		gbc_lblPassword.gridy = 12;
 		add(lblPassword, gbc_lblPassword);
-
+		
 		textPassword = new JTextField();
 		GridBagConstraints gbc_textPassword = new GridBagConstraints();
 		gbc_textPassword.insets = new Insets(0, 0, 5, 5);
@@ -163,38 +172,34 @@ public class PersonelEditor extends JPanel {
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 2;
-		gbc_lblNewLabel.gridy = 15;
+		gbc_lblNewLabel.gridy = 17;
 		add(lblNewLabel, gbc_lblNewLabel);
 
-		JCalendar calendar = new JCalendar();
-		GridBagConstraints gbc_calendar = new GridBagConstraints();
-		gbc_calendar.insets = new Insets(0, 0, 5, 5);
-		gbc_calendar.fill = GridBagConstraints.BOTH;
-		gbc_calendar.gridx = 5;
-		gbc_calendar.gridy = 15;
-		add(calendar, gbc_calendar);
-		
+		dateChooser = new JDateChooser();
+		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
+		gbc_dateChooser.gridheight = 7;
+		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
+		gbc_dateChooser.fill = GridBagConstraints.BOTH;
+		gbc_dateChooser.gridx = 5;
+		gbc_dateChooser.gridy = 15;
+		add(dateChooser, gbc_dateChooser);
 
-		
-		JCheckBox chckbxBdate = new JCheckBox("BDate?");
+		chckbxBdate = new JCheckBox("BDate?");
 		GridBagConstraints gbc_chckbxBdate = new GridBagConstraints();
 		gbc_chckbxBdate.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxBdate.gridx = 2;
-		gbc_chckbxBdate.gridy = 17;
+		gbc_chckbxBdate.gridy = 27;
 		add(chckbxBdate, gbc_chckbxBdate);
 
 		JButton btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
 		gbc_btnSave.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSave.gridx = 5;
-		gbc_btnSave.gridy = 17;
+		gbc_btnSave.gridy = 27;
 		add(btnSave, gbc_btnSave);
 
 		btnSave.addActionListener(editorHandler);
 		btnSave.setActionCommand("Save");
-		
-		
-	
 
 	}
 
@@ -216,7 +221,7 @@ public class PersonelEditor extends JPanel {
 				String username = textUsername.getText();
 				String password = textPassword.getText();
 				boolean isActive = chckbxBdate.isSelected();
-				
+				Date bDate = dateChooser.getDate();
 
 				if (tc.length() == 0) {
 					JFrame f;
@@ -253,6 +258,7 @@ public class PersonelEditor extends JPanel {
 				personel.setLastname(surname);
 				personel.setUsername(username);
 				personel.setPassword(password);
+				personel.setbDate(bDate);
 				if(isActive== true) {
 					personel.setActive(true);
 				}else {
