@@ -13,5 +13,7 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <mapping class="com.erc.entities.PersonnelDTO" />
+        <mapping class="com.erc.entities.PatientDTO" />
+        <mapping class="com.erc.entities.OptionsDTO" />
     </session-factory>
 </hibernate-configuration>

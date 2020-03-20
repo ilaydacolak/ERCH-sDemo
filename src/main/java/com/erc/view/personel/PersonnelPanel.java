@@ -108,6 +108,7 @@ public class PersonnelPanel extends JPanel{
 			String cmd = event.getActionCommand();
 			
 			if(cmd.equals("add")) {
+				
 				PersonnelDTO personel = new PersonnelDTO();
 				System.out.println("add is clicked");
 				
