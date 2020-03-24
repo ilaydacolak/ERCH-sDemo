@@ -35,6 +35,8 @@ import java.awt.Canvas;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javafx.stage.Stage;
 import javax.swing.Box;
+import javax.swing.ComboBoxModel;
+
 import javafx.scene.layout.FlowPane;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -50,6 +52,7 @@ import com.toedter.calendar.JDayChooser;
 import com.toedter.components.JLocaleChooser;
 import com.toedter.components.JSpinField;
 import com.toedter.calendar.JYearChooser;
+import javax.swing.JComboBox;
 
 public class PersonelEditor extends JPanel {
 	private JTextField textTC;
@@ -64,14 +67,20 @@ public class PersonelEditor extends JPanel {
 	private Stage stage;
 	private DatePicker checkInDatePicker;
 	private JTextField textPassword;
+	private JComboBox personelTypeCombobox;
+	private JLabel lblNewLabel_1;
+	private JLabel lblGender;
+	private JComboBox genderCombobox;
+	private GenderComboboxModel comboboxModel = new GenderComboboxModel();
+	private PersonelTypeComboboxModel personelCombobox = new PersonelTypeComboboxModel();
 
 	public PersonelEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 5, 0, 10, 0, 0, 5, 0 };
-		gridBagLayout.rowHeights = new int[] { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 22, 0 };
+		gridBagLayout.rowHeights = new int[] { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 22, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, Double.MIN_VALUE };
+				0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel lblTC = new JLabel("TC:");
@@ -138,18 +147,6 @@ public class PersonelEditor extends JPanel {
 		gbc_lblUsername.gridy = 8;
 		add(lblUsername, gbc_lblUsername);
 
-		/*
-		 * date = new DatePicker(); date.setPromptText("Date of Birth");
-		 * date.setMaxWidth(300);
-		 */
-		/*
-		 * UtilDateModel model = new UtilDateModel(); JDatePanelImpl datePanel = new
-		 * JDatePanelImpl(model); JDatePickerImpl datePicker = new
-		 * JDatePickerImpl(datePanel);
-		 * 
-		 * frame.add(datePicker);
-		 */
-
 		textUsername = new JTextField();
 		GridBagConstraints gbc_textUsername = new GridBagConstraints();
 		gbc_textUsername.gridwidth = 2;
@@ -195,18 +192,54 @@ public class PersonelEditor extends JPanel {
 		gbc_dateChooser.gridy = 12;
 		add(dateChooser, gbc_dateChooser);
 
+		lblNewLabel_1 = new JLabel("Personel Type:");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 1;
+		gbc_lblNewLabel_1.gridy = 14;
+		add(lblNewLabel_1, gbc_lblNewLabel_1);
+
+		personelTypeCombobox = new JComboBox();
+		GridBagConstraints gbc_personelTypeCombobox = new GridBagConstraints();
+		gbc_personelTypeCombobox.insets = new Insets(0, 0, 5, 5);
+		gbc_personelTypeCombobox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_personelTypeCombobox.gridx = 3;
+		gbc_personelTypeCombobox.gridy = 14;
+		add(personelTypeCombobox, gbc_personelTypeCombobox);
+		
+		personelTypeCombobox.setModel(personelCombobox);
+
+		lblGender = new JLabel("Gender:");
+		GridBagConstraints gbc_lblGender = new GridBagConstraints();
+		gbc_lblGender.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGender.gridx = 1;
+		gbc_lblGender.gridy = 16;
+		add(lblGender, gbc_lblGender);
+		
+
+		genderCombobox = new JComboBox();
+		GridBagConstraints gbc_genderCombobox = new GridBagConstraints();
+		gbc_genderCombobox.insets = new Insets(0, 0, 5, 5);
+		gbc_genderCombobox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_genderCombobox.gridx = 3;
+		gbc_genderCombobox.gridy = 16;
+		add(genderCombobox, gbc_genderCombobox);
+		
+		genderCombobox.setModel(comboboxModel);
+		
+
 		chckbxBdate = new JCheckBox("\u0130s Active ?");
 		GridBagConstraints gbc_chckbxBdate = new GridBagConstraints();
-		gbc_chckbxBdate.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxBdate.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxBdate.gridx = 1;
-		gbc_chckbxBdate.gridy = 14;
+		gbc_chckbxBdate.gridy = 18;
 		add(chckbxBdate, gbc_chckbxBdate);
 
 		JButton btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
-		gbc_btnSave.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSave.insets = new Insets(0, 0, 0, 5);
 		gbc_btnSave.gridx = 4;
-		gbc_btnSave.gridy = 14;
+		gbc_btnSave.gridy = 18;
 		add(btnSave, gbc_btnSave);
 
 		btnSave.addActionListener(editorHandler);
@@ -231,6 +264,8 @@ public class PersonelEditor extends JPanel {
 				String password = textPassword.getText();
 				boolean isActive = chckbxBdate.isSelected();
 				Date bDate = dateChooser.getDate();
+				String gender=genderCombobox.getSelectedItem().toString();
+				String personelType = personelTypeCombobox.getSelectedItem().toString();
 
 				if (tc.length() == 0) {
 					JFrame f;
@@ -268,6 +303,8 @@ public class PersonelEditor extends JPanel {
 				personel.setUsername(username);
 				personel.setPassword(password);
 				personel.setbDate(bDate);
+				personel.setGender(gender);
+				personel.setPersonelType(personelType);
 				if (isActive == true) {
 					personel.setActive(true);
 				} else {
@@ -307,7 +344,7 @@ public class PersonelEditor extends JPanel {
 			textName.setText(personel.getName());
 			textSurname.setText(personel.getLastname());
 			textUsername.setText(personel.getUsername());
-			textPassword.setText(personel.getPassword());
+			textPassword.setText(personel.getPassword());		
 
 		}
 

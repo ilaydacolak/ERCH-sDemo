@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import com.erc.view.options.OptionsPanel;
 import com.erc.view.patient.PatientPanel;
 import com.erc.view.personel.PersonnelPanel;
+import com.erc.view.staff.StaffPanel;
 
 public class MainApp extends JFrame {
 	private JPanel toolbarPanel = new JPanel();
@@ -45,12 +46,14 @@ public class MainApp extends JFrame {
 		JMenu personnelMenu = new JMenu("Personnel");
 		JMenu patientMenu = new JMenu("Patient");
 	    JMenu admissionMenu = new JMenu("Admission");
-	    JMenu optionsMenu = new JMenu("Options");
+	    JMenu optionsMenu = new JMenu("Organizations");
+	    JMenu settingsMenu = new JMenu("Settings");
 
 		toolbar.add(personnelMenu);
 		toolbar.add(patientMenu);
 		toolbar.add(admissionMenu);
 		toolbar.add(optionsMenu);
+		toolbar.add(settingsMenu);
 		
 		MenuBarEventListener eventListener = new MenuBarEventListener();
 		
@@ -73,6 +76,10 @@ public class MainApp extends JFrame {
 		options.addActionListener(eventListener);
 		options.setActionCommand("OPTIONS_LIST");
 		
+		JMenuItem settings = new JMenuItem("StaffType");
+		settingsMenu.add(settings);
+		settings.addActionListener(eventListener);
+		settings.setActionCommand("SETTINGS_LIST");
 		//???
 		
 		toolbarPanel.add(toolbar);
@@ -98,6 +105,12 @@ public class MainApp extends JFrame {
  				contentPanel.revalidate();
  			}else if(cmd.equals("OPTIONS_LIST")) {
  				OptionsPanel panel = new OptionsPanel();
+ 				contentPanel.removeAll();
+ 				contentPanel.setLayout(new BorderLayout());
+ 				contentPanel.add(panel, BorderLayout.CENTER);;
+ 				contentPanel.revalidate();
+ 			}else if(cmd.equals("SETTINGS_LIST")) {
+ 				StaffPanel panel = new StaffPanel();
  				contentPanel.removeAll();
  				contentPanel.setLayout(new BorderLayout());
  				contentPanel.add(panel, BorderLayout.CENTER);;

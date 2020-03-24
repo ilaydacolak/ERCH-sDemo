@@ -15,5 +15,6 @@
         <mapping class="com.erc.entities.PersonnelDTO" />
         <mapping class="com.erc.entities.PatientDTO" />
         <mapping class="com.erc.entities.OptionsDTO" />
+        <mapping class="com.erc.entities.StaffTypeDTO" />
     </session-factory>
 </hibernate-configuration>

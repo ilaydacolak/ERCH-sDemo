@@ -14,9 +14,7 @@ public class PatientTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	
-	private String columnNames[] = { "PATIENT NO","TC","NAME", "SURNAME" 
-
-	};
+	private String columnNames[] = { "PATIENT NO","TC","NAME", "SURNAME" };
 
 	@Override
 	public String getColumnName(int index) {
