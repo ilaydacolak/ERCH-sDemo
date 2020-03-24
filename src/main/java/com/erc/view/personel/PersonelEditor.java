@@ -266,6 +266,7 @@ public class PersonelEditor extends JPanel {
 				Date bDate = dateChooser.getDate();
 				String gender=genderCombobox.getSelectedItem().toString();
 				String personelType = personelTypeCombobox.getSelectedItem().toString();
+				
 
 				if (tc.length() == 0) {
 					JFrame f;

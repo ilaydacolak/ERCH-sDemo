@@ -4,12 +4,13 @@ import java.util.Date;
 
 import javax.persistence.*;
 import javax.swing.JComboBox;
-import com.erc.entities.*;
+import com.erc.entities.StaffTypeDTO;
 
 @Entity
 @Table(name = "personel")
 public class PersonnelDTO {
 	@Id
+	@GeneratedValue
 	@Column(name = "personelid")
 	private String personid;
 
@@ -39,29 +40,33 @@ public class PersonnelDTO {
 
 	@Column(name = "personeltype")
 	private String personelType;
-	@Column(name = "personeltypeid")
-	private String personelTypeNumber;
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="staff", referencedColumnName="staffid")
+//	@Column(name = "personeltypeid")
+//	private String personelTypeNumber;
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="personeltypeid")
 	private StaffTypeDTO personelTypeID;
-
-	public String getPersonelTypeNumber() {
-		personelTypeNumber = personelTypeID.getStaffTypeID();
-		return personelTypeNumber;
-	}
-
-	public void setPersonelTypeNumber(String personelTypeNumber) {
-		this.personelTypeNumber = personelTypeNumber;
-	}
-
-//	public String getPersonelTypeID() {
-//		return personelTypeID.getStaffTypeID();
+//
+//	public String getPersonelTypeNumber() {
+//		personelTypeNumber = personelTypeID.getStaffTypeID();
+//		return personelTypeNumber;
 //	}
-//	public void setPersonelTypeID(StaffTypeDTO personelTypeID) {
-//		this.personelTypeID = personelTypeID;
+//
+//	public void setPersonelTypeNumber(String personelTypeNumber) {
+//		this.personelTypeNumber = personelTypeNumber;
 //	}
+
 	public String getGender() {
 		return gender;
+	}
+//	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+//	@JoinColumn(name="personeltypeid")
+	public StaffTypeDTO getPersonelTypeID() {
+		return personelTypeID;
+	}
+
+
+	public void setPersonelTypeID(StaffTypeDTO personelTypeID) {
+		this.personelTypeID = personelTypeID;
 	}
 
 	public void setGender(String gender) {
@@ -75,7 +80,8 @@ public class PersonnelDTO {
 	public void setPersonelType(String personelType) {
 		this.personelType = personelType;
 	}
-
+//	@Id
+//	@GeneratedValue
 	public String getPersonid() {
 		return personid;
 	}

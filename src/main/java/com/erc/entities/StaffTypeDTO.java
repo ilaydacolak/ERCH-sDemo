@@ -2,6 +2,7 @@ package com.erc.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,12 +10,16 @@ import javax.persistence.Table;
 @Table(name="staff")
 public class StaffTypeDTO {
 	@Id
+	@GeneratedValue
 	@Column(name="staffid")
 	private String staffTypeID;
 	@Column(name="staffname")
 	private String name;
 	@Column(name="staffcode")
 	private String code;
+//	@Id
+//	@GeneratedValue
+//	@Column(name="staffid")
 	public String getStaffTypeID() {
 		return staffTypeID;
 	}

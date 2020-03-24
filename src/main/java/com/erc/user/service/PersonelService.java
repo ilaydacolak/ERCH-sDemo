@@ -19,11 +19,13 @@ import org.hibernate.Transaction;
 import com.erc.dbconnection.DBConnection;
 import com.erc.entities.PatientDTO;
 import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffTypeDTO;
 import com.erc.dbconnection.HibernateConnection;
 
 public class PersonelService {
 
 	private PersonnelDTO personel;
+	private StaffTypeDTO staff;
 
 	public ArrayList<PersonnelDTO> getAllPersonels() {
 		Transaction transaction = null;
@@ -61,6 +63,7 @@ public class PersonelService {
 
 		if (personel.getPersonid() == null) {
 			personel.setPersonid(getNewId());
+			personel.setPersonelTypeID(staff);
 //			if (result == false) {
 			session.save(personel);
 //			}else {
