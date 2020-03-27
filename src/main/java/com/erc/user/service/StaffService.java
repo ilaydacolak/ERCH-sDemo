@@ -35,6 +35,7 @@ public class StaffService {
 			staff.setStaffTypeID(getNewId());			
 			session.save(staff);	
 			session.getTransaction().commit();
+			session.persist(staff);
 			return staff;		
 		}else {
 			staff = updateStaff(staff);

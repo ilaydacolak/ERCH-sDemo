@@ -2,15 +2,28 @@ package com.erc.entities;
 
 import java.util.Date;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.*;
 import javax.swing.JComboBox;
 import com.erc.entities.StaffTypeDTO;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "personel")
 public class PersonnelDTO {
 	@Id
-	@GeneratedValue
 	@Column(name = "personelid")
 	private String personid;
 
@@ -40,33 +53,24 @@ public class PersonnelDTO {
 
 	@Column(name = "personeltype")
 	private String personelType;
-//	@Column(name = "personeltypeid")
-//	private String personelTypeNumber;
-	@OneToOne(fetch=FetchType.LAZY)
+
+	@ManyToOne
 	@JoinColumn(name="personeltypeid")
-	private StaffTypeDTO personelTypeID;
-//
-//	public String getPersonelTypeNumber() {
-//		personelTypeNumber = personelTypeID.getStaffTypeID();
-//		return personelTypeNumber;
-//	}
-//
-//	public void setPersonelTypeNumber(String personelTypeNumber) {
-//		this.personelTypeNumber = personelTypeNumber;
-//	}
+//	@OnDelete(action=OnDeleteAction.CASCADE)
+	private StaffTypeDTO personelTypeNumber;
+
+	public StaffTypeDTO getPersonelTypeNumber() {
+		return personelTypeNumber;
+	}
+
+
+	public void setPersonelTypeNumber(StaffTypeDTO personelTypeNumber) {
+		this.personelTypeNumber = personelTypeNumber;
+	}
+
 
 	public String getGender() {
 		return gender;
-	}
-//	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-//	@JoinColumn(name="personeltypeid")
-	public StaffTypeDTO getPersonelTypeID() {
-		return personelTypeID;
-	}
-
-
-	public void setPersonelTypeID(StaffTypeDTO personelTypeID) {
-		this.personelTypeID = personelTypeID;
 	}
 
 	public void setGender(String gender) {
@@ -80,8 +84,7 @@ public class PersonnelDTO {
 	public void setPersonelType(String personelType) {
 		this.personelType = personelType;
 	}
-//	@Id
-//	@GeneratedValue
+
 	public String getPersonid() {
 		return personid;
 	}

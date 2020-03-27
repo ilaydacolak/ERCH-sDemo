@@ -10,16 +10,16 @@ import javax.persistence.Table;
 @Table(name="staff")
 public class StaffTypeDTO {
 	@Id
-	@GeneratedValue
 	@Column(name="staffid")
 	private String staffTypeID;
-	@Column(name="staffname")
+	@Column(name="staffname", unique=true)
 	private String name;
 	@Column(name="staffcode")
 	private String code;
 //	@Id
 //	@GeneratedValue
 //	@Column(name="staffid")
+	
 	public String getStaffTypeID() {
 		return staffTypeID;
 	}

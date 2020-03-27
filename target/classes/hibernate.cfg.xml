@@ -4,6 +4,7 @@
         "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+    
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hastane?useSSL=false&amp;serverTimezone=UTC</property>
         <property name="hibernate.connection.username">root</property>
@@ -16,5 +17,8 @@
         <mapping class="com.erc.entities.PatientDTO" />
         <mapping class="com.erc.entities.OptionsDTO" />
         <mapping class="com.erc.entities.StaffTypeDTO" />
+        
+        
     </session-factory>
+
 </hibernate-configuration>

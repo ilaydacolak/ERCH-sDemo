@@ -13,7 +13,7 @@ public class PersonnelTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
 	private List<PersonnelDTO> list = new ArrayList<PersonnelDTO>();
-	private String columnNames[] = { "IDENTIFICATION NO", "NAME", "SURNAME", "USERNAME"};
+	private String columnNames[] = { Messages.getString("PersonnelTableModel.0"), Messages.getString("PersonnelTableModel.1"), Messages.getString("PersonnelTableModel.2"), Messages.getString("PersonnelTableModel.3")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	@Override
 	public String getColumnName(int index) {
@@ -27,7 +27,7 @@ public class PersonnelTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
- 		return list.size();
+ 		return list==null?0:list.size();
 	}
 
 	@Override

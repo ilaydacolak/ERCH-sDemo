@@ -21,6 +21,7 @@ import java.time.LocalDate;
 
 import com.erc.entities.PatientDTO;
 import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffTypeDTO;
 import com.erc.user.service.PersonelService;
 import com.erc.view.patient.PatientEditor.EditorHandler;
 
@@ -77,10 +78,10 @@ public class PersonelEditor extends JPanel {
 	public PersonelEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 5, 0, 10, 0, 0, 5, 0 };
-		gridBagLayout.rowHeights = new int[] { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 22, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel lblTC = new JLabel("TC:");
@@ -194,6 +195,7 @@ public class PersonelEditor extends JPanel {
 
 		lblNewLabel_1 = new JLabel("Personel Type:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 1;
 		gbc_lblNewLabel_1.gridy = 14;
@@ -201,6 +203,7 @@ public class PersonelEditor extends JPanel {
 
 		personelTypeCombobox = new JComboBox();
 		GridBagConstraints gbc_personelTypeCombobox = new GridBagConstraints();
+		gbc_personelTypeCombobox.gridwidth = 2;
 		gbc_personelTypeCombobox.insets = new Insets(0, 0, 5, 5);
 		gbc_personelTypeCombobox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_personelTypeCombobox.gridx = 3;
@@ -211,6 +214,7 @@ public class PersonelEditor extends JPanel {
 
 		lblGender = new JLabel("Gender:");
 		GridBagConstraints gbc_lblGender = new GridBagConstraints();
+		gbc_lblGender.anchor = GridBagConstraints.WEST;
 		gbc_lblGender.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGender.gridx = 1;
 		gbc_lblGender.gridy = 16;
@@ -219,6 +223,7 @@ public class PersonelEditor extends JPanel {
 
 		genderCombobox = new JComboBox();
 		GridBagConstraints gbc_genderCombobox = new GridBagConstraints();
+		gbc_genderCombobox.gridwidth = 2;
 		gbc_genderCombobox.insets = new Insets(0, 0, 5, 5);
 		gbc_genderCombobox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_genderCombobox.gridx = 3;
@@ -230,14 +235,14 @@ public class PersonelEditor extends JPanel {
 
 		chckbxBdate = new JCheckBox("\u0130s Active ?");
 		GridBagConstraints gbc_chckbxBdate = new GridBagConstraints();
-		gbc_chckbxBdate.insets = new Insets(0, 0, 0, 5);
+		gbc_chckbxBdate.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxBdate.gridx = 1;
 		gbc_chckbxBdate.gridy = 18;
 		add(chckbxBdate, gbc_chckbxBdate);
 
 		JButton btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
-		gbc_btnSave.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSave.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSave.gridx = 4;
 		gbc_btnSave.gridy = 18;
 		add(btnSave, gbc_btnSave);
@@ -266,7 +271,7 @@ public class PersonelEditor extends JPanel {
 				Date bDate = dateChooser.getDate();
 				String gender=genderCombobox.getSelectedItem().toString();
 				String personelType = personelTypeCombobox.getSelectedItem().toString();
-				
+				StaffTypeDTO staff ;
 
 				if (tc.length() == 0) {
 					JFrame f;
@@ -306,6 +311,9 @@ public class PersonelEditor extends JPanel {
 				personel.setbDate(bDate);
 				personel.setGender(gender);
 				personel.setPersonelType(personelType);
+				
+				
+				
 				if (isActive == true) {
 					personel.setActive(true);
 				} else {

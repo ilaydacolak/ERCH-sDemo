@@ -20,6 +20,7 @@ import com.erc.dbconnection.DBConnection;
 import com.erc.entities.PatientDTO;
 import com.erc.entities.PersonnelDTO;
 import com.erc.entities.StaffTypeDTO;
+import com.fasterxml.classmate.AnnotationConfiguration;
 import com.erc.dbconnection.HibernateConnection;
 
 public class PersonelService {
@@ -63,16 +64,22 @@ public class PersonelService {
 
 		if (personel.getPersonid() == null) {
 			personel.setPersonid(getNewId());
-			personel.setPersonelTypeID(staff);
+			personel.setPersonelTypeNumber(staff);
+//			personel.setPersonelTypeID(staff);
 //			if (result == false) {
-			session.save(personel);
+
+//			personel.setPersonelTypeNumber(staff);	
+			
 //			}else {
 //				JFrame f; 
 //				f=new JFrame(); 
 //				JOptionPane.showMessageDialog(f,"Kullanýcý zaten kayýtlý","Alert",JOptionPane.WARNING_MESSAGE); 
 //				return personel;
 //			}
+			session.save(personel);
 			session.getTransaction().commit();
+			session.persist(personel);
+			
 			return personel;
 		} else {
 			personel = updatePersonel(personel);
@@ -91,6 +98,11 @@ public class PersonelService {
 //		} else {
 //			return false;
 //		}
+//	}
+//	 private UUID id;
+//	public String getNewId() {
+//		id = UUID.randomUUID();
+//		return id;
 //	}
 
 	public String getNewId() {
