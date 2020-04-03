@@ -2,6 +2,7 @@ package com.erc.entities;
 
 import java.util.Date;
 
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -50,24 +51,22 @@ public class PersonnelDTO {
 
 	@Column(name = "gender")
 	private String gender;
+//
+//	@Column(name = "personeltype")
+//	private String personelType;
 
-	@Column(name = "personeltype")
-	private String personelType;
-
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="personeltypeid")
 //	@OnDelete(action=OnDeleteAction.CASCADE)
-	private StaffTypeDTO personelTypeNumber;
+	private StaffTypeDTO staffTypeDTO;
 
-	public StaffTypeDTO getPersonelTypeNumber() {
-		return personelTypeNumber;
+	public StaffTypeDTO getStaffTypeDTO() {
+		return staffTypeDTO;
 	}
 
-
-	public void setPersonelTypeNumber(StaffTypeDTO personelTypeNumber) {
-		this.personelTypeNumber = personelTypeNumber;
+	public void setStaffTypeDTO(StaffTypeDTO staffTypeDTO) {
+		this.staffTypeDTO = staffTypeDTO;
 	}
-
 
 	public String getGender() {
 		return gender;
@@ -77,13 +76,13 @@ public class PersonnelDTO {
 		this.gender = gender;
 	}
 
-	public String getPersonelType() {
-		return personelType;
-	}
-
-	public void setPersonelType(String personelType) {
-		this.personelType = personelType;
-	}
+//	public String getPersonelType() {
+//		return personelType;
+//	}
+//
+//	public void setPersonelType(String personelType) {
+//		this.personelType = personelType;
+//	}
 
 	public String getPersonid() {
 		return personid;

@@ -38,5 +38,11 @@ public class StaffTypeDTO {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return code+"-"+name;
+	}
 
 }

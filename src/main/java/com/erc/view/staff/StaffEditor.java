@@ -25,6 +25,7 @@ public class StaffEditor extends JPanel {
 	StaffTypeDTO staff = new StaffTypeDTO();
 	private JTextField txtStaffName;
 	private JTextField txtStaffCode;
+	private PersonnelDTO personel;
 	private JDialog dialog = new JDialog();
 
 	public StaffEditor() {
@@ -35,7 +36,7 @@ public class StaffEditor extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel staffName = new JLabel("Staff Name:");
+		JLabel staffName = new JLabel("Staff Type:");
 		GridBagConstraints gbc_staffName = new GridBagConstraints();
 		gbc_staffName.insets = new Insets(0, 0, 5, 5);
 		gbc_staffName.gridx = 2;
@@ -104,8 +105,10 @@ public class StaffEditor extends JPanel {
 				staff.setName(name);
 				staff.setCode(code);
 				StaffService service = new StaffService();
+				//personel.setPersonelTypeNumber(staff);
 				service.saveStaff(staff);
 				dialog.dispose();
+				
 
 			}
 

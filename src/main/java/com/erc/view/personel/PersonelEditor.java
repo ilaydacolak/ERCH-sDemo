@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JTextField;
@@ -23,6 +24,7 @@ import com.erc.entities.PatientDTO;
 import com.erc.entities.PersonnelDTO;
 import com.erc.entities.StaffTypeDTO;
 import com.erc.user.service.PersonelService;
+import com.erc.user.service.StaffService;
 import com.erc.view.patient.PatientEditor.EditorHandler;
 
 import javax.swing.JButton;
@@ -210,6 +212,10 @@ public class PersonelEditor extends JPanel {
 		gbc_personelTypeCombobox.gridy = 14;
 		add(personelTypeCombobox, gbc_personelTypeCombobox);
 		
+		
+		StaffService service = new StaffService();
+		ArrayList<StaffTypeDTO> staffTypes = service.getAllStaffs();
+		personelCombobox.setStaffTypes(staffTypes);
 		personelTypeCombobox.setModel(personelCombobox);
 
 		lblGender = new JLabel("Gender:");
@@ -269,7 +275,10 @@ public class PersonelEditor extends JPanel {
 				String password = textPassword.getText();
 				boolean isActive = chckbxBdate.isSelected();
 				Date bDate = dateChooser.getDate();
-				String gender=genderCombobox.getSelectedItem().toString();
+				String gender = null;
+				if(genderCombobox.getSelectedItem()!=null) {
+					 gender=genderCombobox.getSelectedItem().toString();
+				}
 				String personelType = personelTypeCombobox.getSelectedItem().toString();
 				StaffTypeDTO staff ;
 
@@ -310,7 +319,12 @@ public class PersonelEditor extends JPanel {
 				personel.setPassword(password);
 				personel.setbDate(bDate);
 				personel.setGender(gender);
-				personel.setPersonelType(personelType);
+				
+				StaffTypeDTO staffType = new StaffTypeDTO();
+				staffType.setStaffTypeID("085a587c-19d3-4484-b65b-71ae8b020682");
+				personel.setStaffTypeDTO(staffType);
+				
+			//	personel.setPersonelType(personelType);
 				
 				
 				
@@ -339,7 +353,7 @@ public class PersonelEditor extends JPanel {
 	public PersonnelDTO showDialog() {
 		dialog.getContentPane().add(this);
 		dialog.setModal(true);
-		dialog.setSize(350, 280);
+		dialog.setSize(450, 380);
 		dialog.setLocationRelativeTo(this);
 		fillScreen();
 		dialog.setVisible(true);

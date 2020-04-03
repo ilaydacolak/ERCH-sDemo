@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import com.erc.dbconnection.DBConnection;
 import com.erc.entities.PatientDTO;
@@ -26,22 +28,15 @@ import com.erc.dbconnection.HibernateConnection;
 public class PersonelService {
 
 	private PersonnelDTO personel;
-	private StaffTypeDTO staff;
 
 	public ArrayList<PersonnelDTO> getAllPersonels() {
 		Transaction transaction = null;
 		try (Session session = HibernateConnection.getSessionFactory().openSession()) {
-			ArrayList<PersonnelDTO> personel = new ArrayList<PersonnelDTO>();
-			personel = (ArrayList<PersonnelDTO>) session.createQuery("from PersonnelDTO", PersonnelDTO.class).list();
-			/*
-			 * for(PersonnelDTO personels : personel) {
-			 * System.out.println(personels.getName());
-			 * System.out.println(personels.getLastname());
-			 * System.out.println(personels.getIdentificationno());
-			 * 
-			 * }
-			 */
-			return personel;
+			ArrayList<PersonnelDTO> personelList = new ArrayList<PersonnelDTO>();
+			
+			personelList = (ArrayList<PersonnelDTO>) session.createQuery("from PersonnelDTO", PersonnelDTO.class).list();
+ 
+			return personelList;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -64,7 +59,7 @@ public class PersonelService {
 
 		if (personel.getPersonid() == null) {
 			personel.setPersonid(getNewId());
-			personel.setPersonelTypeNumber(staff);
+		//	personel.setPersonelTypeNumber(staff);
 //			personel.setPersonelTypeID(staff);
 //			if (result == false) {
 

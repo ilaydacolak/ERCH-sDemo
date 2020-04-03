@@ -7,10 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.erc.dbconnection.HibernateConnection;
+import com.erc.entities.PersonnelDTO;
 import com.erc.entities.StaffTypeDTO;
 
 public class StaffService {
 	private StaffTypeDTO staff;
+
 	
 	public ArrayList<StaffTypeDTO> getAllStaffs() {		
 		Transaction transaction = null;		

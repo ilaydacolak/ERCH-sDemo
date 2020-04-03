@@ -1,33 +1,44 @@
 package com.erc.view.personel;
 
+import java.util.ArrayList;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-public class PersonelTypeComboboxModel extends AbstractListModel implements ComboBoxModel{
-	String [] PersonelType = {"Nurse","Doctor"};
-	String selection = null;
+import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffTypeDTO;
+
+public class PersonelTypeComboboxModel extends AbstractListModel implements ComboBoxModel {
+	private static final long serialVersionUID = 1L;
+	private ArrayList<StaffTypeDTO> staffTypes = new ArrayList<StaffTypeDTO>();
+	private Object selection = null;
+
 	@Override
 	public Object getElementAt(int index) {
-		// TODO Auto-generated method stub
-		return PersonelType[index];
+		return staffTypes.get(index);
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return PersonelType.length;
+		return staffTypes.size();
 	}
 
 	@Override
 	public Object getSelectedItem() {
-		// TODO Auto-generated method stub
 		return selection;
 	}
 
 	@Override
 	public void setSelectedItem(Object anItem) {
-		// TODO Auto-generated method stub
-		selection = (String) anItem; 
+		selection = anItem;
+	}
+
+	public ArrayList<StaffTypeDTO> getStaffTypes() {
+		return staffTypes;
+	}
+
+	public void setStaffTypes(ArrayList<StaffTypeDTO> staffTypes) {
+		this.staffTypes = staffTypes;
 	}
 
 }
