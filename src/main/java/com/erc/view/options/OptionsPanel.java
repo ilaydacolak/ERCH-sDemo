@@ -17,13 +17,13 @@ import java.util.ArrayList;
 
 import javax.swing.JTable;
 
-import com.erc.view.personel.PersonelEditor;
-import com.erc.view.personel.PersonnelTableModel;
+import com.erc.view.personel.StaffEditor;
+import com.erc.view.personel.StaffTableModel;
 import com.erc.entities.OptionsDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.user.service.OptionsService;
-import com.erc.user.service.PersonelService;
-import com.erc.view.personel.PersonnelPanel.Handler;
+import com.erc.user.service.StaffService;
+import com.erc.view.personel.StaffPanel.Handler;
 import javax.swing.JScrollPane;
 
 public class OptionsPanel extends JPanel {
@@ -34,9 +34,9 @@ public class OptionsPanel extends JPanel {
 	public OptionsPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 52, 0, 272, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowHeights = new int[] { 52, 0, 272, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JButton btnAdd = new JButton("ADD");
@@ -63,7 +63,7 @@ public class OptionsPanel extends JPanel {
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 4;
+		gbc_scrollPane.gridwidth = 5;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;

@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.entities.StaffTypeDTO;
 
-public class StaffTableModel extends AbstractTableModel{
+public class StaffTypeTableModel extends AbstractTableModel{
 	
 	private List<StaffTypeDTO> list = new ArrayList<StaffTypeDTO>();
-	private String columnNames[] = { "Staff Name", "Staff Code"};
+	private String columnNames[] = { "Staff Type", "Staff Code"};
 	
 	@Override
 	public String getColumnName(int index) {

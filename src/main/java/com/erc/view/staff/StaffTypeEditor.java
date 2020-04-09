@@ -12,22 +12,23 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.entities.StaffTypeDTO;
-import com.erc.user.service.PersonelService;
 import com.erc.user.service.StaffService;
+import com.erc.user.service.StaffTypeService;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-public class StaffEditor extends JPanel {
+public class StaffTypeEditor extends JPanel {
 	StaffTypeDTO staff = new StaffTypeDTO();
 	private JTextField txtStaffName;
 	private JTextField txtStaffCode;
+	private StaffDTO personel;
 	private JDialog dialog = new JDialog();
 
-	public StaffEditor() {
+	public StaffTypeEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -35,7 +36,7 @@ public class StaffEditor extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel staffName = new JLabel("Staff Name:");
+		JLabel staffName = new JLabel("Staff Type:");
 		GridBagConstraints gbc_staffName = new GridBagConstraints();
 		gbc_staffName.insets = new Insets(0, 0, 5, 5);
 		gbc_staffName.gridx = 2;
@@ -103,9 +104,11 @@ public class StaffEditor extends JPanel {
 				}
 				staff.setName(name);
 				staff.setCode(code);
-				StaffService service = new StaffService();
-				service.saveStaff(staff);
+				StaffTypeService service = new StaffTypeService();
+				//personel.setPersonelTypeNumber(staff);
+				service.saveStaffType(staff);
 				dialog.dispose();
+				
 
 			}
 

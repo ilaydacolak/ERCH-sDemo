@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -19,7 +20,7 @@ import org.hibernate.query.Query;
 import com.erc.dbconnection.DBConnection;
 import com.erc.dbconnection.HibernateConnection;
 import com.erc.entities.PatientDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 
 public class PatientService {
 	private PatientDTO patient;
@@ -40,6 +41,21 @@ public class PatientService {
 		return null;
 	}
 
+	public PatientDTO getPatientByPatientNo(String patientNo ) {
+		try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+			
+			
+			Query<PatientDTO> query = session.createQuery("from PatientDTO where patientno=:patientNo", PatientDTO.class);
+			query.setParameter("patientNo", patientNo);
+			ArrayList<PatientDTO> patientList = (ArrayList<PatientDTO>) query.list();
+			if(patientList!=null && patientList.size()>0) {
+				return patientList.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public PatientDTO savePatient(PatientDTO patient) {
 		Session session = HibernateConnection.getSessionFactory().openSession();
 		session.beginTransaction();

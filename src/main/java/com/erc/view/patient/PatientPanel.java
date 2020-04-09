@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 
 import com.erc.entities.PatientDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.user.service.PatientService;
-import com.erc.user.service.PersonelService;
-import com.erc.view.personel.PersonelEditor;
+import com.erc.user.service.StaffService;
+import com.erc.view.personel.StaffEditor;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;

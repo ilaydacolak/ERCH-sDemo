@@ -6,14 +6,14 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import com.erc.entities.PatientDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 
 
-public class PersonnelTableModel extends AbstractTableModel {
+public class StaffTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
-	private List<PersonnelDTO> list = new ArrayList<PersonnelDTO>();
-	private String columnNames[] = { Messages.getString("PersonnelTableModel.0"), Messages.getString("PersonnelTableModel.1"), Messages.getString("PersonnelTableModel.2"), Messages.getString("PersonnelTableModel.3")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	private List<StaffDTO> list = new ArrayList<StaffDTO>();
+	private String columnNames[] = {"TC","Name","Surname","Active"};
 
 	@Override
 	public String getColumnName(int index) {
@@ -32,7 +32,7 @@ public class PersonnelTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int col) {
-			PersonnelDTO person = list.get(row);
+			StaffDTO person = list.get(row);
 		
 			switch(col) {
 		
@@ -43,17 +43,18 @@ public class PersonnelTableModel extends AbstractTableModel {
 				case 2:
 					return person.getLastname();
 				case 3:
-					return person.getUsername();
+					return person.getAktif();
+
 				}
 		
 		
 		return null;
 	}
-	public List<PersonnelDTO> getDataList() {
+	public List<StaffDTO> getDataList() {
 		return list;
 	}
 
-	public void setDataList(List<PersonnelDTO> list) {
+	public void setDataList(List<StaffDTO> list) {
 		this.list = list;
 	}
 

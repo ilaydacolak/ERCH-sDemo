@@ -11,13 +11,15 @@
         <property name="hibernate.connection.password">ilayda</property>
         <property name="hibernate.connection.pool_size">100</property>
         <property name="hibernate.current_session_context_class">thread</property>
+        
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping class="com.erc.entities.PersonnelDTO" />
+        <mapping class="com.erc.entities.StaffDTO" />
         <mapping class="com.erc.entities.PatientDTO" />
         <mapping class="com.erc.entities.OptionsDTO" />
         <mapping class="com.erc.entities.StaffTypeDTO" />
-        
+        <mapping class="com.erc.entities.AdmissionDTO" />
+        <mapping class="com.erc.entities.AppointmentDTO" />
         
     </session-factory>
 

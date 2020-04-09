@@ -6,12 +6,12 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import com.erc.entities.OptionsDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 
 public class OptionsTableModel extends AbstractTableModel{
 	
 	private List<OptionsDTO> list = new ArrayList<OptionsDTO>();
-	private String columnNames[] = { "ORGANIZATION ID", "ORGANIZATION NAME"};
+	private String columnNames[] = {"ORGANIZATION NAME"};
 	
 	@Override
 	public String getColumnName(int index) {
@@ -38,9 +38,8 @@ public class OptionsTableModel extends AbstractTableModel{
 		switch(col) {
 	
 			case 0 :
-				return option.getoptionsID();
-			case 1:
 				return option.getoptionsName();
+			
 			
 			}
 		

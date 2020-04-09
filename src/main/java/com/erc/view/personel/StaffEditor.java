@@ -14,15 +14,17 @@ import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JTextField;
 import java.time.LocalDate;
 
 import com.erc.entities.PatientDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.entities.StaffTypeDTO;
-import com.erc.user.service.PersonelService;
+import com.erc.user.service.StaffService;
+import com.erc.user.service.StaffTypeService;
 import com.erc.view.patient.PatientEditor.EditorHandler;
 
 import javax.swing.JButton;
@@ -55,14 +57,14 @@ import com.toedter.components.JSpinField;
 import com.toedter.calendar.JYearChooser;
 import javax.swing.JComboBox;
 
-public class PersonelEditor extends JPanel {
+public class StaffEditor extends JPanel {
 	private JTextField textTC;
 	private JTextField textName;
 	private JTextField textSurname;
-	private JCheckBox chckbxBdate;
+	private JCheckBox bxActive;
 	private JDateChooser dateChooser;
 
-	private PersonnelDTO personel;
+	private StaffDTO personel;
 	private JDialog dialog = new JDialog();
 	private JTextField textUsername;
 	private Stage stage;
@@ -73,9 +75,11 @@ public class PersonelEditor extends JPanel {
 	private JLabel lblGender;
 	private JComboBox genderCombobox;
 	private GenderComboboxModel comboboxModel = new GenderComboboxModel();
-	private PersonelTypeComboboxModel personelCombobox = new PersonelTypeComboboxModel();
+	private StaffTypeComboboxModel personelCombobox = new StaffTypeComboboxModel();
+	private JTextField txtAktif;
+	String personelType;
 
-	public PersonelEditor() {
+	public StaffEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 5, 0, 10, 0, 0, 5, 0 };
 		gridBagLayout.rowHeights = new int[] { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0 };
@@ -193,7 +197,7 @@ public class PersonelEditor extends JPanel {
 		gbc_dateChooser.gridy = 12;
 		add(dateChooser, gbc_dateChooser);
 
-		lblNewLabel_1 = new JLabel("Personel Type:");
+		lblNewLabel_1 = new JLabel("Staff Type:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
@@ -209,7 +213,10 @@ public class PersonelEditor extends JPanel {
 		gbc_personelTypeCombobox.gridx = 3;
 		gbc_personelTypeCombobox.gridy = 14;
 		add(personelTypeCombobox, gbc_personelTypeCombobox);
-		
+
+		StaffTypeService service = new StaffTypeService();
+		ArrayList<StaffTypeDTO> staffTypes = service.getAllStaffTypes();
+		personelCombobox.setStaffTypes(staffTypes);
 		personelTypeCombobox.setModel(personelCombobox);
 
 		lblGender = new JLabel("Gender:");
@@ -219,7 +226,6 @@ public class PersonelEditor extends JPanel {
 		gbc_lblGender.gridx = 1;
 		gbc_lblGender.gridy = 16;
 		add(lblGender, gbc_lblGender);
-		
 
 		genderCombobox = new JComboBox();
 		GridBagConstraints gbc_genderCombobox = new GridBagConstraints();
@@ -229,16 +235,15 @@ public class PersonelEditor extends JPanel {
 		gbc_genderCombobox.gridx = 3;
 		gbc_genderCombobox.gridy = 16;
 		add(genderCombobox, gbc_genderCombobox);
-		
-		genderCombobox.setModel(comboboxModel);
-		
 
-		chckbxBdate = new JCheckBox("\u0130s Active ?");
-		GridBagConstraints gbc_chckbxBdate = new GridBagConstraints();
-		gbc_chckbxBdate.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxBdate.gridx = 1;
-		gbc_chckbxBdate.gridy = 18;
-		add(chckbxBdate, gbc_chckbxBdate);
+		genderCombobox.setModel(comboboxModel);
+
+		bxActive = new JCheckBox("\u0130s Active ?");
+		GridBagConstraints gbc_bxActive = new GridBagConstraints();
+		gbc_bxActive.insets = new Insets(0, 0, 5, 5);
+		gbc_bxActive.gridx = 1;
+		gbc_bxActive.gridy = 18;
+		add(bxActive, gbc_bxActive);
 
 		JButton btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
@@ -249,6 +254,16 @@ public class PersonelEditor extends JPanel {
 
 		btnSave.addActionListener(editorHandler);
 		btnSave.setActionCommand("Save");
+
+		txtAktif = new JTextField();
+		GridBagConstraints gbc_txtAktif = new GridBagConstraints();
+		gbc_txtAktif.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAktif.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAktif.gridx = 3;
+		gbc_txtAktif.gridy = 19;
+		add(txtAktif, gbc_txtAktif);
+		txtAktif.setColumns(10);
+		txtAktif.setVisible(false);
 
 	}
 
@@ -267,11 +282,15 @@ public class PersonelEditor extends JPanel {
 				String surname = textSurname.getText();
 				String username = textUsername.getText();
 				String password = textPassword.getText();
-				boolean isActive = chckbxBdate.isSelected();
+				boolean isActive = bxActive.isSelected();
 				Date bDate = dateChooser.getDate();
-				String gender=genderCombobox.getSelectedItem().toString();
-				String personelType = personelTypeCombobox.getSelectedItem().toString();
-				StaffTypeDTO staff ;
+	//			String personelType = personelCombobox.getSelectedItem().toString();
+				String gender = null;
+
+				if (genderCombobox.getSelectedItem() != null) {
+					gender = genderCombobox.getSelectedItem().toString();
+				}
+				StaffTypeDTO staff;
 
 				if (tc.length() == 0) {
 					JFrame f;
@@ -297,12 +316,35 @@ public class PersonelEditor extends JPanel {
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,enter Username", "Alert", JOptionPane.WARNING_MESSAGE);
 					return;
+				} else if (password.length() == 0) {
+					JFrame f;
+					f = new JFrame();
+					JOptionPane.showMessageDialog(f, "Please,enter Password", "Alert", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (bDate == null) {
+					JFrame f;
+					f = new JFrame();
+					JOptionPane.showMessageDialog(f, "Please,enter Date", "Alert", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (genderCombobox.getSelectedItem()==null) {
+					JFrame f;
+					f = new JFrame();
+					JOptionPane.showMessageDialog(f, "Please,enter Gender", "Alert", JOptionPane.WARNING_MESSAGE);
+					return;
+				}else if(personelTypeCombobox.getSelectedItem()==null) {
+					JFrame f;
+					f = new JFrame();
+					JOptionPane.showMessageDialog(f, "Please select  the staff type", "Alert", JOptionPane.WARNING_MESSAGE);
+					return;
 				}
+				
+
 
 				if (personel == null) {
-					personel = new PersonnelDTO();
+					personel = new StaffDTO();
 				}
 
+				
 				personel.setIdentificationno(tc);
 				personel.setName(name);
 				personel.setLastname(surname);
@@ -311,51 +353,84 @@ public class PersonelEditor extends JPanel {
 				personel.setbDate(bDate);
 				personel.setGender(gender);
 				personel.setPersonelType(personelType);
-				
-				
-				
+				StaffTypeDTO staffTypeDTO = (StaffTypeDTO)personelCombobox.getSelectedItem();
+				personel.setStaffTypeDTO(staffTypeDTO);
+//				personel.setPersonelType(personelCombobox.getSelectedItem().toString());
+
+
+//			StaffTypeDTO staffType = new StaffTypeDTO();
+//////				staffType.setStaffTypeID("53352e4f-5484-430d-9e80-c7e13f6e2f39");
+//////				personel.setStaffTypeDTO(staffType);
+////
+//				personel.setStaffTypeDTO(staffType);
+			// personel.setPersonelType(personelType);
+
 				if (isActive == true) {
 					personel.setActive(true);
+					personel.setAktif("YES");
+
 				} else {
 					personel.setActive(false);
+					personel.setAktif("NO");
 				}
 
-				PersonelService service = new PersonelService();
-				personel = service.savePersonel(personel);
+				StaffService service = new StaffService();
+				personel = service.saveStaff(personel);
 				dialog.dispose();
 
 			}
 		}
 	}
 
-	public PersonnelDTO getPersonel() {
+	public StaffDTO getPersonel() {
 		return personel;
 	}
 
-	public void setPersonel(PersonnelDTO personel) {
+	public void setPersonel(StaffDTO personel) {
 		this.personel = personel;
+
 	}
 
-	public PersonnelDTO showDialog() {
+	public StaffDTO showDialog() {
+		// TODO Auto-generated method stub
 		dialog.getContentPane().add(this);
 		dialog.setModal(true);
-		dialog.setSize(350, 280);
+		dialog.setSize(450, 380);
 		dialog.setLocationRelativeTo(this);
 		fillScreen();
 		dialog.setVisible(true);
 
 		return personel;
+
 	}
 
 	private void fillScreen() {
+		// TODO Auto-generated method stub
 		if (personel != null) {
+			
 			textTC.setText(personel.getIdentificationno());
 			textName.setText(personel.getName());
 			textSurname.setText(personel.getLastname());
 			textUsername.setText(personel.getUsername());
-			textPassword.setText(personel.getPassword());		
+			textPassword.setText(personel.getPassword());
+			dateChooser.setDate(personel.getbDate());
+			txtAktif.setText(personel.getAktif());
+
+			if (personel.getStaffTypeDTO() != null) {
+				String staffTypeId = personel.getStaffTypeDTO().getStaffTypeID();
+				ArrayList<StaffTypeDTO> staffTypes = personelCombobox.getStaffTypes();
+
+				for (StaffTypeDTO staffTypeDTO : staffTypes) {
+					if (staffTypeDTO.getStaffTypeID().equals(staffTypeId)) {
+						personelCombobox.setSelectedItem(staffTypeDTO);
+						break;
+					}
+				}
+			}
+
+			genderCombobox.setSelectedItem(personel.getGender());
+			bxActive.setSelected(personel.isActive());
 
 		}
-
 	}
 }

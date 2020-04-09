@@ -11,10 +11,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.erc.view.appointment.AppointmentPanel;
 import com.erc.view.options.OptionsPanel;
 import com.erc.view.patient.PatientPanel;
-import com.erc.view.personel.PersonnelPanel;
-import com.erc.view.staff.StaffPanel;
+import com.erc.view.patientAccept.PatientAcceptPanel;
+import com.erc.view.personel.StaffPanel;
+import com.erc.view.staff.StaffTypePanel;
 
 public class MainApp extends JFrame {
 	private JPanel toolbarPanel = new JPanel();
@@ -35,7 +37,7 @@ public class MainApp extends JFrame {
 		MainApp frame = new MainApp();
 		frame.addMenuBar();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(550, 360);
+		frame.setSize(750, 560);
         frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -43,27 +45,31 @@ public class MainApp extends JFrame {
 
 	private void addMenuBar() {
 		JMenuBar toolbar = new JMenuBar();
-		JMenu personnelMenu = new JMenu("Personnel");
+		JMenu personnelMenu = new JMenu("Staff");
 		JMenu patientMenu = new JMenu("Patient");
 	    JMenu admissionMenu = new JMenu("Admission");
 	    JMenu optionsMenu = new JMenu("Organizations");
 	    JMenu settingsMenu = new JMenu("Settings");
+	    JMenu patientAcceptMenu = new JMenu("Hasta Kabul");
+	    JMenu appointmentMenu = new JMenu("Randevu");
 
 		toolbar.add(personnelMenu);
 		toolbar.add(patientMenu);
 		toolbar.add(admissionMenu);
 		toolbar.add(optionsMenu);
 		toolbar.add(settingsMenu);
+		toolbar.add(patientAcceptMenu);
+		toolbar.add(appointmentMenu);
 		
 		MenuBarEventListener eventListener = new MenuBarEventListener();
 		
 		
 		//???
 		
-		JMenuItem personnels = new JMenuItem("Personnels");
+		JMenuItem personnels = new JMenuItem("Staffs");
 		personnelMenu.add(personnels);
 		personnels.addActionListener(eventListener);
-		personnels.setActionCommand("PERSONNEL_LIST");
+		personnels.setActionCommand("STAFF_LIST");
 		
 		
 		JMenuItem patients = new JMenuItem("Patients");
@@ -80,7 +86,17 @@ public class MainApp extends JFrame {
 		settingsMenu.add(settings);
 		settings.addActionListener(eventListener);
 		settings.setActionCommand("SETTINGS_LIST");
-		//???
+		
+		JMenuItem patientAccept = new JMenuItem("Hasta Kabul");
+		patientAcceptMenu.add(patientAccept);
+		patientAccept.addActionListener(eventListener);
+		patientAccept.setActionCommand("PATIENTACCEPT_LIST");
+		
+		JMenuItem appointment = new JMenuItem("Randevu");
+		appointmentMenu.add(appointment);
+		appointment.addActionListener(eventListener);
+		appointment.setActionCommand("APPOINTMENT_LIST");
+		
 		
 		toolbarPanel.add(toolbar);
 	}
@@ -91,8 +107,8 @@ public class MainApp extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
- 			if(cmd.equals("PERSONNEL_LIST")) {
- 				PersonnelPanel panel = new PersonnelPanel();
+ 			if(cmd.equals("STAFF_LIST")) {
+ 				StaffPanel panel = new StaffPanel();
  				contentPanel.removeAll();
  				contentPanel.setLayout(new BorderLayout());
  				contentPanel.add(panel, BorderLayout.CENTER);
@@ -110,13 +126,24 @@ public class MainApp extends JFrame {
  				contentPanel.add(panel, BorderLayout.CENTER);;
  				contentPanel.revalidate();
  			}else if(cmd.equals("SETTINGS_LIST")) {
- 				StaffPanel panel = new StaffPanel();
+ 				StaffTypePanel panel = new StaffTypePanel();
+ 				contentPanel.removeAll();
+ 				contentPanel.setLayout(new BorderLayout());
+ 				contentPanel.add(panel, BorderLayout.CENTER);;
+ 				contentPanel.revalidate();
+ 			}else if(cmd.equals("PATIENTACCEPT_LIST")) {
+ 				PatientAcceptPanel panel = new PatientAcceptPanel();
+ 				contentPanel.removeAll();
+ 				contentPanel.setLayout(new BorderLayout());
+ 				contentPanel.add(panel, BorderLayout.CENTER);;
+ 				contentPanel.revalidate();
+ 			}else if(cmd.equals("APPOINTMENT_LIST")) {
+ 				AppointmentPanel panel = new AppointmentPanel();
  				contentPanel.removeAll();
  				contentPanel.setLayout(new BorderLayout());
  				contentPanel.add(panel, BorderLayout.CENTER);;
  				contentPanel.revalidate();
  			}
-			
 		}
 		
 	}

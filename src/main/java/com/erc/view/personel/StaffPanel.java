@@ -18,10 +18,10 @@ import javax.swing.JTable;
 
 import com.erc.dbconnection.DBConnection;
 import com.erc.entities.PatientDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 
 import com.erc.user.service.PatientService;
-import com.erc.user.service.PersonelService;
+import com.erc.user.service.StaffService;
 import com.erc.view.patient.PatientEditor;
 import com.erc.view.patient.PatientPanel.Handler;
 
@@ -29,15 +29,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class PersonnelPanel extends JPanel{
+public class StaffPanel extends JPanel{
 	private JButton btnAdd = new JButton("ADD");
 	private JButton btnUpdate = new JButton("UPDATE");
 	private JButton btnDelete = new JButton("DELETE");
 	
-	private PersonnelTableModel tableModel = new PersonnelTableModel();
+	private StaffTableModel tableModel = new StaffTableModel();
 	private JTable table = new JTable();
 	
-	public PersonnelPanel() {
+	public StaffPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{5, 0, 0, 0, 0, 5, 0};
 		gridBagLayout.rowHeights = new int[]{5, 0, 0, 5, 0};
@@ -88,13 +88,13 @@ public class PersonnelPanel extends JPanel{
 		btnDelete.setActionCommand("delete");
 		btnUpdate.setActionCommand("update");
 		
-		getPersonelListFromDB();
+		getStaffListFromDB();
 	
 	}
-	private void getPersonelListFromDB() {
-		 PersonelService service = new PersonelService();
-		 ArrayList<PersonnelDTO> personnelList = service.getAllPersonels();
-		 tableModel.setDataList(personnelList);
+	private void getStaffListFromDB() {
+		 StaffService service = new StaffService();
+		 ArrayList<StaffDTO> staffList = service.getAllStaff();
+		 tableModel.setDataList(staffList);
 		 table.setModel(tableModel);
 		 tableModel.fireTableDataChanged();	
 	}
@@ -109,15 +109,15 @@ public class PersonnelPanel extends JPanel{
 			
 			if(cmd.equals("add")) {
 				
-				PersonnelDTO personel = new PersonnelDTO();
+				StaffDTO staff = new StaffDTO();
 				System.out.println("add is clicked");
 				
-				PersonelEditor personelEditor = new PersonelEditor();
-				personel = personelEditor.showDialog();
+				StaffEditor personelEditor = new StaffEditor();
+				staff = personelEditor.showDialog();
 			
-				if (personel != null) {
+				if (staff != null) {
 					
-					tableModel.getDataList().add(personel);
+					tableModel.getDataList().add(staff);
 					tableModel.fireTableDataChanged();		
 					JFrame f; 
 					f=new JFrame(); 
@@ -145,8 +145,8 @@ public class PersonnelPanel extends JPanel{
 					return;
 				}else {
 					
-					PersonnelDTO personel = tableModel.getDataList().get(selectedRow);
-					PersonelEditor editor = new PersonelEditor();
+					StaffDTO personel = tableModel.getDataList().get(selectedRow);
+					StaffEditor editor = new StaffEditor();
 					editor.setPersonel(personel);
 					personel = editor.showDialog();
 			
@@ -181,8 +181,8 @@ public class PersonnelPanel extends JPanel{
 					// 0=yes, 1=no, 2=cancel
 					System.out.println(input);
 					if (input == 0) {
-					PersonnelDTO personel = tableModel.getDataList().get(selectedRow);
-					PersonelService service = new PersonelService();
+					StaffDTO personel = tableModel.getDataList().get(selectedRow);
+					StaffService service = new StaffService();
 					boolean isDeleted = service.deletePersonel(personel);		
 					if(isDeleted) {
 						tableModel.getDataList().remove(selectedRow);	

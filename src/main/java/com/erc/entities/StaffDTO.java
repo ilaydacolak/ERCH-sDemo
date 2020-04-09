@@ -2,6 +2,7 @@ package com.erc.entities;
 
 import java.util.Date;
 
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -15,17 +16,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.CascadeType;
 
 @Entity
-@Table(name = "personel")
-public class PersonnelDTO {
+@Table(name = "staff")
+public class StaffDTO {
 	@Id
-	@Column(name = "personelid")
-	private String personid;
+//	@GeneratedValue(generator = "UUID")
+//	@GenericGenerator(name="UUID",  strategy = "guid", parameters = {})
+	@Column(name = "staffid")
+	private String staffid;
 
 	@Column(name = "tcno")
 	private String identificationno;
@@ -50,24 +51,36 @@ public class PersonnelDTO {
 
 	@Column(name = "gender")
 	private String gender;
+	
+	@Column(name = "active")
+	private String aktif;
 
+	public String getAktif() {
+		return aktif;
+	}
+	public void setAktif(String aktif) {
+		this.aktif = aktif;
+	}
+	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="staffnumber")
+	private StaffTypeDTO staffTypeDTO;
 	@Column(name = "personeltype")
 	private String personelType;
+	
 
-	@ManyToOne
-	@JoinColumn(name="personeltypeid")
-//	@OnDelete(action=OnDeleteAction.CASCADE)
-	private StaffTypeDTO personelTypeNumber;
-
-	public StaffTypeDTO getPersonelTypeNumber() {
-		return personelTypeNumber;
+	public String getPersonelType() {
+		return personelType;
+	}
+	public void setPersonelType(String personelType) {
+		this.personelType = personelType;
+	}
+	public StaffTypeDTO getStaffTypeDTO() {
+		return staffTypeDTO;
 	}
 
-
-	public void setPersonelTypeNumber(StaffTypeDTO personelTypeNumber) {
-		this.personelTypeNumber = personelTypeNumber;
+	public void setStaffTypeDTO(StaffTypeDTO staffTypeDTO) {
+		this.staffTypeDTO = staffTypeDTO;
 	}
-
 
 	public String getGender() {
 		return gender;
@@ -77,20 +90,13 @@ public class PersonnelDTO {
 		this.gender = gender;
 	}
 
-	public String getPersonelType() {
-		return personelType;
-	}
-
-	public void setPersonelType(String personelType) {
-		this.personelType = personelType;
-	}
 
 	public String getPersonid() {
-		return personid;
+		return staffid;
 	}
 
-	public void setPersonid(String personid) {
-		this.personid = personid;
+	public void setPersonid(String staffid) {
+		this.staffid = staffid;
 	}
 
 	public String getIdentificationno() {

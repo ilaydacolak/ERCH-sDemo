@@ -15,18 +15,18 @@ import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.entities.StaffTypeDTO;
-import com.erc.user.service.PersonelService;
 import com.erc.user.service.StaffService;
-import com.erc.view.personel.PersonelEditor;
-import com.erc.view.personel.PersonnelTableModel;
+import com.erc.user.service.StaffTypeService;
+import com.erc.view.personel.StaffEditor;
+import com.erc.view.personel.StaffTableModel;
 
-public class StaffPanel extends JPanel {
+public class StaffTypePanel extends JPanel {
 	private JTable table;
-	private StaffTableModel tableModel = new StaffTableModel();
+	private StaffTypeTableModel tableModel = new StaffTypeTableModel();
 
-	public StaffPanel() {
+	public StaffTypePanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -81,8 +81,8 @@ public class StaffPanel extends JPanel {
 	}
 
 	private void getStaffListFromService() {
-		StaffService service = new StaffService();
-		ArrayList<StaffTypeDTO> staffList = service.getAllStaffs();
+		StaffTypeService service = new StaffTypeService();
+		ArrayList<StaffTypeDTO> staffList = service.getAllStaffTypes();
 		tableModel.setDataList(staffList);
 		table.setModel(tableModel);
 		tableModel.fireTableDataChanged();
@@ -99,7 +99,7 @@ public class StaffPanel extends JPanel {
 			if (cmd.equals("ADD")) {
 				System.out.println("add is clicked");
 
-				StaffEditor staffEditor = new StaffEditor();
+				StaffTypeEditor staffEditor = new StaffTypeEditor();
 				staff = staffEditor.showDialog();
 				if (staff != null) {
 					tableModel.getDataList().add(staff);
@@ -128,7 +128,7 @@ public class StaffPanel extends JPanel {
 				} else {
 
 					StaffTypeDTO staff = tableModel.getDataList().get(selectedRow);
-					StaffEditor editor = new StaffEditor();
+					StaffTypeEditor editor = new StaffTypeEditor();
 					editor.setStaff(staff);
 					staff = editor.showDialog();
 
@@ -164,8 +164,8 @@ public class StaffPanel extends JPanel {
 					System.out.println(input);
 					if (input == 0) {
 						StaffTypeDTO staff = tableModel.getDataList().get(selectedRow);
-						StaffService service = new StaffService();
-						boolean isDeleted = service.deleteStaff(staff);
+						StaffTypeService service = new StaffTypeService();
+						boolean isDeleted = service.deleteStaffType(staff);
 						if (isDeleted) {
 							tableModel.getDataList().remove(selectedRow);
 							tableModel.fireTableDataChanged();

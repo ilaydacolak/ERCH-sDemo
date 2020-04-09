@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 import com.erc.dbconnection.HibernateConnection;
 import com.erc.entities.OptionsDTO;
-import com.erc.entities.PersonnelDTO;
+
 
 public class OptionsService {
 	private OptionsDTO options;
@@ -18,7 +18,7 @@ public class OptionsService {
 		try (Session session = HibernateConnection.getSessionFactory().openSession()) {
 			ArrayList<OptionsDTO> options = new ArrayList<OptionsDTO>();
 			options = (ArrayList<OptionsDTO>) session.createQuery("from OptionsDTO", OptionsDTO.class).list();
-
+			
 			return options;
 		} catch (Exception e) {
 			if (transaction != null) {

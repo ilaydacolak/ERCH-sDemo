@@ -13,9 +13,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 
 import com.erc.entities.OptionsDTO;
-import com.erc.entities.PersonnelDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.user.service.OptionsService;
-import com.erc.user.service.PersonelService;
+import com.erc.user.service.StaffService;
 
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -30,41 +30,42 @@ public class OptionsEditor extends JPanel {
 
 	public OptionsEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel OrgNameLlbl = new JLabel("Organization Name:");
 		GridBagConstraints gbc_OrgNameLlbl = new GridBagConstraints();
 		gbc_OrgNameLlbl.insets = new Insets(0, 0, 5, 5);
-		gbc_OrgNameLlbl.gridx = 4;
-		gbc_OrgNameLlbl.gridy = 3;
+		gbc_OrgNameLlbl.gridx = 1;
+		gbc_OrgNameLlbl.gridy = 1;
 		add(OrgNameLlbl, gbc_OrgNameLlbl);
 
 		txtName = new JTextField();
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
-		gbc_txtName.insets = new Insets(0, 0, 5, 5);
-		gbc_txtName.gridx = 5;
-		gbc_txtName.gridy = 3;
+		gbc_txtName.gridwidth = 2;
+		gbc_txtName.insets = new Insets(0, 0, 5, 0);
+		gbc_txtName.gridx = 2;
+		gbc_txtName.gridy = 1;
 		add(txtName, gbc_txtName);
 		txtName.setColumns(10);
 
 		chckbxNewCheckBox = new JCheckBox("Is Active?");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
 		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxNewCheckBox.gridx = 4;
-		gbc_chckbxNewCheckBox.gridy = 5;
+		gbc_chckbxNewCheckBox.gridx = 1;
+		gbc_chckbxNewCheckBox.gridy = 3;
 		add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 
 		EditorHandler editorHandler = new EditorHandler();
 
 		JButton btnSave = new JButton("SAVE");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
-		gbc_btnSave.insets = new Insets(0, 0, 0, 5);
-		gbc_btnSave.gridx = 5;
-		gbc_btnSave.gridy = 8;
+		gbc_btnSave.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSave.gridx = 3;
+		gbc_btnSave.gridy = 5;
 		add(btnSave, gbc_btnSave);
 
 		btnSave.addActionListener(editorHandler);
@@ -118,7 +119,7 @@ public class OptionsEditor extends JPanel {
 	public OptionsDTO showDialog() {
 		dialog.getContentPane().add(this);
 		dialog.setModal(true);
-		dialog.setSize(350, 280);
+		dialog.setSize(250, 200);
 		dialog.setLocationRelativeTo(this);
 		fillScreen();
 		dialog.setVisible(true);
