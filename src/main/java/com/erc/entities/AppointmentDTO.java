@@ -25,15 +25,23 @@ private Date appointmentDate;
 private Date appointmentCreate;
 @Column(name="appointmentupdatedate")	
 private Date appointmentUpdate;
-@Column(name="hour")	
-private LocalTime  saat;
+
 @Column(name="note")
 private String note;
 @Column (name="stringsaat")
 private String stringSaat;
 
+@Column(name="hour")
+private Date date;
 
 
+
+public Date getDate() {
+	return date;
+}
+public void setDate(Date date) {
+	this.date = date;
+}
 public String getStringSaat() {
 	return stringSaat;
 }
@@ -46,12 +54,7 @@ public String getNote() {
 public void setNote(String note) {
 	this.note = note;
 }
-public LocalTime getSaat() {
-	return saat;
-}
-public void setSaat(LocalTime saat) {
-	this.saat = saat;
-}
+
 public String getAppointmentID() {
 	return appointmentID;
 }

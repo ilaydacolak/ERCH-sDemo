@@ -52,8 +52,7 @@ public class AppointmentTableModel extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		AppointmentDTO appointment = appointmentList.get(row);
 		switch (col) {
-		case 0:
-			return appointment.getSaat();
+
 		case 1:
 			return appointment.getPatientName();
 		case 2:

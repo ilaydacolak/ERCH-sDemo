@@ -34,13 +34,14 @@ public class AppointmentEditor extends JPanel {
 	private JComboBox doctorBox;
 	private JComboBox patientBox;
 	private AppointmentPatientComboboxModel patientComboboxModel = new AppointmentPatientComboboxModel();
-	private AppointmentDTO appointment;
+	private AppointmentDTO appointment = new AppointmentDTO();
 	private JDialog dialog = new JDialog();
 	private AppointmentPanel panel = new AppointmentPanel();
 	private OptionsDTO organizationDTO;
 	private JTextField txtOrganization;
-	private ArrayList<AppointmentDTO> appointmentDTOList ;
-	private AppointmentDTO appointmentDTO;
+	private ArrayList<AppointmentDTO> appointmentDTOList;
+	private AppointmentRow appointmentRow;
+	private SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
 	public ArrayList<AppointmentDTO> getAppointmentDTOList() {
 		return appointmentDTOList;
@@ -49,14 +50,13 @@ public class AppointmentEditor extends JPanel {
 	public void setAppointmentDTOList(ArrayList<AppointmentDTO> appointmentDTOList) {
 		this.appointmentDTOList = appointmentDTOList;
 	}
-	
 
-	public AppointmentDTO getAppointmentDTO() {
-		return appointmentDTO;
+	public AppointmentRow getAppointmentRow() {
+		return appointmentRow;
 	}
 
-	public void setAppointmentDTO(AppointmentDTO appointmentDTO) {
-		this.appointmentDTO = appointmentDTO;
+	public void setAppointmentRow(AppointmentRow appointmentRow) {
+		this.appointmentRow = appointmentRow;
 	}
 
 	public AppointmentEditor() {
@@ -127,14 +127,14 @@ public class AppointmentEditor extends JPanel {
 		notText.setColumns(10);
 
 		EditorHandler editorHandler = new EditorHandler();
-		
+
 		JLabel lblNewLabel = new JLabel("Organizasyon:");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 4;
 		add(lblNewLabel, gbc_lblNewLabel);
-		
+
 		txtOrganization = new JTextField();
 		txtOrganization.setEditable(false);
 		GridBagConstraints gbc_txtOrganization = new GridBagConstraints();
@@ -191,26 +191,30 @@ public class AppointmentEditor extends JPanel {
 //				if (appointment == null) {
 //					appointment = new AppointmentDTO();
 //				}
-				for(AppointmentDTO appointment : appointmentDTOList) {
-					if(appointment.getStringSaat() == appointmentDTO.getStringSaat()) {
-						appointment.setNote(not);
-						if (appointment.getAppointmentCreate() == null) {
-							appointment.setAppointmentCreate(createDate);
-						} else {
-							appointment.setAppointmentUpdate(updateDate);
-						}
-						appointment.setPatientName(patientBox.getSelectedItem().toString());
-						appointment.setDoctorName(doctorBox.getSelectedItem().toString());
-						appointment.setOrganizationName(organizationDTO.getoptionsName());
-						AppointmentService appointmentService = new AppointmentService();
-						appointment = appointmentService.saveAppointment(appointment);
-						dialog.dispose();						
-					}
+				// for(AppointmentDTO appointment : appointmentDTOList) {
+				// if(appointment.getStringSaat() == appointmentDTO.getStringSaat()) {
 		
+					appointment.setNote(not);
+				
+				if (appointment.getAppointmentCreate() == null) {
+					appointment.setAppointmentCreate(createDate);
+				} else {
+					appointment.setAppointmentUpdate(updateDate);
 				}
-				
-					
-				
+				appointment.setPatientName(patientBox.getSelectedItem().toString());
+				appointment.setDoctorName(doctorBox.getSelectedItem().toString());
+				appointment.setOrganizationName(organizationDTO.getoptionsName());
+//				
+				String hour = hourFormat.format(appointmentRow.getDate());
+				appointment.setStringSaat(hour);
+				appointment.setDate(appointmentRow.getDate());
+				AppointmentService appointmentService = new AppointmentService();
+				appointment = appointmentService.saveAppointment(appointment);
+				dialog.dispose();
+			}
+
+		}
+
 //				appointment.setNote(not);
 //				if (appointment.getAppointmentCreate() == null) {
 //					appointment.setAppointmentCreate(createDate);
@@ -223,9 +227,10 @@ public class AppointmentEditor extends JPanel {
 //				AppointmentService appointmentService = new AppointmentService();
 //				appointment = appointmentService.saveAppointment(appointment);
 //				dialog.dispose();
-			}
-		}
-
+//			}
+//		}
+//
+//	}
 	}
 
 	public AppointmentDTO getAppointment() {
@@ -252,12 +257,12 @@ public class AppointmentEditor extends JPanel {
 			notText.setText(appointment.getNote());
 			patientBox.setSelectedItem(appointment.getPatientName());
 			doctorBox.setSelectedItem(appointment.getDoctorName());
+			
 		}
 	}
 
 	public void setAppointmentOrganization(OptionsDTO organizationDTO) {
 		this.organizationDTO = organizationDTO;
 	}
-	
 
 }

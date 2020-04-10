@@ -30,6 +30,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JLabel;
@@ -44,7 +45,7 @@ import java.time.ZoneId;
 public class AppointmentPanel extends JPanel {
 	public AppointmentOrganizationTableModel organizationTableModel = new AppointmentOrganizationTableModel();
 	public JTable organizationTable = new JTable();
-	private AppointmentTableModel appointmentTableModel = new AppointmentTableModel();
+	private AppointmentTableModel2 appointmentTableModel = new AppointmentTableModel2();
 	private JTable appointmentTable = new JTable();
 	private AppointmentDTO appointment = new AppointmentDTO();
 	private JLabel lblDate;
@@ -126,6 +127,35 @@ public class AppointmentPanel extends JPanel {
 	}
 
 	private void getAppointmentListFromService() {
+
+		appointmentTableModel.getAppointmentList().clear();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.set(Calendar.HOUR_OF_DAY, 8);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
+		boolean finished = false;
+
+		while (!finished) {
+
+			AppointmentRow appointmentRow = new AppointmentRow();
+			appointmentRow.setDate(cal.getTime());
+			AppointmentDTO emptyAppointment = new AppointmentDTO();
+			appointmentRow.setAppointment(emptyAppointment);
+			appointmentTableModel.addAppointmentRow(appointmentRow);
+			Calendar loopTime = Calendar.getInstance();
+
+			cal.add(Calendar.MINUTE, 15);
+			loopTime.setTime(cal.getTime());
+
+			System.out.println(loopTime.getTime());
+			if (loopTime.get(Calendar.HOUR_OF_DAY) == 17 && loopTime.get(Calendar.MINUTE) == 15) {
+				finished = true;
+			}
+		}
+
 		AdmissionService admissionService = new AdmissionService();
 		ArrayList<AdmissionDTO> admissions = admissionService.getAllAdmissionPatients();
 		ArrayList<AdmissionDTO> admission = new ArrayList<AdmissionDTO>();
@@ -149,7 +179,7 @@ public class AppointmentPanel extends JPanel {
 				}
 			}
 		}
-		appointmentTableModel.setAppointmentList(app);
+		// appointmentTableModel.setAppointmentList(app);
 		appointmentTable.setModel(appointmentTableModel);
 		appointmentTableModel.fireTableDataChanged();
 
@@ -182,7 +212,7 @@ public class AppointmentPanel extends JPanel {
 
 				AppointmentService appService = new AppointmentService();
 				ArrayList<AppointmentDTO> appointmentList = appService.getAllAppointmentList();
-				
+
 //				AppointmentDTO appointments = new AppointmentDTO();
 //				appointmentTableModel.time.of(8, 00);
 //				while(appointmentTableModel.time.equals(Time.valueOf(LocalTime.of(17, 00)))) {
@@ -192,112 +222,9 @@ public class AppointmentPanel extends JPanel {
 //					}
 //					}
 //				}
-				// AppointmentDTO appointment = new AppointmentDTO();
-	
-				while (appointmentTableModel.time.compareTo(appointmentTableModel.time2) < 0) {					
-						appointment.setSaat(appointmentTableModel.time);
-						appointmentList.add(appointment);
-						appointmentTableModel.time = appointmentTableModel.time.plusMinutes(15);				
-				}
 
-				// ArrayList<AppointmentDTO> appointmentList = new ArrayList<AppointmentDTO>();
-//				AppointmentDTO appointments = new AppointmentDTO();
-//				boolean stp = false;
-//				for (AppointmentDTO appointment : appointmentList) {
-//					if (appointment.getStringSaat().equals("9:00")) {
-//						stp = true;
-//						appointmentTableModel.setRowColour(1, Color.RED);
-//						break;
-//					}		
-//				}
-//				if (stp == false) {
-//					appointmentTableModel.setRowColour(1, Color.GREEN);
-//					appointments.setStringSaat("9:00");
-//					appointmentList.add(appointments);		
-//				}
-//
-////				appService.saveAppointment(appointments);
-//				AppointmentDTO appointments2 = new AppointmentDTO();
-//				boolean stp2 = false;
-//				for (AppointmentDTO appointment2 : appointmentList) {
-//					if (appointment2.getStringSaat().equals("9:15")) {
-//						stp2 = true;
-//						break;
-//					}
-//				}
-//				if (stp2== false) {
-//					appointments2.setStringSaat("9:15");
-//					appointmentList.add(appointments2);
-//				}
-//
-//				
-//				AppointmentDTO appointments3 = new AppointmentDTO();
-//				boolean stp3 = false;
-//				for (AppointmentDTO appointment2 : appointmentList) {
-//					if (appointment2.getStringSaat().equals("9:30")) {
-//						stp3 = true;
-//						break;
-//					}
-//				}
-//				if (stp3== false) {
-//					appointments3.setStringSaat("9:30");
-//					appointmentList.add(appointments3);
-//				}
-//		
-//				AppointmentDTO appointments4 = new AppointmentDTO();
-//		
-//				boolean stp4 = false;
-//				for (AppointmentDTO appointment2 : appointmentList) {
-//					if (appointment2.getStringSaat().equals("9:45")) {
-//						stp4 = true;
-//						break;
-//					}
-//				}
-//				if (stp4== false) {
-//					appointments4.setStringSaat("9:45");
-//					appointmentList.add(appointments4);
-//				}
-//
-//				AppointmentDTO appointments5 = new AppointmentDTO();
-//				boolean stp5 = false;
-//				for (AppointmentDTO appointment2 : appointmentList) {
-//					if (appointment2.getStringSaat().equals("10:00")) {
-//						stp5 = true;
-//						break;
-//					}
-//				}
-//				if (stp5== false) {
-//					appointments5.setStringSaat("10:00");
-//					appointmentList.add(appointments5);
-//				}
-//
-//				AppointmentDTO appointments6 = new AppointmentDTO();
-//				boolean stp6 = false;
-//				for (AppointmentDTO appointment2 : appointmentList) {
-//					if (appointment2.getStringSaat().equals("10:15")) {
-//						stp6 = true;
-//						break;
-//					}
-//				}
-//				if (stp6== false) {
-//					appointments6.setStringSaat("10:15");
-//					appointmentList.add(appointments6);
-//				}
-//
-//				AppointmentDTO appointments7 = new AppointmentDTO();
-//				boolean stp7 = false;
-//				for (AppointmentDTO appointment2 : appointmentList) {
-//					if (appointment2.getStringSaat().equals("10:30")) {
-//						stp7 = true;
-//						break;
-//					}
-//				}
-//				if (stp7== false) {
-//					appointments7.setStringSaat("10:30");
-//					appointmentList.add(appointments7);
-//				}
+//				appointmentTableModel.setAppointmentList(appointmentList);
 
-				appointmentTableModel.setAppointmentList(appointmentList);
 				appointmentTable.setModel(appointmentTableModel);
 				appointmentTableModel.fireTableDataChanged();
 
@@ -313,14 +240,25 @@ public class AppointmentPanel extends JPanel {
 				appointmentTable.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						if (appointmentTable.getSelectedRow() != -1) {
-							AppointmentDTO appointmentDTO = appointmentTableModel.getAppointmentList()
+							AppointmentRow appointmentDTO = appointmentTableModel.getAppointmentList()
 									.get(appointmentTable.getSelectedRow());
-							AppointmentEditor appointmentEditor = new AppointmentEditor();
-							appointmentEditor.setAppointmentOrganization(organizationDTO);
-							appointmentEditor.setAppointmentDTOList(appointmentList);
-							appointmentEditor.setAppointmentDTO(appointmentDTO);
-							appointment = appointmentEditor.showDialog();
 
+							boolean add = false;
+							add = appointmentTableModel.controlAppointment();
+							if (add == true) {
+								AppointmentEditor appointmentEditor = new AppointmentEditor();
+								appointmentEditor.setAppointmentOrganization(organizationDTO);
+
+								appointmentEditor.setAppointmentDTOList(appointmentList);
+								appointmentEditor.setAppointmentRow(appointmentDTO);
+								appointment = appointmentEditor.showDialog();
+							}else {
+								JFrame f;
+								f = new JFrame();
+								JOptionPane.showMessageDialog(f, "Randevu dolu", "Alert",
+										JOptionPane.WARNING_MESSAGE);
+								return;
+							}
 						}
 					}
 				});
