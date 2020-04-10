@@ -51,6 +51,7 @@ public class StaffDTO {
 
 	@Column(name = "gender")
 	private String gender;
+
 	
 	@Column(name = "active")
 	private String aktif;
@@ -82,6 +83,24 @@ public class StaffDTO {
 		this.staffTypeDTO = staffTypeDTO;
 	}
 
+//
+//	@Column(name = "personeltype")
+//	private String personelType;
+
+//	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinColumn(name="personeltypeid")
+////	@OnDelete(action=OnDeleteAction.CASCADE)
+//	private StaffTypeDTO staffTypeDTO;
+//
+//	public StaffTypeDTO getStaffTypeDTO() {
+//		return staffTypeDTO;
+//	}
+//
+//	public void setStaffTypeDTO(StaffTypeDTO staffTypeDTO) {
+//		this.staffTypeDTO = staffTypeDTO;
+//	}
+
+
 	public String getGender() {
 		return gender;
 	}
@@ -89,6 +108,15 @@ public class StaffDTO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+
+//	public String getPersonelType() {
+//		return personelType;
+//	}
+//
+//	public void setPersonelType(String personelType) {
+//		this.personelType = personelType;
+//	}
 
 
 	public String getPersonid() {

@@ -21,11 +21,16 @@ import org.hibernate.query.Query;
 import com.erc.dbconnection.DBConnection;
 import com.erc.entities.PatientDTO;
 import com.erc.entities.StaffDTO;
+
+import com.erc.dbconnection.HibernateConnection;
+
+
 import com.erc.entities.StaffTypeDTO;
 import com.fasterxml.classmate.AnnotationConfiguration;
 import com.erc.dbconnection.HibernateConnection;
 
 public class StaffService {
+
 
 	private StaffDTO staff;
 
@@ -43,6 +48,24 @@ public class StaffService {
 			}
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+
+	
+	public ArrayList<StaffTypeDTO> getAllStaffs() {		
+		Transaction transaction = null;		
+		 try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+	            ArrayList < StaffTypeDTO > personel = new ArrayList<StaffTypeDTO>();
+	            personel = (ArrayList<StaffTypeDTO>) session.createQuery("from StaffTypeDTO", StaffTypeDTO.class).list();
+	            return personel;            
+	        } catch (Exception e) {
+	            if (transaction != null) {
+	                transaction.rollback();
+	            }
+	            e.printStackTrace();
+	        }
+
 		return null;
 	}
 

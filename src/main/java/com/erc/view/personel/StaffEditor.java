@@ -23,8 +23,12 @@ import java.time.LocalDate;
 import com.erc.entities.PatientDTO;
 import com.erc.entities.StaffDTO;
 import com.erc.entities.StaffTypeDTO;
+
 import com.erc.user.service.StaffService;
 import com.erc.user.service.StaffTypeService;
+
+import com.erc.user.service.StaffService;
+
 import com.erc.view.patient.PatientEditor.EditorHandler;
 
 import javax.swing.JButton;
@@ -214,8 +218,12 @@ public class StaffEditor extends JPanel {
 		gbc_personelTypeCombobox.gridy = 14;
 		add(personelTypeCombobox, gbc_personelTypeCombobox);
 
+
 		StaffTypeService service = new StaffTypeService();
 		ArrayList<StaffTypeDTO> staffTypes = service.getAllStaffTypes();
+	
+	
+
 		personelCombobox.setStaffTypes(staffTypes);
 		personelTypeCombobox.setModel(personelCombobox);
 
@@ -284,13 +292,17 @@ public class StaffEditor extends JPanel {
 				String password = textPassword.getText();
 				boolean isActive = bxActive.isSelected();
 				Date bDate = dateChooser.getDate();
-	//			String personelType = personelCombobox.getSelectedItem().toString();
-				String gender = null;
 
-				if (genderCombobox.getSelectedItem() != null) {
-					gender = genderCombobox.getSelectedItem().toString();
+	//			String personelType = personelCombobox.getSelectedItem().toString();
+	
+
+				String gender = null;
+				if(genderCombobox.getSelectedItem()!=null) {
+					 gender=genderCombobox.getSelectedItem().toString();
 				}
-				StaffTypeDTO staff;
+				String personelType = personelTypeCombobox.getSelectedItem().toString();
+				StaffTypeDTO staff ;
+
 
 				if (tc.length() == 0) {
 					JFrame f;
@@ -352,6 +364,7 @@ public class StaffEditor extends JPanel {
 				personel.setPassword(password);
 				personel.setbDate(bDate);
 				personel.setGender(gender);
+
 				personel.setPersonelType(personelType);
 				StaffTypeDTO staffTypeDTO = (StaffTypeDTO)personelCombobox.getSelectedItem();
 				personel.setStaffTypeDTO(staffTypeDTO);
@@ -364,6 +377,16 @@ public class StaffEditor extends JPanel {
 ////
 //				personel.setStaffTypeDTO(staffType);
 			// personel.setPersonelType(personelType);
+
+				
+				StaffTypeDTO staffType = new StaffTypeDTO();
+				staffType.setStaffTypeID("085a587c-19d3-4484-b65b-71ae8b020682");
+				personel.setStaffTypeDTO(staffType);
+				
+			//	personel.setPersonelType(personelType);
+				
+				
+				
 
 				if (isActive == true) {
 					personel.setActive(true);

@@ -25,7 +25,9 @@ public class StaffTypeEditor extends JPanel {
 	StaffTypeDTO staff = new StaffTypeDTO();
 	private JTextField txtStaffName;
 	private JTextField txtStaffCode;
+
 	private StaffDTO personel;
+
 	private JDialog dialog = new JDialog();
 
 	public StaffTypeEditor() {
@@ -104,9 +106,15 @@ public class StaffTypeEditor extends JPanel {
 				}
 				staff.setName(name);
 				staff.setCode(code);
+
 				StaffTypeService service = new StaffTypeService();
 				//personel.setPersonelTypeNumber(staff);
 				service.saveStaffType(staff);
+//
+//				StaffService service = new StaffService();
+//				//personel.setPersonelTypeNumber(staff);
+//				service.saveStaff(staff);
+
 				dialog.dispose();
 				
 
