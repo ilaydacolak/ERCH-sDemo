@@ -51,7 +51,7 @@ public class AppointmentPanel extends JPanel {
 	private JLabel lblDate;
 	private LocalDate today;
 	private OptionsDTO organizationDTO = new OptionsDTO();
-
+	private ArrayList<AppointmentRow> appRowList = new ArrayList<AppointmentRow>();
 	public AppointmentPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
@@ -145,6 +145,9 @@ public class AppointmentPanel extends JPanel {
 			AppointmentDTO emptyAppointment = new AppointmentDTO();
 			appointmentRow.setAppointment(emptyAppointment);
 			appointmentTableModel.addAppointmentRow(appointmentRow);
+			
+			
+
 			Calendar loopTime = Calendar.getInstance();
 
 			cal.add(Calendar.MINUTE, 15);
@@ -224,6 +227,7 @@ public class AppointmentPanel extends JPanel {
 //				}
 
 //				appointmentTableModel.setAppointmentList(appointmentList);
+				
 
 				appointmentTable.setModel(appointmentTableModel);
 				appointmentTableModel.fireTableDataChanged();
