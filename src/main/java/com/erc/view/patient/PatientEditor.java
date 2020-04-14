@@ -30,7 +30,6 @@ public class PatientEditor extends JPanel {
 
 	private PatientDTO patient;
 	private JDialog dialog = new JDialog();
-	private JTextField textUsername;
 	private JTextField txtPatientNo;
 
 	public PatientEditor() {
@@ -94,50 +93,33 @@ public class PatientEditor extends JPanel {
 		textSurname.setColumns(10);
 
 		EditorHandler editorHandler = new EditorHandler();
-
-		JLabel lblUsername = new JLabel("Username:");
-		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
-		gbc_lblUsername.anchor = GridBagConstraints.WEST;
-		gbc_lblUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUsername.gridx = 1;
-		gbc_lblUsername.gridy = 8;
-		add(lblUsername, gbc_lblUsername);
-
-		textUsername = new JTextField();
-		GridBagConstraints gbc_textUsername = new GridBagConstraints();
-		gbc_textUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_textUsername.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textUsername.gridx = 3;
-		gbc_textUsername.gridy = 8;
-		add(textUsername, gbc_textUsername);
-		textUsername.setColumns(10);
-
-		JLabel lblPatientNo = new JLabel("Patient No:");
-		GridBagConstraints gbc_lblPatientNo = new GridBagConstraints();
-		gbc_lblPatientNo.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPatientNo.gridx = 1;
-		gbc_lblPatientNo.gridy = 10;
-		add(lblPatientNo, gbc_lblPatientNo);
-
-		txtPatientNo = new JTextField();
-		GridBagConstraints gbc_txtPatientNo = new GridBagConstraints();
-		gbc_txtPatientNo.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPatientNo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPatientNo.gridx = 3;
-		gbc_txtPatientNo.gridy = 10;
-		add(txtPatientNo, gbc_txtPatientNo);
-		txtPatientNo.setColumns(10);
-
-		JButton btnSave = new JButton("Save");
-		GridBagConstraints gbc_btnSave = new GridBagConstraints();
-		gbc_btnSave.insets = new Insets(0, 0, 0, 5);
-		gbc_btnSave.gridx = 3;
-		gbc_btnSave.gridy = 12;
-		add(btnSave, gbc_btnSave);
-
-		btnSave.addActionListener(editorHandler);
-
-		btnSave.setActionCommand("Save");
+		
+				JLabel lblPatientNo = new JLabel("Patient No:");
+				GridBagConstraints gbc_lblPatientNo = new GridBagConstraints();
+				gbc_lblPatientNo.insets = new Insets(0, 0, 5, 5);
+				gbc_lblPatientNo.gridx = 1;
+				gbc_lblPatientNo.gridy = 8;
+				add(lblPatientNo, gbc_lblPatientNo);
+		
+				txtPatientNo = new JTextField();
+				GridBagConstraints gbc_txtPatientNo = new GridBagConstraints();
+				gbc_txtPatientNo.insets = new Insets(0, 0, 5, 5);
+				gbc_txtPatientNo.fill = GridBagConstraints.HORIZONTAL;
+				gbc_txtPatientNo.gridx = 3;
+				gbc_txtPatientNo.gridy = 8;
+				add(txtPatientNo, gbc_txtPatientNo);
+				txtPatientNo.setColumns(10);
+		
+				JButton btnSave = new JButton("Save");
+				GridBagConstraints gbc_btnSave = new GridBagConstraints();
+				gbc_btnSave.insets = new Insets(0, 0, 5, 5);
+				gbc_btnSave.gridx = 3;
+				gbc_btnSave.gridy = 10;
+				add(btnSave, gbc_btnSave);
+				
+						btnSave.addActionListener(editorHandler);
+						
+								btnSave.setActionCommand("Save");
 	}
 
 	public class EditorHandler implements ActionListener {
@@ -153,7 +135,7 @@ public class PatientEditor extends JPanel {
 				String tc = textTC.getText();
 				String name = textName.getText();
 				String surname = textSurname.getText();
-				String username = textUsername.getText();
+
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 				Date createDate = new Date(System.currentTimeMillis());
 				formatter.format(createDate);
@@ -180,13 +162,7 @@ public class PatientEditor extends JPanel {
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,enter Surname", "Alert", JOptionPane.WARNING_MESSAGE);
 					return;
-				} else if (username.length() == 0) {
-
-					JFrame f;
-					f = new JFrame();
-					JOptionPane.showMessageDialog(f, "Please,enter Username", "Alert", JOptionPane.WARNING_MESSAGE);
-					return;
-				}else if(patientNo.length() == 0) {
+				} else if(patientNo.length() == 0) {
 					JFrame f;
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,enter patient number", "Alert", JOptionPane.WARNING_MESSAGE);
@@ -200,7 +176,7 @@ public class PatientEditor extends JPanel {
 				patient.setTc(tc);
 				patient.setName(name);
 				patient.setSurname(surname);
-				patient.setUsername(username);
+
 				patient.setPatientNo(patientNo);
 				if (patient.getCreatedDate() == null) {
 					patient.setCreatedDate(createDate);
@@ -246,7 +222,6 @@ public class PatientEditor extends JPanel {
 			textTC.setText(patient.getTc());
 			textName.setText(patient.getName());
 			textSurname.setText(patient.getSurname());
-			textUsername.setText(patient.getUsername());
 			txtPatientNo.setText(patient.getPatientNo());
 
 		}

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.erc.entities.AdmissionDTO;
-import com.erc.entities.OptionsDTO;
+import com.erc.entities.OrganizationDTO;
 import com.erc.entities.PatientDTO;
 import com.erc.entities.StaffDTO;
 import com.erc.entities.StaffTypeDTO;
@@ -200,7 +200,7 @@ public class PatientAcceptPanel extends JPanel {
 		add(OrganizationCombobox, gbc_OrganizationCombobox);
 
 		OptionsService service = new OptionsService();
-		ArrayList<OptionsDTO> options = service.getAllOptions();
+		ArrayList<OrganizationDTO> options = service.getAllOptions();
 		orgCombobox.setOptions(options);
 		OrganizationCombobox.setModel(orgCombobox);
 

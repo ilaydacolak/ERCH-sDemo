@@ -7,17 +7,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.erc.dbconnection.HibernateConnection;
-import com.erc.entities.OptionsDTO;
+import com.erc.entities.OrganizationDTO;
 
 
 public class OptionsService {
-	private OptionsDTO options;
+	private OrganizationDTO options;
 
-	public ArrayList<OptionsDTO> getAllOptions() {
+	public ArrayList<OrganizationDTO> getAllOptions() {
 		Transaction transaction = null;
 		try (Session session = HibernateConnection.getSessionFactory().openSession()) {
-			ArrayList<OptionsDTO> options = new ArrayList<OptionsDTO>();
-			options = (ArrayList<OptionsDTO>) session.createQuery("from OptionsDTO", OptionsDTO.class).list();
+			ArrayList<OrganizationDTO> options = new ArrayList<OrganizationDTO>();
+			options = (ArrayList<OrganizationDTO>) session.createQuery("from OrganizationDTO", OrganizationDTO.class).list();
 			
 			return options;
 		} catch (Exception e) {
@@ -28,7 +28,7 @@ public class OptionsService {
 		}
 		return null;
 	}
-	public OptionsDTO saveOptions(OptionsDTO options) {
+	public OrganizationDTO saveOptions(OrganizationDTO options) {
 		Session session = HibernateConnection.getSessionFactory().openSession();
 		session.beginTransaction();
 		if(options.getoptionsID()== null) {
@@ -46,7 +46,7 @@ public class OptionsService {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
-	public OptionsDTO updateOptions(OptionsDTO options) {
+	public OrganizationDTO updateOptions(OrganizationDTO options) {
 		//Session session = HibernateConnection.getSessionFactory().openSession();
 		
 		try (Session session = HibernateConnection.getSessionFactory().openSession()){
@@ -60,7 +60,7 @@ public class OptionsService {
 		return null;
 	}
 	
-	public boolean deleteOptions (OptionsDTO option) {
+	public boolean deleteOptions (OrganizationDTO option) {
 		if(option != null) {
 		try (Session session = HibernateConnection.getSessionFactory().openSession()){
 			session.beginTransaction();

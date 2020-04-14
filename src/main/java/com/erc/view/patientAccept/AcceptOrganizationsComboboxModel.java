@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import com.erc.entities.OptionsDTO;
+import com.erc.entities.OrganizationDTO;
 
 
 public class AcceptOrganizationsComboboxModel extends AbstractListModel implements ComboBoxModel{
 	private static final long serialVersionUID = 1L;
-	private ArrayList<OptionsDTO> options = new ArrayList<OptionsDTO>();
+	private ArrayList<OrganizationDTO> options = new ArrayList<OrganizationDTO>();
 	private ArrayList<String> optionsName = new ArrayList<String>();
 	private Object selection = null;
 	
-	public ArrayList<String> optionsList (ArrayList<OptionsDTO> options){
-		for(OptionsDTO optionsDTO : options) {
+	public ArrayList<String> optionsList (ArrayList<OrganizationDTO> options){
+		for(OrganizationDTO optionsDTO : options) {
 			optionsName.add(optionsDTO.getoptionsName());
 		}
 		return optionsName;
@@ -46,11 +46,11 @@ public class AcceptOrganizationsComboboxModel extends AbstractListModel implemen
 		selection = anItem;		
 	}
 
-	public ArrayList<OptionsDTO> getOptions() {
+	public ArrayList<OrganizationDTO> getOptions() {
 		return options;
 	}
 
-	public void setOptions(ArrayList<OptionsDTO> options) {
+	public void setOptions(ArrayList<OrganizationDTO> options) {
 		optionsList(options);
 		this.options = options;
 	}

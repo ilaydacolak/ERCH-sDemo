@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="options")
-public class OptionsDTO {
+public class OrganizationDTO {
 	
 	@Id
 	@Column(name="optionsid")

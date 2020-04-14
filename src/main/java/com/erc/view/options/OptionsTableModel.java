@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.erc.entities.OptionsDTO;
+import com.erc.entities.OrganizationDTO;
 import com.erc.entities.StaffDTO;
 
 public class OptionsTableModel extends AbstractTableModel{
 	
-	private List<OptionsDTO> list = new ArrayList<OptionsDTO>();
+	private List<OrganizationDTO> list = new ArrayList<OrganizationDTO>();
 	private String columnNames[] = {"ORGANIZATION NAME"};
 	
 	@Override
@@ -33,7 +33,7 @@ public class OptionsTableModel extends AbstractTableModel{
 	@Override
 	public Object getValueAt(int row, int col) {
 		// TODO Auto-generated method stub
-		OptionsDTO option = list.get(row);
+		OrganizationDTO option = list.get(row);
 		
 		switch(col) {
 	
@@ -45,11 +45,11 @@ public class OptionsTableModel extends AbstractTableModel{
 		
 		return null;
 	}
-	public List<OptionsDTO> getDataList() {
+	public List<OrganizationDTO> getDataList() {
 		return list;
 	}
 
-	public void setDataList(List<OptionsDTO> list) {
+	public void setDataList(List<OrganizationDTO> list) {
 		this.list = list;
 	}
 	

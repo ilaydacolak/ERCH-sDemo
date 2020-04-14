@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import com.erc.entities.OptionsDTO;
+import com.erc.entities.OrganizationDTO;
 import com.erc.entities.StaffDTO;
 import com.erc.user.service.OptionsService;
 import com.erc.user.service.StaffService;
@@ -25,7 +25,7 @@ import javax.swing.JButton;
 public class OptionsEditor extends JPanel {
 	private JTextField txtName;
 	private JCheckBox chckbxNewCheckBox;
-	private OptionsDTO options;
+	private OrganizationDTO options;
 	private JDialog dialog = new JDialog();
 
 	public OptionsEditor() {
@@ -93,7 +93,7 @@ public class OptionsEditor extends JPanel {
 
 				}
 				if (options == null) {
-					options = new OptionsDTO();
+					options = new OrganizationDTO();
 				}
 				options.setoptionsName(optionName);
 				options.setIsActive(active);
@@ -108,15 +108,15 @@ public class OptionsEditor extends JPanel {
 
 	}
 
-	public OptionsDTO getOptions() {
+	public OrganizationDTO getOptions() {
 		return options;
 	}
 
-	public void setOptions(OptionsDTO options) {
+	public void setOptions(OrganizationDTO options) {
 		this.options = options;
 	}
 
-	public OptionsDTO showDialog() {
+	public OrganizationDTO showDialog() {
 		dialog.getContentPane().add(this);
 		dialog.setModal(true);
 		dialog.setSize(250, 200);

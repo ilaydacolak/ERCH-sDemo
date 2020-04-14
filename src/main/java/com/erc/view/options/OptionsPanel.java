@@ -19,7 +19,7 @@ import javax.swing.JTable;
 
 import com.erc.view.personel.StaffEditor;
 import com.erc.view.personel.StaffTableModel;
-import com.erc.entities.OptionsDTO;
+import com.erc.entities.OrganizationDTO;
 import com.erc.entities.StaffDTO;
 import com.erc.user.service.OptionsService;
 import com.erc.user.service.StaffService;
@@ -29,7 +29,7 @@ import javax.swing.JScrollPane;
 public class OptionsPanel extends JPanel {
 	private JTable table = new JTable();
 	private OptionsTableModel tableModel = new OptionsTableModel();
-	private OptionsDTO options;
+	private OrganizationDTO options;
 
 	public OptionsPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -87,7 +87,7 @@ public class OptionsPanel extends JPanel {
 	}
 	private void getOptionsListFromService() {
 		 OptionsService service = new OptionsService();
-		 ArrayList<OptionsDTO> optionList = service.getAllOptions();
+		 ArrayList<OrganizationDTO> optionList = service.getAllOptions();
 		 tableModel.setDataList(optionList);
 		 table.setModel(tableModel);
 		 tableModel.fireTableDataChanged();	
@@ -130,7 +130,7 @@ public class OptionsPanel extends JPanel {
 					return;
 				} else {
 
-					OptionsDTO options = tableModel.getDataList().get(selectedRow);
+					OrganizationDTO options = tableModel.getDataList().get(selectedRow);
 					OptionsEditor editor = new OptionsEditor();
 					editor.setOptions(options);
 					options = editor.showDialog();
@@ -164,7 +164,7 @@ public class OptionsPanel extends JPanel {
 					// 0=yes, 1=no, 2=cancel
 					System.out.println(input);
 					if (input == 0) {
-						OptionsDTO options = tableModel.getDataList().get(selectedRow);
+						OrganizationDTO options = tableModel.getDataList().get(selectedRow);
 						OptionsService service = new OptionsService();
 
 						boolean isDeleted = service.deleteOptions(options);
