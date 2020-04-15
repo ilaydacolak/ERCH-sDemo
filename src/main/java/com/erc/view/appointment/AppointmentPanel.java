@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import com.toedter.calendar.JDayChooser;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import com.toedter.components.JLocaleChooser;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import com.erc.user.service.AdmissionService;
 import com.erc.user.service.AppointmentService;
 import com.erc.user.service.OptionsService;
 import com.erc.user.service.PatientService;
+import com.erc.view.appointment.AppointmentTableModel2.MyTableCellRenderer;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -40,6 +42,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,7 @@ public class AppointmentPanel extends JPanel {
 	private AppointmentTableModel2 appointmentTableModel = new AppointmentTableModel2();
 	private JTable appointmentTable = new JTable();
 	private JDateChooser dateChooser = new JDateChooser();
-
+	private MyTableCellRenderer myTableCellRenderer;
 	public AppointmentPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -149,6 +153,27 @@ public class AppointmentPanel extends JPanel {
 
 		appointmentTable.setModel(appointmentTableModel);
 		RandevuPane.setViewportView(appointmentTable);
+		
+		appointmentTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+		{
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		    {
+		    	
+ 		    	
+		    	AppointmentTableModel2 modelRef = (AppointmentTableModel2) table.getModel();
+		    	AppointmentRow appRow = modelRef.getAppointmentList().get(row);
+		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		       
+		    	AppointmentDTO appointment = appRow.getAppointment();
+		    	if(appointment.getAppointmentID()!=null) {
+		    		c.setBackground(new Color(120, 255, 117));
+		    	}else {
+		    		c.setBackground(Color.white);
+		    	}
+ 		        return c;
+		    }
+		});
 	}
 
 	private void getAppointmentListFromService() {
@@ -217,12 +242,14 @@ public class AppointmentPanel extends JPanel {
 		AppointmentService service = new AppointmentService();
 		ArrayList<AppointmentDTO> appList = service.getAllAppointmentList();
 		OrganizationDTO organization = organizationTableModel.getDataList().get(organizationTable.getSelectedRow());
+		
 //////if(appList.isEmpty()) {
 //////	AppointmentDTO emptyAppointment = new AppointmentDTO();
 //////	appointmentRow.setAppointment(emptyAppointment);
 //////	appointmentTableModel.addAppointmentRow(appointmentRow);
 //////}else {
 		Date appointmentDate = dateChooser.getDate();
+		int row=1;
 
 		for (AppointmentDTO appointment : appList) {
 			if (appointment.getOrganizationName().equals(organization.getoptionsName())) {
@@ -236,12 +263,26 @@ public class AppointmentPanel extends JPanel {
 //						AppointmentRow appointmentAdd = new AppointmentRow();
 //						appointmentAdd.setAppointment(appointment);	
 							appRow.setAppointment(appointment);
+							
+//					    appointmentTable.getColumnModel().getColumn(0).setCellRenderer(new MyTableCellRenderer());							
+						//appointmentTable.getColumnModel().getColumn(1).setCellRenderer(new MyTableCellRenderer());
+						//appointmentTable.getColumnModel().getColumn(2).setCellRenderer(new MyTableCellRenderer());
+						//appointmentTable.getColumnModel().getColumn(3).setCellRenderer(new MyTableCellRenderer());
+						//appointmentTable.getColumnModel().getColumn(1).setCellRenderer(new MyTableCellRenderer());
+							
+						
+						
+		//			appointmentTable.setBackground(Color.GREEN);
+		//					appointmentTableModel.setRowColour(row,Color.RED);
 //						appointmentTableModel.addAppointmentRow(appRow);						
 						}
 					}
 				}
 				appointmentTableModel.fireTableDataChanged();
 			}
+		//	appointmentTable.setBackground(Color.RED);
+		//	appointmentTableModel.setRowColour(row,Color.GREEN);
+			row ++;
 		}
 
 	}
