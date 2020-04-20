@@ -10,25 +10,23 @@ import com.erc.entities.StaffDTO;
 
 public class AppointmentDoctorComboboxModel extends AbstractListModel implements ComboBoxModel {
 
-
-	private ArrayList<StaffDTO> staffTypes = new ArrayList<StaffDTO>();	
+	private ArrayList<StaffDTO> staffTypes = new ArrayList<StaffDTO>();
 	private Object selection = null;
-	private ArrayList<String> DoctorList= new ArrayList<String>();
-	
+	private ArrayList<String> DoctorList = new ArrayList<String>();
+
 	public ArrayList<String> DrList(ArrayList<StaffDTO> staffTypes) {
-		for(StaffDTO staffDTO : staffTypes) {
-			if(staffDTO.getStaffTypeDTO().getStaffTypeID().equals("34289ffd-1fbf-4f5e-8f9c-00f8559ba9c4")) {
-				DoctorList.add(staffDTO.getName()+ " " + staffDTO.getLastname());
+		for (StaffDTO staffDTO : staffTypes) {
+			if (staffDTO.getStaffTypeDTO().getStaffTypeID().equals("34289ffd-1fbf-4f5e-8f9c-00f8559ba9c4")) {
+				DoctorList.add(staffDTO.getName() + " " + staffDTO.getLastname());
 			}
 		}
-		return DoctorList ;
+		return DoctorList;
 	}
-	
-	
+
 	@Override
 	public void addListDataListener(ListDataListener arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -63,6 +61,5 @@ public class AppointmentDoctorComboboxModel extends AbstractListModel implements
 		DrList(staffTypes);
 		this.staffTypes = staffTypes;
 	}
-	
 
 }

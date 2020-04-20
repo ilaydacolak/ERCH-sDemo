@@ -41,16 +41,6 @@ public class AppointmentTableModel2 extends AbstractTableModel {
 		fireTableRowsUpdated(row, row);
 	}
 
-//	public void setRowColour(JTable table, int row,int column) {
-//		AppointmentTableModel2 model = (AppointmentTableModel2) table.getModel();
-//		if(table.getValueAt(row, column).toString().equals(null)) {
-//			rowColours.set(row,Color.GREEN);
-//			fireTableRowsUpdated(row, row);		        	
-//        }else {
-//        	rowColours.set(row,Color.RED);
-//			fireTableRowsUpdated(row, row);	
-//        }
-//	}
 //	
 	public Color getRowColour(int row) {
 		return rowColours.get(row);
@@ -61,20 +51,6 @@ public class AppointmentTableModel2 extends AbstractTableModel {
 		return columnNames[index];
 	}
 
-//	
-//	private SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm");
-	/*
-	 * //servisten appointenList list getirldii for(appointnmentrow in
-	 * appointmentRowList) { appointmentRowHour =
-	 * hourFormat.format(appointnmentrow.getDate); //servisten getireln data
-	 * 
-	 * for(appointment in appointenList ) { appointmentHour =
-	 * hourFormat.format(appointment);
-	 * 
-	 * if(appointmentHour.eqa }
-	 * 
-	 * }
-	 */
 	public boolean controlAppointment() {
 		AppointmentService appService = new AppointmentService();
 		ArrayList<AppointmentDTO> appointmentLists = appService.getAllAppointmentList();
@@ -115,7 +91,7 @@ public class AppointmentTableModel2 extends AbstractTableModel {
 		PatientDTO patient = appointmentDTO.getPatientDTO();
 
 		StaffDTO staff = appointmentDTO.getStaffDTO();
-		// String doctorName = staff.getName();
+
 
 		switch (col) {
 		case 0:
@@ -164,16 +140,6 @@ public class AppointmentTableModel2 extends AbstractTableModel {
 
 	}
 
-//	static class MyTableCellRenderer extends DefaultTableCellRenderer {
-//
-//	    @Override
-//	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//	    	AppointmentTableModel2 model = (AppointmentTableModel2) table.getModel();
-//	        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//	        c.setBackground(model.getRowColour(row));
-//	        return c;
-//	    }
-//	}
 	static class MyTableCellRenderer extends DefaultTableCellRenderer {
 
 		@Override
@@ -197,26 +163,3 @@ public class AppointmentTableModel2 extends AbstractTableModel {
 	}
 
 }
-//class CustomRenderer extends DefaultTableCellRenderer 
-//{
-//private static final long serialVersionUID = 6703872492730589499L;
-//
-//    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-//    {
-//    	AppointmentTableModel2 tableModel = new AppointmentTableModel2();
-//        Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//
-////        if(table.getValueAt(row, column).equals("Y")){
-////            cellComponent.setBackground(Color.YELLOW);
-////        } else if(table.getValueAt(row, column).equals("N")){
-////            cellComponent.setBackground(Color.GRAY);
-////        }
-//        if(table.getValueAt(row, column).toString().equals(null)) {
-//        	cellComponent.setBackground(Color.GREEN);
-//        }else {
-//        	cellComponent.setBackground(Color.RED);  
-//        }
-//            
-//        return cellComponent;
-//    }
-//}

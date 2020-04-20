@@ -9,17 +9,21 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import com.toedter.components.JLocaleChooser;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import com.erc.entities.AdmissionDTO;
 import com.erc.entities.AppointmentDTO;
 import com.erc.entities.OrganizationDTO;
 import com.erc.entities.PatientDTO;
+import com.erc.entities.StaffDTO;
 import com.erc.user.service.AdmissionService;
 import com.erc.user.service.AppointmentService;
 import com.erc.user.service.OptionsService;
 import com.erc.user.service.PatientService;
+import com.erc.user.service.StaffService;
 import com.erc.view.appointment.AppointmentTableModel2.MyTableCellRenderer;
+import com.erc.view.patientAccept.PatientAcceptPanel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -57,25 +61,15 @@ public class AppointmentPanel extends JPanel {
 	private JTable appointmentTable = new JTable();
 	private JDateChooser dateChooser = new JDateChooser();
 	private MyTableCellRenderer myTableCellRenderer;
+
 	public AppointmentPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[] { 10, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0 };
+		gridBagLayout.rowHeights = new int[] { 10, 0, 10, 0, 10, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 0.0,
+				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-
-//		lblDate = new JLabel("New label");
-//		GridBagConstraints gbc_lblDate = new GridBagConstraints();
-//		gbc_lblDate.insets = new Insets(0, 0, 5, 5);
-//		gbc_lblDate.gridx = 1;
-//		gbc_lblDate.gridy = 1;
-//		add(lblDate, gbc_lblDate);
-
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//		today = LocalDate.now();
-//		formatter.format(today);
-//		lblDate.setText(today.toString());
 
 		Handler handler = new Handler();
 
@@ -123,9 +117,19 @@ public class AppointmentPanel extends JPanel {
 		btnDelete.addActionListener(handler);
 		btnDelete.setActionCommand("DELETE");
 
+		JButton btnAdmission = new JButton("Kabul Et");
+		GridBagConstraints gbc_btnAdmission = new GridBagConstraints();
+		gbc_btnAdmission.insets = new Insets(0, 0, 5, 5);
+		gbc_btnAdmission.gridx = 9;
+		gbc_btnAdmission.gridy = 1;
+		add(btnAdmission, gbc_btnAdmission);
+
+		btnAdmission.addActionListener(handler);
+		btnAdmission.setActionCommand("Kaydet");
+
 		JScrollPane OrganizationPane = new JScrollPane();
 		GridBagConstraints gbc_OrganizationPane = new GridBagConstraints();
-		gbc_OrganizationPane.insets = new Insets(0, 0, 0, 5);
+		gbc_OrganizationPane.insets = new Insets(0, 0, 5, 5);
 		gbc_OrganizationPane.fill = GridBagConstraints.BOTH;
 		gbc_OrganizationPane.gridx = 1;
 		gbc_OrganizationPane.gridy = 3;
@@ -145,7 +149,8 @@ public class AppointmentPanel extends JPanel {
 
 		JScrollPane RandevuPane = new JScrollPane();
 		GridBagConstraints gbc_RandevuPane = new GridBagConstraints();
-		gbc_RandevuPane.gridwidth = 6;
+		gbc_RandevuPane.insets = new Insets(0, 0, 5, 5);
+		gbc_RandevuPane.gridwidth = 8;
 		gbc_RandevuPane.fill = GridBagConstraints.BOTH;
 		gbc_RandevuPane.gridx = 3;
 		gbc_RandevuPane.gridy = 3;
@@ -153,26 +158,25 @@ public class AppointmentPanel extends JPanel {
 
 		appointmentTable.setModel(appointmentTableModel);
 		RandevuPane.setViewportView(appointmentTable);
-		
-		appointmentTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
-		{
-		    @Override
-		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-		    {
-		    	
- 		    	
-		    	AppointmentTableModel2 modelRef = (AppointmentTableModel2) table.getModel();
-		    	AppointmentRow appRow = modelRef.getAppointmentList().get(row);
-		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		       
-		    	AppointmentDTO appointment = appRow.getAppointment();
-		    	if(appointment.getAppointmentID()!=null) {
-		    		c.setBackground(new Color(120, 255, 117));
-		    	}else {
-		    		c.setBackground(Color.white);
-		    	}
- 		        return c;
-		    }
+
+		appointmentTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+
+				AppointmentTableModel2 modelRef = (AppointmentTableModel2) table.getModel();
+				AppointmentRow appRow = modelRef.getAppointmentList().get(row);
+				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+						column);
+
+				AppointmentDTO appointment = appRow.getAppointment();
+				if (appointment.getAppointmentID() != null) {
+					c.setBackground(new Color(120, 255, 117));
+				} else {
+					c.setBackground(Color.white);
+				}
+				return c;
+			}
 		});
 	}
 
@@ -210,46 +214,13 @@ public class AppointmentPanel extends JPanel {
 		getFilledAppointmentList();
 	}
 
-//		AdmissionService admissionService = new AdmissionService();
-//		ArrayList<AdmissionDTO> admissions = admissionService.getAllAdmissionPatients();
-//		ArrayList<AdmissionDTO> admission = new ArrayList<AdmissionDTO>();
-//		OrganizationDTO organizationDTO = organizationTableModel.getDataList().get(organizationTable.getSelectedRow());
-//		AppointmentService appService = new AppointmentService();
-//		ArrayList<AppointmentDTO> appointmentList = appService.getAllAppointmentList();
-//		ArrayList<AppointmentDTO> app = new ArrayList<AppointmentDTO>();
-//
-//		for (AppointmentDTO appointment : appointmentList) {
-//			if (appointment.getOrganizationName().equals(organizationDTO.getoptionsName())) {
-//				for (AdmissionDTO admis : admissions) {
-//					System.out.println(admis.getAdmissionDate().toString());
-//
-//					ZoneId defaultZoneId = ZoneId.systemDefault();
-//					System.out.println(Date.from(today.atStartOfDay(defaultZoneId).toInstant()));
-//					Timestamp ts = new Timestamp(admis.getAdmissionDate().getTime());
-//					if (today.equals(ts.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
-//						app.add(appointment);
-//					}
-//
-//				}
-//			}
-//		}
-	// appointmentTableModel.setAppointmentList(app);
-
-//
-//}
-
 	private void getFilledAppointmentList() {
 		AppointmentService service = new AppointmentService();
 		ArrayList<AppointmentDTO> appList = service.getAllAppointmentList();
 		OrganizationDTO organization = organizationTableModel.getDataList().get(organizationTable.getSelectedRow());
-		
-//////if(appList.isEmpty()) {
-//////	AppointmentDTO emptyAppointment = new AppointmentDTO();
-//////	appointmentRow.setAppointment(emptyAppointment);
-//////	appointmentTableModel.addAppointmentRow(appointmentRow);
-//////}else {
+
 		Date appointmentDate = dateChooser.getDate();
-		int row=1;
+		int row = 1;
 
 		for (AppointmentDTO appointment : appList) {
 			if (appointment.getOrganizationName().equals(organization.getoptionsName())) {
@@ -260,29 +231,15 @@ public class AppointmentPanel extends JPanel {
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						if (dateFormat.format(appointment.getAppointmentCreate())
 								.equals(dateFormat.format(appointmentDate))) {
-//						AppointmentRow appointmentAdd = new AppointmentRow();
-//						appointmentAdd.setAppointment(appointment);	
+
 							appRow.setAppointment(appointment);
-							
-//					    appointmentTable.getColumnModel().getColumn(0).setCellRenderer(new MyTableCellRenderer());							
-						//appointmentTable.getColumnModel().getColumn(1).setCellRenderer(new MyTableCellRenderer());
-						//appointmentTable.getColumnModel().getColumn(2).setCellRenderer(new MyTableCellRenderer());
-						//appointmentTable.getColumnModel().getColumn(3).setCellRenderer(new MyTableCellRenderer());
-						//appointmentTable.getColumnModel().getColumn(1).setCellRenderer(new MyTableCellRenderer());
-							
-						
-						
-		//			appointmentTable.setBackground(Color.GREEN);
-		//					appointmentTableModel.setRowColour(row,Color.RED);
-//						appointmentTableModel.addAppointmentRow(appRow);						
+
 						}
 					}
 				}
 				appointmentTableModel.fireTableDataChanged();
 			}
-		//	appointmentTable.setBackground(Color.RED);
-		//	appointmentTableModel.setRowColour(row,Color.GREEN);
-			row ++;
+			row++;
 		}
 
 	}
@@ -309,17 +266,12 @@ public class AppointmentPanel extends JPanel {
 				LocalDate today = LocalDate.now();
 				formatter.format(today);
 
-//				SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm");
-//				LocalDate currentHour = LocalDate.now();
-//				hourFormat.format(currentHour);
-
-				SimpleDateFormat currentDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-			    Date date = new Date(); 
-			    currentDateTime.format(date);
+				SimpleDateFormat currentDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				Date date = new Date();
+				currentDateTime.format(date);
 
 				SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm");
-
-//				Date currentDate = java.util.Date.from(currentHour.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				int temp = 0;
 
 				AppointmentRow appRow = appointmentTableModel.getAppointmentList()
 						.get(appointmentTable.getSelectedRow());
@@ -337,10 +289,12 @@ public class AppointmentPanel extends JPanel {
 					JOptionPane.showMessageDialog(new JFrame(), "You selected old date", "Alert",
 							JOptionPane.WARNING_MESSAGE);
 
-				} else if (hourFormat.format(date).compareTo(hourFormat.format(appRow.getDate()))>0) {
+				} else if (appointmentDate.compareTo(
+						java.util.Date.from(today.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())) == 0
+						&& hourFormat.format(date).compareTo(hourFormat.format(appRow.getDate())) > 0) {
 					JOptionPane.showMessageDialog(new JFrame(), "You selected old hour", "Alert",
 							JOptionPane.WARNING_MESSAGE);
-				}else {
+				} else {
 					OrganizationDTO organizationDTO = organizationTableModel.getDataList()
 							.get(organizationTable.getSelectedRow());
 					int selectedRow = appointmentTable.getSelectedRow();
@@ -425,21 +379,102 @@ public class AppointmentPanel extends JPanel {
 					appointmentTableModel.fireTableDataChanged();
 				}
 
-			}
+			} else if (cmd.equals("Kaydet")) {
+				if (organizationTable.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(new JFrame(), "Please,select poliklinik", "Alert",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (appointmentTable.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(new JFrame(), "Please,an appointment to update", "Alert",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				int selectedRow = appointmentTable.getSelectedRow();
+				AppointmentRow appointmentRow = appointmentTableModel.getAppointmentList().get(selectedRow);
+				AppointmentDTO appointment = appointmentRow.getAppointment();
+				if (appointment.getAppointmentID() == null) {
+					JOptionPane.showMessageDialog(new JFrame(), "There is no exist appointment", "Alert",
+							JOptionPane.WARNING_MESSAGE);
+				} else if (appointment.getAdmissionýd() == null) {
 
-//				if (appointmentTable.getSelectedRow() == -1) {
-//					JFrame f;
-//					f = new JFrame();
-//					JOptionPane.showMessageDialog(f, "Please,select poliklinik", "Alert", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				} else {
-//					System.out.println("update is clicked");
-//					AppointmentEditor appointmentEditor = new AppointmentEditor();
-//					AppointmentRow appointment = appointmentEditor.showDialog();
-//
-//				}
+					System.out.println("var");
+					JDialog dialog = new JDialog();
+					PatientAcceptPanel admissionPanel = fillScreen(appointment);
+					appointment.setAdmissionýd(admissionPanel.txtAccept.getText());
+					AppointmentService appService = new AppointmentService();
+					appService.saveAppointment(appointment);
+//					AdmissionService admissionService = new AdmissionService();
+//					ArrayList<AdmissionDTO> admissionList = admissionService.getAllAdmissionPatients();
+//					for(AdmissionDTO admission : admissionList) {
+//						if(admissionPanel.txtAccept.getText().equals(admission.getAdmissionNo())) {
+//							appointment.setAdmissionýd(admission.getAdmissionID());
+//						}
+//					}
+					
+					dialog.getContentPane().add(admissionPanel);
+					dialog.setModal(true);
+					dialog.setSize(520, 250);
+					dialog.setLocationRelativeTo(admissionPanel);
+				//	fillScreen(appointment);
+					dialog.setVisible(true);
+				
+
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "The patient is already accepted ", "Alert",
+							JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
 
 		}
 	}
 
+	private PatientAcceptPanel fillScreen(AppointmentDTO appointment) {
+		PatientAcceptPanel admissionPanel = new PatientAcceptPanel();
+		
+		
+		PatientService patientService = new PatientService();
+		ArrayList<PatientDTO> patientList = patientService.getAllPatients();
+		StaffService staffService = new StaffService();
+		ArrayList<StaffDTO> staffList = staffService.getAllStaff();
+		for(PatientDTO patient : patientList) {
+			if(patient.getPatientId().toString().equals(appointment.getPatientID().toString())) {
+				admissionPanel.textPatient.setText(patient.getPatientNo().toString());
+				System.out.println(admissionPanel.textPatient.getText());				
+				
+				admissionPanel.OrganizationCombobox.setSelectedItem(appointment.getOrganizationName());				
+				
+				admissionPanel.dateChooser.setDate(appointment.getDate());		
+				for(StaffDTO staff : staffList) {
+					if(staff.getPersonid().equals(appointment.getDoctorID())) {
+						admissionPanel.DoctorCombobox.setSelectedItem(staff.getName() + " " + staff.getLastname());
+					}
+				}
+				admissionPanel.ayaktaradio.doClick();
+				}
+				break;
+			}
+		admissionPanel.btnSave.doClick();
+		admissionPanel.textPatient.enable();
+		admissionPanel.btnClear.enable();
+		admissionPanel.txtAccept.enable();
+		
+
+		return admissionPanel;
+	}
+//		PatientAcceptPanel admissionPanel = new PatientAcceptPanel();
+//		AdmissionService admissionService = new AdmissionService();
+//		ArrayList<AdmissionDTO> admissionList = admissionService.getAllAdmissionPatients();
+//		for(AdmissionDTO admission : admissionList) {
+//			if(admission.getPatientID().toString().equals(appointment.getPatientID().toString())) {				
+//				admissionPanel.OrganizationCombobox.setSelectedItem(appointment.getOrganizationName());
+//				admissionPanel.dateChooser.setDate(appointment.getDate());			
+//				if(admissionPanel.txtAccept.getText().equals(admission.getAdmissionNo())) {
+//					appointment.setAdmissionýd(admission.getAdmissionID());
+//				}
+//				}
+//			}
+//		
+//
+//		return admissionPanel;
+	
 }

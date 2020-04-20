@@ -31,8 +31,8 @@ import com.erc.user.service.StaffService;
 public class AppointmentEditor extends JPanel {
 	private JTextField notText;
 	private AppointmentDoctorComboboxModel doctorComboboxModel = new AppointmentDoctorComboboxModel();
-	private JComboBox doctorBox ;
-	private JComboBox patientBox ;
+	private JComboBox doctorBox;
+	private JComboBox patientBox;
 	private AppointmentPatientComboboxModel patientComboboxModel = new AppointmentPatientComboboxModel();
 	private AppointmentDTO appointment = new AppointmentDTO();
 	private JDialog dialog = new JDialog();
@@ -189,10 +189,6 @@ public class AppointmentEditor extends JPanel {
 			if (cmd.equals("SAVE")) {
 				System.out.println("save is clicked");
 				String not = notText.getText();
-//				AppointmentService appointmentService = new AppointmentService();
-//				ArrayList<AppointmentDTO> appointmentList = appointmentService.getAllAppointmentList();
-//				for(AppointmentDTO appointments : appointmentList) {
-//					if(appointments.getAppointmentID() == panel.getName()) {
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 				Date createDate = new Date(System.currentTimeMillis());
 				formatter.format(createDate);
@@ -210,11 +206,6 @@ public class AppointmentEditor extends JPanel {
 					JOptionPane.showMessageDialog(f, "Please,select doctor", "Alert", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-//				if (appointment == null) {
-//					appointment = new AppointmentDTO();
-//				}
-				// for(AppointmentDTO appointment : appointmentDTOList) {
-				// if(appointment.getStringSaat() == appointmentDTO.getStringSaat()) {
 
 				appointment.setNote(not);
 
@@ -226,23 +217,17 @@ public class AppointmentEditor extends JPanel {
 
 				patientDTO = patientComboboxModel.getPatientList().get(patientBox.getSelectedIndex());
 				appointment.setPatientID(patientDTO.getPatientId());
-				appointment.setPatientName(patientDTO);
+		//		appointment.setPatientName(patientDTO);
 				String patientName;
-				if(patientBox.getSelectedItem()!=null) {
-				patientName = patientBox.getSelectedItem().toString();
+				if (patientBox.getSelectedItem() != null) {
+					patientName = patientBox.getSelectedItem().toString();
 				}
-				// patientBox.getSelectedItem();
-//				tableModel.setPatientDTO(patientDTO);
-				// appointment.setPatientName(patientBox.getSelectedItem().toString());
-				
+
 				staffDTO = doctorComboboxModel.getStaffTypes().get(doctorBox.getSelectedIndex());
 				appointment.setDoctorID(staffDTO.getPersonid());
-				appointment.setDoctorName(staffDTO);
-//				if(doctorBox.getSelectedItem()!=null) {
-//				doctorBox.setSelectedItem(appointment.getStaffDTO().getName() + " " + appointment.getStaffDTO().getLastname());
-//				}
+		//		appointment.setDoctorName(staffDTO);
+
 				tableModel.setStaffDTO(staffDTO);
-				// appointment.setDoctorName(doctorBox.getSelectedItem().toString());
 
 				appointment.setOrganizationName(organizationDTO.getoptionsName());
 
@@ -261,22 +246,6 @@ public class AppointmentEditor extends JPanel {
 
 		}
 
-//				appointment.setNote(not);
-//				if (appointment.getAppointmentCreate() == null) {
-//					appointment.setAppointmentCreate(createDate);
-//				} else {
-//					appointment.setAppointmentUpdate(updateDate);
-//				}
-//				appointment.setPatientName(patientBox.getSelectedItem().toString());
-//				appointment.setDoctorName(doctorBox.getSelectedItem().toString());
-//				appointment.setOrganizationName(organizationDTO.getoptionsName());
-//				AppointmentService appointmentService = new AppointmentService();
-//				appointment = appointmentService.saveAppointment(appointment);
-//				dialog.dispose();
-//			}
-//		}
-//
-//	}
 	}
 
 	public AppointmentDTO getAppointment() {
@@ -304,13 +273,13 @@ public class AppointmentEditor extends JPanel {
 		if (appointment != null) {
 			txtOrganization.setText(organizationDTO.getoptionsName());
 			notText.setText(appointment.getNote());
-			if(appointment.getStaffDTO()!=null) {
+			if (appointment.getStaffDTO() != null) {
 				doctorBox.setSelectedItem(
-					appointment.getStaffDTO().getName() + " " + appointment.getStaffDTO().getLastname());
+						appointment.getStaffDTO().getName() + " " + appointment.getStaffDTO().getLastname());
 			}
-			if(appointment.getPatientDTO()!=null) {
-			patientBox.setSelectedItem(
-					appointment.getPatientDTO().getName() + " " + appointment.getPatientDTO().getSurname());
+			if (appointment.getPatientDTO() != null) {
+				patientBox.setSelectedItem(
+						appointment.getPatientDTO().getName() + " " + appointment.getPatientDTO().getSurname());
 			}
 		}
 	}

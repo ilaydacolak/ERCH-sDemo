@@ -1,8 +1,5 @@
 package com.erc.entities;
 
-
-
-
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -17,11 +14,11 @@ import com.toedter.calendar.JDateChooser;
 public class AdmissionDTO {
 	@Id
 	@Column(name = "admissionid")
-	private int admissionID;
+	private String admissionID;
 	@Column(name = "admissionno")
 	private String admissionNo;
 	@Column(name = "patientid")
-	private int patientID;
+	private String patientID;
 	@Column(name = "admissiontype")
 	private String admissionType;
 	@Column(name = "organizationid")
@@ -36,24 +33,19 @@ public class AdmissionDTO {
 	private Date admissionUpdate;
 	@Column(name = "status")
 	private String status;
-	@Column(name = "patientname")
-	private String patientName;
-	@Column(name = "doctorname")
-	private String doctorName;
+
+//	@Column(name = "admissionnumber")
+//	private String admissionnumber;
 	
-	
-	public String getPatientName() {
-		return patientName;
-	}
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
-	}
-	public String getDoctorName() {
-		return doctorName;
-	}
-	public void setDoctorName(String doctorName) {
-		this.doctorName = doctorName;
-	}
+
+//	public String getAdmissionnumber() {
+//		return admissionnumber;
+//	}
+//	public void setAdmissionnumber(String admissionnumber) {
+//		this.admissionnumber = admissionnumber;
+//	}
+
+
 	public Date getAdmissionDate() {
 		return admissionDate;
 	}
@@ -73,10 +65,10 @@ public class AdmissionDTO {
 		this.admissionUpdate = admissionUpdate;
 	}
 
-	public int getAdmissionID() {
+	public String getAdmissionID() {
 		return admissionID;
 	}
-	public void setAdmissionID(int admissionID) {
+	public void setAdmissionID(String admissionID) {
 		this.admissionID = admissionID;
 	}
 	public String getAdmissionNo() {
@@ -85,10 +77,10 @@ public class AdmissionDTO {
 	public void setAdmissionNo(String admissionNo) {
 		this.admissionNo = admissionNo;
 	}
-	public int getPatientID() {
+	public String getPatientID() {
 		return patientID;
 	}
-	public void setPatientID(int patientID) {
+	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
 	public String getAdmissionType() {

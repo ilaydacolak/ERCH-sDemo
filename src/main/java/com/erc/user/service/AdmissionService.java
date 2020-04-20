@@ -48,13 +48,9 @@ public class AdmissionService {
 //		}
 	}
 
-	public int getNewId() {
+	public String getNewId() {
 		UUID uuid = UUID.randomUUID();
-		if((int) uuid.hashCode()<0) {
-			return -1*((int) uuid.hashCode());
-		}else {
-		return (int) uuid.hashCode();
-		}
+		return uuid.toString();
 	}
 //	public AdmissionDTO updateAdmission(AdmissionDTO admission) {
 //		// Session session = HibernateConnection.getSessionFactory().openSession();

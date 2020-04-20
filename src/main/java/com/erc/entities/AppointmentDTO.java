@@ -55,6 +55,14 @@ public PatientDTO getPatientDTO() {
 	private String stringSaat;
 	@Column(name = "hour")
 	private Date date;
+	@Column(name = "admissionnumber")
+	private String admissionýd;
+	public String getAdmissionýd() {
+		return admissionýd;
+	}
+	public void setAdmissionýd(String admissionýd) {
+		this.admissionýd = admissionýd;
+	}
 	public String getPatientID() {
 		return patientID;
 	}

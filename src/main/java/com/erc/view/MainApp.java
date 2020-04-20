@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import com.erc.view.appointment.AppointmentPanel;
+import com.erc.view.doctor.DoctorPanel;
 import com.erc.view.options.OptionsPanel;
 import com.erc.view.patient.PatientPanel;
 import com.erc.view.patientAccept.PatientAcceptPanel;
@@ -52,6 +53,7 @@ public class MainApp extends JFrame {
 	    JMenu settingsMenu = new JMenu("Settings");
 	    JMenu patientAcceptMenu = new JMenu("Hasta Kabul");
 	    JMenu appointmentMenu = new JMenu("Randevu");
+	    JMenu doctorMenu = new JMenu("Doctor");
 
 		toolbar.add(personnelMenu);
 		toolbar.add(patientMenu);
@@ -60,6 +62,7 @@ public class MainApp extends JFrame {
 		toolbar.add(settingsMenu);
 		toolbar.add(patientAcceptMenu);
 		toolbar.add(appointmentMenu);
+		toolbar.add(doctorMenu);
 		
 		MenuBarEventListener eventListener = new MenuBarEventListener();
 		
@@ -97,6 +100,10 @@ public class MainApp extends JFrame {
 		appointment.addActionListener(eventListener);
 		appointment.setActionCommand("APPOINTMENT_LIST");
 		
+		JMenuItem doctorPage = new JMenuItem("Doctor");
+		doctorMenu.add(doctorPage);
+		doctorPage.addActionListener(eventListener);
+		doctorPage.setActionCommand("DOCTOR_LIST");
 		
 		toolbarPanel.add(toolbar);
 	}
@@ -139,6 +146,12 @@ public class MainApp extends JFrame {
  				contentPanel.revalidate();
  			}else if(cmd.equals("APPOINTMENT_LIST")) {
  				AppointmentPanel panel = new AppointmentPanel();
+ 				contentPanel.removeAll();
+ 				contentPanel.setLayout(new BorderLayout());
+ 				contentPanel.add(panel, BorderLayout.CENTER);;
+ 				contentPanel.revalidate();
+ 			}else if(cmd.equals("DOCTOR_LIST")) {
+ 				DoctorPanel panel = new DoctorPanel();
  				contentPanel.removeAll();
  				contentPanel.setLayout(new BorderLayout());
  				contentPanel.add(panel, BorderLayout.CENTER);;

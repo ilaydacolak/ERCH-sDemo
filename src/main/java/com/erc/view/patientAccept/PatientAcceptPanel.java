@@ -31,10 +31,14 @@ import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JTable;
@@ -52,26 +56,27 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
 public class PatientAcceptPanel extends JPanel {
-	private JTextField txtAccept;
-	private JTextField textPatient;
+	public JTextField txtAccept;
+	public JTextField textPatient;
 	private AcceptOrganizationsComboboxModel orgCombobox = new AcceptOrganizationsComboboxModel();
-	private JComboBox OrganizationCombobox;
+	public JComboBox OrganizationCombobox;
 	private JTable table = new JTable();
-	private JComboBox DoctorCombobox;
+	public JComboBox DoctorCombobox;
 	private DoctorComboboxModel drCombobox = new DoctorComboboxModel();
 	private JLabel lblNameSurname;
 	private String patientNo;
-	private JRadioButton ayaktaradio;
+	public JRadioButton ayaktaradio;
 	private JRadioButton yatanradio;
 	private JRadioButton dayradio;
 	private ButtonGroup btngrp = new ButtonGroup();;
-	private JDateChooser dateChooser;
+	public JDateChooser dateChooser;
 	private AdmissionDTO admission;
 	private JDialog dialog = new JDialog();
 	private JCalendar calendar;
 	private AcceptTableModel tableModel = new AcceptTableModel();
 	private JScrollPane scrollPane;
-
+	public JButton btnClear;
+	public JButton btnSave;
 
 	public PatientAcceptPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -82,14 +87,14 @@ public class PatientAcceptPanel extends JPanel {
 				1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JButton btnSave = new JButton("Kaydet");
+		btnSave = new JButton("Kaydet");
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
 		gbc_btnSave.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSave.gridx = 2;
 		gbc_btnSave.gridy = 1;
 		add(btnSave, gbc_btnSave);
-		
-		JButton btnClear = new JButton("Temizle");
+
+		btnClear = new JButton("Temizle");
 		GridBagConstraints gbc_btnClear = new GridBagConstraints();
 		gbc_btnClear.insets = new Insets(0, 0, 5, 5);
 		gbc_btnClear.gridx = 3;
@@ -153,33 +158,31 @@ public class PatientAcceptPanel extends JPanel {
 		gbc_lblAcceptType.gridx = 2;
 		gbc_lblAcceptType.gridy = 7;
 		add(lblAcceptType, gbc_lblAcceptType);
-		
-				ayaktaradio = new JRadioButton("Ayakta");
-				GridBagConstraints gbc_ayaktaradio = new GridBagConstraints();
-				gbc_ayaktaradio.anchor = GridBagConstraints.WEST;
-				gbc_ayaktaradio.insets = new Insets(0, 0, 5, 5);
-				gbc_ayaktaradio.gridx = 4;
-				gbc_ayaktaradio.gridy = 7;
-				add(ayaktaradio, gbc_ayaktaradio);
-				btngrp.add(ayaktaradio);
-		
-				yatanradio = new JRadioButton("Yatan");
-				GridBagConstraints gbc_yatanradio = new GridBagConstraints();
-				gbc_yatanradio.insets = new Insets(0, 0, 5, 5);
-				gbc_yatanradio.gridx = 5;
-				gbc_yatanradio.gridy = 7;
-				add(yatanradio, gbc_yatanradio);
-				btngrp.add(yatanradio);
 
-		
-		
-				dayradio = new JRadioButton("G\u00FCn\u00FCbirlik");
-				GridBagConstraints gbc_dayradio = new GridBagConstraints();
-				gbc_dayradio.insets = new Insets(0, 0, 5, 5);
-				gbc_dayradio.gridx = 6;
-				gbc_dayradio.gridy = 7;
-				add(dayradio, gbc_dayradio);
-				btngrp.add(dayradio);
+		ayaktaradio = new JRadioButton("Ayakta");
+		GridBagConstraints gbc_ayaktaradio = new GridBagConstraints();
+		gbc_ayaktaradio.anchor = GridBagConstraints.WEST;
+		gbc_ayaktaradio.insets = new Insets(0, 0, 5, 5);
+		gbc_ayaktaradio.gridx = 4;
+		gbc_ayaktaradio.gridy = 7;
+		add(ayaktaradio, gbc_ayaktaradio);
+		btngrp.add(ayaktaradio);
+
+		yatanradio = new JRadioButton("Yatan");
+		GridBagConstraints gbc_yatanradio = new GridBagConstraints();
+		gbc_yatanradio.insets = new Insets(0, 0, 5, 5);
+		gbc_yatanradio.gridx = 5;
+		gbc_yatanradio.gridy = 7;
+		add(yatanradio, gbc_yatanradio);
+		btngrp.add(yatanradio);
+
+		dayradio = new JRadioButton("G\u00FCn\u00FCbirlik");
+		GridBagConstraints gbc_dayradio = new GridBagConstraints();
+		gbc_dayradio.insets = new Insets(0, 0, 5, 5);
+		gbc_dayradio.gridx = 6;
+		gbc_dayradio.gridy = 7;
+		add(dayradio, gbc_dayradio);
+		btngrp.add(dayradio);
 
 		JLabel lblAcceptOrganization = new JLabel("Kabul Organizasyonu");
 		GridBagConstraints gbc_lblAcceptOrganization = new GridBagConstraints();
@@ -227,8 +230,6 @@ public class PatientAcceptPanel extends JPanel {
 		drCombobox.setStaffTypes(staff);
 		DoctorCombobox.setModel(drCombobox);
 
-		
-
 		JLabel lblDate = new JLabel("Kabul Tarihi");
 		GridBagConstraints gbc_lblDate = new GridBagConstraints();
 		gbc_lblDate.gridwidth = 2;
@@ -238,7 +239,7 @@ public class PatientAcceptPanel extends JPanel {
 		gbc_lblDate.gridy = 13;
 		add(lblDate, gbc_lblDate);
 
-		dateChooser = new JDateChooser(); 
+		dateChooser = new JDateChooser();
 		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
 		gbc_dateChooser.gridwidth = 2;
 		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
@@ -246,28 +247,25 @@ public class PatientAcceptPanel extends JPanel {
 		gbc_dateChooser.gridx = 4;
 		gbc_dateChooser.gridy = 13;
 		add(dateChooser, gbc_dateChooser);
-		
-		calendar = new JCalendar (GregorianCalendar.getInstance());
-		
-		 GregorianCalendar cal = (GregorianCalendar)GregorianCalendar.getInstance();
-//	        // set the max date
-		// cal.set(2021, 01, 01);
 
-		 cal.set(Calendar.DATE, +16);
-		 
-		
-	
-		 Date date = new Date(); 
-		 Calendar c = Calendar.getInstance();
-		 c.setTime(date);
-	        // MinDate is the current Date
-	        // MaxDate you can set in the GregorianCalendar object
-		 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-		 Date nowDate = new Date(System.currentTimeMillis());
-		 formatter.format(nowDate);  
-		 
-		 Date fromDate = Calendar.getInstance().getTime();
-		 dateChooser.setSelectableDateRange(fromDate, cal.getTime());
+		final String DATE_FORMAT = "dd/MM/yyyy hh:mm:ss.SSS";
+		SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		Calendar currentTime = Calendar.getInstance();
+
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate today = LocalDate.now();
+		formatter2.format(today);
+		dateChooser.setMinSelectableDate(
+				java.util.Date.from(today.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		LocalDate tomorrow = today.plusDays(14);
+		dateChooser.setMaxSelectableDate(
+				java.util.Date.from(tomorrow.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+		Date date = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
 
 		JButton btnOk = new JButton("TAMAM");
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
@@ -279,7 +277,7 @@ public class PatientAcceptPanel extends JPanel {
 		btnOk.setActionCommand("OK");
 		btnSave.addActionListener(editorHandler);
 		btnSave.setActionCommand("SAVE");
-		
+
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridwidth = 8;
@@ -288,7 +286,7 @@ public class PatientAcceptPanel extends JPanel {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 17;
 		add(scrollPane, gbc_scrollPane);
-		 
+
 		table.setModel(tableModel);
 		scrollPane.setViewportView(table);
 
@@ -321,24 +319,24 @@ public class PatientAcceptPanel extends JPanel {
 					ayaktaradio.setSelected(false);
 					yatanradio.setSelected(false);
 				}
-			
+
 				PatientService patientService = new PatientService();
 				PatientDTO patient = patientService.getPatientByPatientNo(patientNo);
 				if (patient == null) {
 					JOptionPane.showMessageDialog(new JFrame(), "Hasta yok ", "Alert", JOptionPane.WARNING_MESSAGE);
 					return;
 				} else {
-					lblNameSurname.setText(patient.getName() + " " + patient.getSurname());	
+					lblNameSurname.setText(patient.getName() + " " + patient.getSurname());
 					if (admission == null) {
 						admission = new AdmissionDTO();
-					}	
-					admission.setPatientID(Integer.parseInt(patientNo));
+					}
+					admission.setPatientID(patientNo);
 					getPastAdmissionListFromDB();
 				}
-				textPatient.disable();		
+				textPatient.disable();
 				System.out.println("fördü");
 
-			}else if (cmd.equals("TEMÝZLE")) {
+			} else if (cmd.equals("TEMÝZLE")) {
 				txtAccept.setText("");
 				textPatient.setText("");
 				lblNameSurname.setText("");
@@ -348,28 +346,28 @@ public class PatientAcceptPanel extends JPanel {
 				drCombobox.setSelectedItem(null);
 				orgCombobox.setSelectedItem(null);
 				tableModel.setRowCount(null);
-				tableModel.fireTableDataChanged();			
-				
+				tableModel.fireTableDataChanged();
+
 				// DoctorCombobox.removeAllItems();
 
-			}else if (cmd.equals("SAVE")) {
-				
+			} else if (cmd.equals("SAVE")) {
+
 				String patientNum = textPatient.getText();
-		//		String admissionOrg = OrganizationCombobox.getSelectedItem().toString();
-			//	String admissionDoctor = DoctorCombobox.getSelectedItem().toString();
+				// String admissionOrg = OrganizationCombobox.getSelectedItem().toString();
+				// String admissionDoctor = DoctorCombobox.getSelectedItem().toString();
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 				Date createDate = new Date(System.currentTimeMillis());
 				formatter.format(createDate);
 				Date updateDate = new Date(System.currentTimeMillis());
 				formatter.format(updateDate);
 				Date admissionDate = dateChooser.getDate();
-				
+
 				if (patientNum.length() == 0) {
 					JFrame f;
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,enter PatientNo", "Alert", JOptionPane.WARNING_MESSAGE);
 					return;
-				}else if (OrganizationCombobox.getSelectedItem() == null) {
+				} else if (OrganizationCombobox.getSelectedItem() == null) {
 					JFrame f;
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,select organization", "Alert",
@@ -386,7 +384,7 @@ public class PatientAcceptPanel extends JPanel {
 					JOptionPane.showMessageDialog(f, "Please,select admission type", "Alert",
 							JOptionPane.WARNING_MESSAGE);
 					return;
-				}else if (dateChooser.getDate() == null) {
+				} else if (dateChooser.getDate() == null) {
 					JFrame f;
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,select date", "Alert", JOptionPane.WARNING_MESSAGE);
@@ -395,80 +393,88 @@ public class PatientAcceptPanel extends JPanel {
 
 				if (admission == null) {
 					admission = new AdmissionDTO();
-				}			
-			
+				}
+
 				ThreadLocalRandom random = ThreadLocalRandom.current();
 				int randomInt = random.nextInt(100000, 999999);
-				
+
 				admission.setAdmissionNo(Integer.toString(randomInt));
 				txtAccept.setText(admission.getAdmissionNo());
-				
-				admission.setPatientID(Integer.parseInt(patientNum));
-				if(ayaktaradio.isSelected()) {
+
+				admission.setPatientID(patientNum);
+				if (ayaktaradio.isSelected()) {
 					admission.setAdmissionType("O");
-				}else if(yatanradio.isSelected()) {
+				} else if (yatanradio.isSelected()) {
 					admission.setAdmissionType("I");
-				}else if (dayradio.isSelected()) {
+				} else if (dayradio.isSelected()) {
 					admission.setAdmissionType("D");
-				}	
+				}
+				OrganizationDTO organization = orgCombobox.getOptions().get(OrganizationCombobox.getSelectedIndex());				
 				admission.setOrganizationID(OrganizationCombobox.getSelectedItem().toString());
+	//			admission.setOrganizationID(organization.getoptionsID());
+				
+				StaffDTO staff = drCombobox.getStaffTypes().get(DoctorCombobox.getSelectedIndex());
+	//			admission.setDoctorID(staff.getPersonid());
 				admission.setDoctorID(DoctorCombobox.getSelectedItem().toString());
 				admission.setAdmissionDate(admissionDate);
-				if(admission.getAdmissionCreate()== null) {
+				if (admission.getAdmissionCreate() == null) {
 					admission.setAdmissionCreate(createDate);
-				}else {
+				} else {
 					admission.setAdmissionUpdate(updateDate);
-				}			
-				
+				}
+
 				AdmissionService service = new AdmissionService();
 				admission = service.saveAdmission(admission);
 				JFrame f;
 				f = new JFrame();
-				JOptionPane.showMessageDialog(f, "Kayýt iþlemi baþarýlý", "Alert", JOptionPane.WARNING_MESSAGE);				
+				JOptionPane.showMessageDialog(f, "Kayýt iþlemi baþarýlý", "Alert", JOptionPane.WARNING_MESSAGE);
 				dialog.dispose();
 				getAdmissionListFromDB();
-				
+
 			}
 		}
 
 	}
+
 	private void getAdmissionListFromDB() {
-		 AdmissionService service = new AdmissionService();
-		 int admissionID = admission.getPatientID();
-		 ArrayList<AdmissionDTO> admissionListTable = new ArrayList<AdmissionDTO>() ;
-		 ArrayList<AdmissionDTO> admissonDTO = service.getAllAdmissionPatients();
-		 for(AdmissionDTO admissionList : admissonDTO) {	
-			 if(admissionList.getPatientID()== admissionID) {
-				 admissionListTable.add(admissionList);
-			 }
-		 }	
-		 tableModel.setAdmissionList(admissionListTable);
-		 table.setModel(tableModel);
-		 tableModel.fireTableDataChanged();	
+		AdmissionService service = new AdmissionService();
+		String admissionID = admission.getPatientID();
+		ArrayList<AdmissionDTO> admissionListTable = new ArrayList<AdmissionDTO>();
+		ArrayList<AdmissionDTO> admissonDTO = service.getAllAdmissionPatients();
+		for (AdmissionDTO admissionList : admissonDTO) {
+			if (admissionList.getPatientID().equals(admissionID)) {
+				admissionListTable.add(admissionList);
+			}
+		}
+		tableModel.setAdmissionList(admissionListTable);
+		table.setModel(tableModel);
+		tableModel.fireTableDataChanged();
 	}
-	
+
 	private void getPastAdmissionListFromDB() {
-		 AdmissionService service = new AdmissionService();
-		 int admissionID = admission.getPatientID();
-		 ArrayList<AdmissionDTO> admissionListTable = new ArrayList<AdmissionDTO>() ;
-		 ArrayList<AdmissionDTO> admissonDTO = service.getAllAdmissionPatients();
-		 for(AdmissionDTO admissionList : admissonDTO) {	
-			 if(admissionList.getPatientID()== admissionID) {
-				 admissionListTable.add(admissionList);
-			 }
-		 }	
-		 tableModel.setAdmissionList(admissionListTable);
-		 table.setModel(tableModel);
-		 tableModel.fireTableDataChanged();	
+		AdmissionService service = new AdmissionService();
+		String admissionID = admission.getPatientID();
+		ArrayList<AdmissionDTO> admissionListTable = new ArrayList<AdmissionDTO>();
+		ArrayList<AdmissionDTO> admissonDTO = service.getAllAdmissionPatients();
+		for (AdmissionDTO admissionList : admissonDTO) {
+			if (admissionList.getPatientID() == admissionID) {
+				admissionListTable.add(admissionList);
+			}
+		}
+		tableModel.setAdmissionList(admissionListTable);
+		table.setModel(tableModel);
+		tableModel.fireTableDataChanged();
 	}
-	
+
 	public AdmissionDTO getAdmission() {
 		return admission;
 
 	}
-	public void setAdmission (AdmissionDTO admission) {
+
+	public void setAdmission(AdmissionDTO admission) {
 		this.admission = admission;
 	}
+
 	public AdmissionDTO showDialog() {
 		// TODO Auto-generated method stub
 		dialog.getContentPane().add(this);
@@ -480,6 +486,5 @@ public class PatientAcceptPanel extends JPanel {
 		return admission;
 
 	}
-	
 
 }
