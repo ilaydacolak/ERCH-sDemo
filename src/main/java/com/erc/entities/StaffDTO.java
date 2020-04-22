@@ -55,7 +55,16 @@ public class StaffDTO {
 	
 	@Column(name = "active")
 	private String aktif;
+	
+	@Column(name="organization")
+	private String organizationID;
 
+	public String getorganizationID() {
+		return organizationID;
+	}
+	public void setorganizationID(String organizationID) {
+		this.organizationID = organizationID;
+	}
 	public String getAktif() {
 		return aktif;
 	}

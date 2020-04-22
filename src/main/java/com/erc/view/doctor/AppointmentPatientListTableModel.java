@@ -39,8 +39,9 @@ public class AppointmentPatientListTableModel extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		AppointmentDTO appointment = appointmentList.get(row);
 		switch (col) {
+				
 		case 0:
-			return appointment.getPatientName().getName() + " " + appointment.getPatientName().getSurname();
+			return appointment.getPatientName().getPatientNo() + " " + appointment.getPatientName().getName() + " " + appointment.getPatientName().getSurname();
 		}
 		return null;
 	}

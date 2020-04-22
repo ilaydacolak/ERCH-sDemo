@@ -7,6 +7,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
 
 import com.erc.entities.StaffDTO;
+import com.erc.entities.StaffTypeDTO;
 
 public class AppointmentDoctorComboboxModel extends AbstractListModel implements ComboBoxModel {
 
@@ -16,12 +17,25 @@ public class AppointmentDoctorComboboxModel extends AbstractListModel implements
 
 	public ArrayList<String> DrList(ArrayList<StaffDTO> staffTypes) {
 		for (StaffDTO staffDTO : staffTypes) {
-			if (staffDTO.getStaffTypeDTO().getStaffTypeID().equals("34289ffd-1fbf-4f5e-8f9c-00f8559ba9c4")) {
+//			if (staffDTO.getStaffTypeDTO().getStaffTypeID().equals("085a587c-19d3-4484-b65b-71ae8b020682")) {
+			if(staffDTO.getPersonelType().equals("00011-Doctor")) {
 				DoctorList.add(staffDTO.getName() + " " + staffDTO.getLastname());
 			}
 		}
 		return DoctorList;
 	}
+	
+//	public ArrayList<String> DrList(ArrayList<StaffTypeDTO> staffTypes) {
+//		for (StaffTypeDTO staffType : staffTypes) {
+//			if (staffType.getStaffTypeID().equals("34289ffd-1fbf-4f5e-8f9c-00f8559ba9c4")) {
+//				StaffDTO staff = new StaffDTO();
+//				if (staff.getPersonelType().equals("00011-Doctor")) {
+//					DoctorList.add(staff.getName() + " " + staff.getLastname());
+//				}
+//			}
+//		}
+//		return DoctorList;
+//	}
 
 	@Override
 	public void addListDataListener(ListDataListener arg0) {

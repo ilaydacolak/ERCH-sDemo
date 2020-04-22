@@ -26,6 +26,14 @@ public class AppointmentDTO {
 	private PatientDTO patientDTO;
 	@Column(name = "organizationname")
 	private String organizationName;
+	@Column(name = "organizationid")
+	private String organizationID;
+public String getOrganizationID() {
+		return organizationID;
+	}
+	public void setOrganizationID(String organizationID) {
+		this.organizationID = organizationID;
+	}
 public PatientDTO getPatientDTO() {
 		return patientDTO;
 	}

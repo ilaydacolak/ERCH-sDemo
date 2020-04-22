@@ -32,6 +32,7 @@ import com.erc.dbconnection.HibernateConnection;
 public class StaffService {
 
 
+	private static final ArrayList<StaffDTO> StaffDTO = null;
 	private StaffDTO staff;
 
 	public ArrayList<StaffDTO> getAllStaff() {
@@ -50,24 +51,40 @@ public class StaffService {
 		}
 		return null;
 	}
+	
+	public List<StaffDTO> getOnlyStaff(String username, String password){
+		Transaction transaction = null;
+		try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+			
+			Query query= session.createQuery( "SELECT s FROM StaffDTO s WHERE s.username = :username AND s.password = :password", StaffDTO.class);	
+			  query.setParameter("username", username);
+			  query.setParameter("password", password);
+			  List<StaffDTO> staff = query.list();
+		
+			if(staff!=null) {
+				return staff;
+			}
+		}
+		return null;
+	}
 
 
 	
-	public ArrayList<StaffTypeDTO> getAllStaffs() {		
-		Transaction transaction = null;		
-		 try (Session session = HibernateConnection.getSessionFactory().openSession()) {
-	            ArrayList < StaffTypeDTO > personel = new ArrayList<StaffTypeDTO>();
-	            personel = (ArrayList<StaffTypeDTO>) session.createQuery("from StaffTypeDTO", StaffTypeDTO.class).list();
-	            return personel;            
-	        } catch (Exception e) {
-	            if (transaction != null) {
-	                transaction.rollback();
-	            }
-	            e.printStackTrace();
-	        }
-
-		return null;
-	}
+//	public ArrayList<StaffTypeDTO> getAllStaffs() {		
+//		Transaction transaction = null;		
+//		 try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+//	            ArrayList < StaffTypeDTO > personel = new ArrayList<StaffTypeDTO>();
+//	            personel = (ArrayList<StaffTypeDTO>) session.createQuery("from StaffTypeDTO", StaffTypeDTO.class).list();
+//	            return personel;            
+//	        } catch (Exception e) {
+//	            if (transaction != null) {
+//	                transaction.rollback();
+//	            }
+//	            e.printStackTrace();
+//	        }
+//
+//		return null;
+//	}
 
 	public StaffDTO saveStaff(StaffDTO staff) {
 		Session session = HibernateConnection.getSessionFactory().openSession();
@@ -119,5 +136,6 @@ public class StaffService {
 		}
 		return false;
 	}
+	
 
 }

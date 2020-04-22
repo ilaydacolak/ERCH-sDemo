@@ -24,9 +24,11 @@ import com.erc.entities.AppointmentDTO;
 import com.erc.entities.OrganizationDTO;
 import com.erc.entities.PatientDTO;
 import com.erc.entities.StaffDTO;
+import com.erc.entities.StaffTypeDTO;
 import com.erc.user.service.AppointmentService;
 import com.erc.user.service.PatientService;
 import com.erc.user.service.StaffService;
+import com.erc.user.service.StaffTypeService;
 
 public class AppointmentEditor extends JPanel {
 	private JTextField notText;
@@ -222,14 +224,15 @@ public class AppointmentEditor extends JPanel {
 				if (patientBox.getSelectedItem() != null) {
 					patientName = patientBox.getSelectedItem().toString();
 				}
-
 				staffDTO = doctorComboboxModel.getStaffTypes().get(doctorBox.getSelectedIndex());
+				
 				appointment.setDoctorID(staffDTO.getPersonid());
 		//		appointment.setDoctorName(staffDTO);
 
 				tableModel.setStaffDTO(staffDTO);
 
 				appointment.setOrganizationName(organizationDTO.getoptionsName());
+				appointment.setOrganizationID(organizationDTO.getoptionsID());
 
 				appointment.setDate(appointmentRow.getDate());
 				String hour = hourFormat.format(appointmentRow.getDate());

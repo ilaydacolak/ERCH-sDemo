@@ -17,13 +17,14 @@ import java.util.ArrayList;
 
 import javax.swing.JTable;
 
-import com.erc.view.personel.StaffEditor;
-import com.erc.view.personel.StaffTableModel;
 import com.erc.entities.OrganizationDTO;
 import com.erc.entities.StaffDTO;
 import com.erc.user.service.OptionsService;
 import com.erc.user.service.StaffService;
-import com.erc.view.personel.StaffPanel.Handler;
+import com.erc.view.Staff.StaffEditor;
+import com.erc.view.Staff.StaffTableModel;
+import com.erc.view.Staff.StaffPanel.Handler;
+
 import javax.swing.JScrollPane;
 
 public class OptionsPanel extends JPanel {
