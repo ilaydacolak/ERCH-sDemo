@@ -95,14 +95,20 @@ public class LoginPanel extends JPanel {
 			int tmp = 0;
 			if (cmd.equals("Login")) {
 				StaffService staffService = new StaffService();
-			List<StaffDTO> staffList = staffService.getOnlyStaff(textUsername.getText(),
-						passwordField.getText());
-				StaffDTO staffDTO = new StaffDTO();
-				if (staffList != null) {
-					for (StaffDTO staff : staffList) {
-						staffDTO = staff;
+//			List<StaffDTO> staffList = staffService.getOnlyStaff(textUsername.getText(),
+//						passwordField.getText());
+				ArrayList<StaffDTO> staffList = staffService.getAllStaff();
+				for(StaffDTO staffDTO : staffList) {
+					if(staffDTO.getUsername().equals(textUsername.getText()) && staffDTO.getPassword().equals(passwordField.getText())) {
+						AuthService.setStaffDTO(staffDTO);
 					}
-					AuthService.setStaffDTO(staffDTO);
+				}
+//				StaffDTO staffDTO = new StaffDTO();
+//				if (staffList != null) {
+//					for (StaffDTO staff : staffList) {
+//						staffDTO = staff;
+//					}
+//					AuthService.setStaffDTO(staffDTO);
 
 					JOptionPane.showMessageDialog(new JFrame(), "Login is success", "Alert",
 							JOptionPane.WARNING_MESSAGE);
@@ -148,7 +154,7 @@ public class LoginPanel extends JPanel {
 
 		}
 
-	}
+//	}
 
 	public Object MenuFrame() {
 		// TODO Auto-generated method stub

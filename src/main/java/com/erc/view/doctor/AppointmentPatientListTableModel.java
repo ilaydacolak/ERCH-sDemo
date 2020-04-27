@@ -10,8 +10,9 @@ import com.erc.entities.AppointmentDTO;
 
 
 public class AppointmentPatientListTableModel extends AbstractTableModel {
+	
 	private List <AppointmentDTO> appointmentList = new ArrayList<AppointmentDTO>();
-	private String columnNames[] = {"HASTA LÝSTESÝ"};
+	private String columnNames[] = {"HASTA NO","HASTA LÝSTESÝ"};
 	
 	@Override
 	public String getColumnName(int index) {
@@ -29,19 +30,16 @@ public class AppointmentPatientListTableModel extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		return appointmentList == null ? 0 : appointmentList.size();
 	}
-	
-	public void setRowCount(String size) {
-		appointmentList=null;
-	}
 
 	@Override
 	public Object getValueAt(int row, int col) {
 		// TODO Auto-generated method stub
 		AppointmentDTO appointment = appointmentList.get(row);
 		switch (col) {
-				
 		case 0:
-			return appointment.getPatientName().getPatientNo() + " " + appointment.getPatientName().getName() + " " + appointment.getPatientName().getSurname();
+			return appointment.getPatientName().getPatientNo() ;		
+		case 1:
+			return  appointment.getPatientName().getName() + " " + appointment.getPatientName().getSurname();
 		}
 		return null;
 	}

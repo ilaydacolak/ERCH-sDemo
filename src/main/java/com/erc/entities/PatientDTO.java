@@ -27,7 +27,58 @@ public class PatientDTO {
 	private Date createdDate;
 	@Column(name="dateupdate")
 	private Date updatedDate;
+	@Column(name="age")
+	private String age;
+	@Column(name="phone")
+	private String phone;
+	@Column(name="priority")
+	private String priority;
+	@Column(name="gender")
+	private String gender;
+	@Column(name="bloodgroup")
+	private String bloodGroup;
 	
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+
 
 	public Date getCreatedDate() {
 		return createdDate;

@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JComboBox;
 
 public class PatientEditor extends JPanel {
 	private JTextField textTC;
@@ -31,14 +32,18 @@ public class PatientEditor extends JPanel {
 	private PatientDTO patient;
 	private JDialog dialog = new JDialog();
 	private JTextField txtPatientNo;
-
+	private JTextField txtPhone;
+	private JTextField txtAge;
+	private JComboBox genderCMBX = new JComboBox();
+	private JComboBox bloodCMBX = new JComboBox();
+	private JComboBox priorityCMBX = new JComboBox();
 	public PatientEditor() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 575, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel lblTC = new JLabel("TC:");
@@ -93,33 +98,125 @@ public class PatientEditor extends JPanel {
 		textSurname.setColumns(10);
 
 		EditorHandler editorHandler = new EditorHandler();
+
+		JLabel lblPatientNo = new JLabel("Patient No:");
+		GridBagConstraints gbc_lblPatientNo = new GridBagConstraints();
+		gbc_lblPatientNo.anchor = GridBagConstraints.WEST;
+		gbc_lblPatientNo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPatientNo.gridx = 1;
+		gbc_lblPatientNo.gridy = 8;
+		add(lblPatientNo, gbc_lblPatientNo);
+
+		txtPatientNo = new JTextField();
+		GridBagConstraints gbc_txtPatientNo = new GridBagConstraints();
+		gbc_txtPatientNo.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPatientNo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPatientNo.gridx = 3;
+		gbc_txtPatientNo.gridy = 8;
+		add(txtPatientNo, gbc_txtPatientNo);
+		txtPatientNo.setColumns(10);
+
+		JLabel lblPhone = new JLabel("Phone:");
+		GridBagConstraints gbc_lblPhone = new GridBagConstraints();
+		gbc_lblPhone.anchor = GridBagConstraints.WEST;
+		gbc_lblPhone.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPhone.gridx = 1;
+		gbc_lblPhone.gridy = 10;
+		add(lblPhone, gbc_lblPhone);
+
+		txtPhone = new JTextField();
+		GridBagConstraints gbc_txtPhone = new GridBagConstraints();
+		gbc_txtPhone.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPhone.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPhone.gridx = 3;
+		gbc_txtPhone.gridy = 10;
+		add(txtPhone, gbc_txtPhone);
+		txtPhone.setColumns(10);
+
+		JLabel lblAge = new JLabel("Age:");
+		GridBagConstraints gbc_lblAge = new GridBagConstraints();
+		gbc_lblAge.anchor = GridBagConstraints.WEST;
+		gbc_lblAge.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAge.gridx = 1;
+		gbc_lblAge.gridy = 12;
+		add(lblAge, gbc_lblAge);
+
+		txtAge = new JTextField();
+		GridBagConstraints gbc_txtAge = new GridBagConstraints();
+		gbc_txtAge.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAge.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAge.gridx = 3;
+		gbc_txtAge.gridy = 12;
+		add(txtAge, gbc_txtAge);
+		txtAge.setColumns(10);
+
+		JLabel lblPriority = new JLabel("Priority:");
+		GridBagConstraints gbc_lblPriority = new GridBagConstraints();
+		gbc_lblPriority.anchor = GridBagConstraints.WEST;
+		gbc_lblPriority.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPriority.gridx = 1;
+		gbc_lblPriority.gridy = 14;
+		add(lblPriority, gbc_lblPriority);
+
+		priorityCMBX = new JComboBox();
+		GridBagConstraints gbc_priorityCMBX = new GridBagConstraints();
+		gbc_priorityCMBX.insets = new Insets(0, 0, 5, 5);
+		gbc_priorityCMBX.fill = GridBagConstraints.HORIZONTAL;
+		gbc_priorityCMBX.gridx = 3;
+		gbc_priorityCMBX.gridy = 14;
+		add(priorityCMBX, gbc_priorityCMBX);
 		
-				JLabel lblPatientNo = new JLabel("Patient No:");
-				GridBagConstraints gbc_lblPatientNo = new GridBagConstraints();
-				gbc_lblPatientNo.insets = new Insets(0, 0, 5, 5);
-				gbc_lblPatientNo.gridx = 1;
-				gbc_lblPatientNo.gridy = 8;
-				add(lblPatientNo, gbc_lblPatientNo);
+		PriorityComboboxModel priorityCmbModel = new PriorityComboboxModel ();
+		priorityCMBX.setModel(priorityCmbModel);
+
+		JLabel lblBlood = new JLabel("Blood Group:");
+		GridBagConstraints gbc_lblBlood = new GridBagConstraints();
+		gbc_lblBlood.anchor = GridBagConstraints.WEST;
+		gbc_lblBlood.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBlood.gridx = 1;
+		gbc_lblBlood.gridy = 16;
+		add(lblBlood, gbc_lblBlood);
+
+		bloodCMBX = new JComboBox();
+		GridBagConstraints gbc_bloodCMBX = new GridBagConstraints();
+		gbc_bloodCMBX.insets = new Insets(0, 0, 5, 5);
+		gbc_bloodCMBX.fill = GridBagConstraints.HORIZONTAL;
+		gbc_bloodCMBX.gridx = 3;
+		gbc_bloodCMBX.gridy = 16;
+		add(bloodCMBX, gbc_bloodCMBX);
 		
-				txtPatientNo = new JTextField();
-				GridBagConstraints gbc_txtPatientNo = new GridBagConstraints();
-				gbc_txtPatientNo.insets = new Insets(0, 0, 5, 5);
-				gbc_txtPatientNo.fill = GridBagConstraints.HORIZONTAL;
-				gbc_txtPatientNo.gridx = 3;
-				gbc_txtPatientNo.gridy = 8;
-				add(txtPatientNo, gbc_txtPatientNo);
-				txtPatientNo.setColumns(10);
+		BloodComboboxModel bloodcmbModel = new BloodComboboxModel();
+		bloodCMBX.setModel(bloodcmbModel);
+
+		JLabel lblGender = new JLabel("Gender:");
+		GridBagConstraints gbc_lblGender = new GridBagConstraints();
+		gbc_lblGender.anchor = GridBagConstraints.WEST;
+		gbc_lblGender.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGender.gridx = 1;
+		gbc_lblGender.gridy = 18;
+		add(lblGender, gbc_lblGender);
+
+		genderCMBX = new JComboBox();
+		GridBagConstraints gbc_genderCMBX = new GridBagConstraints();
+		gbc_genderCMBX.insets = new Insets(0, 0, 5, 5);
+		gbc_genderCMBX.fill = GridBagConstraints.HORIZONTAL;
+		gbc_genderCMBX.gridx = 3;
+		gbc_genderCMBX.gridy = 18;
+		add(genderCMBX, gbc_genderCMBX);
 		
-				JButton btnSave = new JButton("Save");
-				GridBagConstraints gbc_btnSave = new GridBagConstraints();
-				gbc_btnSave.insets = new Insets(0, 0, 5, 5);
-				gbc_btnSave.gridx = 3;
-				gbc_btnSave.gridy = 10;
-				add(btnSave, gbc_btnSave);
-				
-						btnSave.addActionListener(editorHandler);
-						
-								btnSave.setActionCommand("Save");
+		GenderComboboxModel genderComboboxModel = new GenderComboboxModel();
+		genderCMBX.setModel(genderComboboxModel);
+
+		JButton btnSave = new JButton("Save");
+		GridBagConstraints gbc_btnSave = new GridBagConstraints();
+		gbc_btnSave.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSave.gridx = 3;
+		gbc_btnSave.gridy = 20;
+		add(btnSave, gbc_btnSave);
+
+		btnSave.addActionListener(editorHandler);
+
+		btnSave.setActionCommand("Save");
 	}
 
 	public class EditorHandler implements ActionListener {
@@ -135,6 +232,8 @@ public class PatientEditor extends JPanel {
 				String tc = textTC.getText();
 				String name = textName.getText();
 				String surname = textSurname.getText();
+				String age = txtAge.getText();
+				String phone = txtPhone.getText();
 
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 				Date createDate = new Date(System.currentTimeMillis());
@@ -162,10 +261,11 @@ public class PatientEditor extends JPanel {
 					f = new JFrame();
 					JOptionPane.showMessageDialog(f, "Please,enter Surname", "Alert", JOptionPane.WARNING_MESSAGE);
 					return;
-				} else if(patientNo.length() == 0) {
+				} else if (patientNo.length() == 0) {
 					JFrame f;
 					f = new JFrame();
-					JOptionPane.showMessageDialog(f, "Please,enter patient number", "Alert", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(f, "Please,enter patient number", "Alert",
+							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 
@@ -176,20 +276,23 @@ public class PatientEditor extends JPanel {
 				patient.setTc(tc);
 				patient.setName(name);
 				patient.setSurname(surname);
-
 				patient.setPatientNo(patientNo);
+				patient.setAge(age);
+				patient.setPhone(phone);
+				if(genderCMBX.getSelectedItem() != null) {
+					patient.setGender(genderCMBX.getSelectedItem().toString());
+				}if(bloodCMBX.getSelectedItem() != null) {
+					patient.setBloodGroup(bloodCMBX.getSelectedItem().toString());
+				}if(priorityCMBX.getSelectedItem() != null) {
+					patient.setPriority(priorityCMBX.getSelectedItem().toString());			
+				}
+				
 				if (patient.getCreatedDate() == null) {
 					patient.setCreatedDate(createDate);
 				} else {
 					patient.setUpdatedDate(updateDate);
 				}
 				PatientService service = new PatientService();
-//				if (patient.getPatientId() == null) {
-//					if (service.isTCExist(patient)) {
-//						return;
-//					}
-//
-//				}
 
 				patient = service.savePatient(patient);
 				dialog.dispose();

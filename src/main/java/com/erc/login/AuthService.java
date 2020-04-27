@@ -17,12 +17,15 @@ public class AuthService {
 		AuthService.staffDTO = staffDTO;
 	}
 
-	public static StaffDTO loginInformation(String name) {
+	public static StaffDTO loginInformation(String name,String password) {
 
 		StaffService staffService = new StaffService();
 		ArrayList<StaffDTO> staffList = staffService.getAllStaff();
 		for (StaffDTO staff : staffList) {
-			if (staff.getUsername().equals(name)) {
+//			if (staff.getUsername().equals(name) && staff.getPassword().equals(password)) {
+//				return staff;
+//			}
+			if(staff.getUsername().equals(staffDTO.getUsername()) && staff.getPassword().equals(staffDTO.getPassword())) {
 				return staff;
 			}
 		}
