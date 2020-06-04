@@ -385,38 +385,32 @@ public class AppointmentPanel extends JPanel {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				} else if (appointmentTable.getSelectedRow() == -1) {
-					JOptionPane.showMessageDialog(new JFrame(), "Please,an appointment to update", "Alert",
+					JOptionPane.showMessageDialog(new JFrame(), "Please,an appointment for admission", "Alert",
 							JOptionPane.WARNING_MESSAGE);
 				}
 				int selectedRow = appointmentTable.getSelectedRow();
 				AppointmentRow appointmentRow = appointmentTableModel.getAppointmentList().get(selectedRow);
 				AppointmentDTO appointment = appointmentRow.getAppointment();
-				if (appointment.getAppointmentID() == null) {
+				if (appointment.getAppointmentID().equals(null)) {
 					JOptionPane.showMessageDialog(new JFrame(), "There is no exist appointment", "Alert",
 							JOptionPane.WARNING_MESSAGE);
-				} else if (appointment.getAdmissionýd() == null) {
+				} else if (appointment.getAdmissionDTO()==null) {
 
 					System.out.println("var");
 					JDialog dialog = new JDialog();
 					PatientAcceptPanel admissionPanel = fillScreen(appointment);
-					appointment.setAdmissionýd(admissionPanel.txtAccept.getText());
+
+					appointment.setAdmissionDTO(admissionPanel.admission);
+
 					AppointmentService appService = new AppointmentService();
 					appService.saveAppointment(appointment);
-//					AdmissionService admissionService = new AdmissionService();
-//					ArrayList<AdmissionDTO> admissionList = admissionService.getAllAdmissionPatients();
-//					for(AdmissionDTO admission : admissionList) {
-//						if(admissionPanel.txtAccept.getText().equals(admission.getAdmissionNo())) {
-//							appointment.setAdmissionýd(admission.getAdmissionID());
-//						}
-//					}
-					
+
 					dialog.getContentPane().add(admissionPanel);
 					dialog.setModal(true);
 					dialog.setSize(520, 250);
 					dialog.setLocationRelativeTo(admissionPanel);
-				//	fillScreen(appointment);
+
 					dialog.setVisible(true);
-				
 
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(), "The patient is already accepted ", "Alert",
@@ -430,51 +424,39 @@ public class AppointmentPanel extends JPanel {
 
 	private PatientAcceptPanel fillScreen(AppointmentDTO appointment) {
 		PatientAcceptPanel admissionPanel = new PatientAcceptPanel();
-		
-		
+
 		PatientService patientService = new PatientService();
 		ArrayList<PatientDTO> patientList = patientService.getAllPatients();
 		StaffService staffService = new StaffService();
 		ArrayList<StaffDTO> staffList = staffService.getAllStaff();
-		for(PatientDTO patient : patientList) {
-			if(patient.getPatientId().toString().equals(appointment.getPatientID().toString())) {
+		for (PatientDTO patient : patientList) {
+			if (patient.getPatientId().toString().equals(appointment.getPatientDTO().getPatientId().toString())) {
+
 				admissionPanel.textPatient.setText(patient.getPatientNo().toString());
-				System.out.println(admissionPanel.textPatient.getText());				
-				
-				admissionPanel.OrganizationCombobox.setSelectedItem(appointment.getOrganizationName());				
-				
-				admissionPanel.dateChooser.setDate(appointment.getDate());		
-				for(StaffDTO staff : staffList) {
-					if(staff.getPersonid().equals(appointment.getDoctorID())) {
+
+				System.out.println(admissionPanel.textPatient.getText());
+
+				admissionPanel.OrganizationCombobox.setSelectedItem(appointment.getOrganizationName());
+
+				admissionPanel.dateChooser.setDate(appointment.getDate());
+
+				for (StaffDTO staff : staffList) {
+					if (staff.getPersonid().equals(appointment.getDoctorID())) {
 						admissionPanel.DoctorCombobox.setSelectedItem(staff.getName() + " " + staff.getLastname());
+
 					}
 				}
 				admissionPanel.ayaktaradio.doClick();
-				}
-				break;
+
 			}
+
+		}
 		admissionPanel.btnSave.doClick();
 		admissionPanel.textPatient.enable();
 		admissionPanel.btnClear.enable();
 		admissionPanel.txtAccept.enable();
-		
 
 		return admissionPanel;
 	}
-//		PatientAcceptPanel admissionPanel = new PatientAcceptPanel();
-//		AdmissionService admissionService = new AdmissionService();
-//		ArrayList<AdmissionDTO> admissionList = admissionService.getAllAdmissionPatients();
-//		for(AdmissionDTO admission : admissionList) {
-//			if(admission.getPatientID().toString().equals(appointment.getPatientID().toString())) {				
-//				admissionPanel.OrganizationCombobox.setSelectedItem(appointment.getOrganizationName());
-//				admissionPanel.dateChooser.setDate(appointment.getDate());			
-//				if(admissionPanel.txtAccept.getText().equals(admission.getAdmissionNo())) {
-//					appointment.setAdmissionýd(admission.getAdmissionID());
-//				}
-//				}
-//			}
-//		
-//
-//		return admissionPanel;
-	
+
 }

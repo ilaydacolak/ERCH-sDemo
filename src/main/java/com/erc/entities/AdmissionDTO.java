@@ -25,6 +25,18 @@ public class AdmissionDTO {
 	private String organizationID;
 	@Column(name = "doctorid")
 	private String doctorID;
+	public String getProtocolType() {
+		return protocolType;
+	}
+	public void setProtocolType(String protocolType) {
+		this.protocolType = protocolType;
+	}
+	public String getKurum() {
+		return kurum;
+	}
+	public void setKurum(String kurum) {
+		this.kurum = kurum;
+	}
 	@Column(name = "admissiondate")
 	private Date admissionDate;
 	@Column(name = "admissioncreate")
@@ -33,6 +45,10 @@ public class AdmissionDTO {
 	private Date admissionUpdate;
 	@Column(name = "status")
 	private String status;
+	@Column(name = "protocoltype")
+	private String protocolType;
+	@Column(name = "kurum")
+	private String kurum;
 
 //	@Column(name = "admissionnumber")
 //	private String admissionnumber;
@@ -46,6 +62,12 @@ public class AdmissionDTO {
 //	}
 
 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Date getAdmissionDate() {
 		return admissionDate;
 	}

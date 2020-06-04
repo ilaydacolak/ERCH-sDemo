@@ -20,6 +20,7 @@
         <mapping class="com.erc.entities.StaffTypeDTO" />
         <mapping class="com.erc.entities.AdmissionDTO" />
         <mapping class="com.erc.entities.AppointmentDTO" />
+        <mapping class="com.erc.entities.MedicalOrderDTO" />
         
     </session-factory>
 

@@ -47,10 +47,12 @@ public class MenuFrame extends JFrame {
 	public void startApplication() {
 		MenuFrame frame = new MenuFrame();
 		frame.addMenuBar();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(750, 560);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
 	}
 
 	private void addMenuBar() {
@@ -63,6 +65,7 @@ public class MenuFrame extends JFrame {
 		JMenu patientAcceptMenu = new JMenu("Hasta Kabul");
 		JMenu appointmentMenu = new JMenu("Randevu");
 		JMenu doctorMenu = new JMenu("Doctor");
+		
 
 		toolbar.add(personnelMenu);
 		toolbar.add(patientMenu);

@@ -407,6 +407,7 @@ public class StaffEditor extends JPanel {
 				personel.setPersonelType(personelType);
 				StaffTypeDTO staffTypeDTO = (StaffTypeDTO)personelCombobox.getSelectedItem();
 				personel.setStaffTypeDTO(staffTypeDTO);
+				
 //				personel.setPersonelType(personelCombobox.getSelectedItem().toString());
 
 

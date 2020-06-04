@@ -70,7 +70,7 @@ public class PatientAcceptPanel extends JPanel {
 	private JRadioButton dayradio;
 	private ButtonGroup btngrp = new ButtonGroup();;
 	public JDateChooser dateChooser;
-	private AdmissionDTO admission;
+	public AdmissionDTO admission;
 	private JDialog dialog = new JDialog();
 	private JCalendar calendar;
 	private AcceptTableModel tableModel = new AcceptTableModel();
@@ -81,10 +81,10 @@ public class PatientAcceptPanel extends JPanel {
 	public PatientAcceptPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 10, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
-				1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
+				1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		btnSave = new JButton("Kaydet");
@@ -266,17 +266,17 @@ public class PatientAcceptPanel extends JPanel {
 		Date date = new Date();
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-
-		JButton btnOk = new JButton("TAMAM");
-		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		gbc_btnOk.insets = new Insets(0, 0, 5, 5);
-		gbc_btnOk.gridx = 5;
-		gbc_btnOk.gridy = 16;
-		add(btnOk, gbc_btnOk);
-		btnOk.addActionListener(editorHandler);
-		btnOk.setActionCommand("OK");
 		btnSave.addActionListener(editorHandler);
 		btnSave.setActionCommand("SAVE");
+		
+				JButton btnOk = new JButton("TAMAM");
+				GridBagConstraints gbc_btnOk = new GridBagConstraints();
+				gbc_btnOk.insets = new Insets(0, 0, 5, 5);
+				gbc_btnOk.gridx = 6;
+				gbc_btnOk.gridy = 16;
+				add(btnOk, gbc_btnOk);
+				btnOk.addActionListener(editorHandler);
+				btnOk.setActionCommand("OK");
 
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -284,7 +284,7 @@ public class PatientAcceptPanel extends JPanel {
 		gbc_scrollPane.gridheight = 5;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 17;
+		gbc_scrollPane.gridy = 18;
 		add(scrollPane, gbc_scrollPane);
 
 		table.setModel(tableModel);
@@ -319,6 +319,7 @@ public class PatientAcceptPanel extends JPanel {
 					ayaktaradio.setSelected(false);
 					yatanradio.setSelected(false);
 				}
+				
 
 				PatientService patientService = new PatientService();
 				PatientDTO patient = patientService.getPatientByPatientNo(patientNo);
@@ -333,6 +334,7 @@ public class PatientAcceptPanel extends JPanel {
 					admission.setPatientID(patientNo);
 					getPastAdmissionListFromDB();
 				}
+				
 				textPatient.disable();
 				System.out.println("fördü");
 

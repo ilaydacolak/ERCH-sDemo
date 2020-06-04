@@ -17,7 +17,7 @@ public class DoctorComboboxModel extends AbstractListModel implements ComboBoxMo
 	
 	public ArrayList<String> DrList(ArrayList<StaffDTO> staffTypes) {
 		for(StaffDTO staffDTO : staffTypes) {
-			if(staffDTO.getStaffTypeDTO().getStaffTypeID().equals("34289ffd-1fbf-4f5e-8f9c-00f8559ba9c4")) {
+			if(staffDTO.getPersonelType().equals("00011-Doctor")) {
 				DoctorList.add(staffDTO.getName()+ " " + staffDTO.getLastname());
 			}
 		}

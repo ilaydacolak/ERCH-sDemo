@@ -233,6 +233,7 @@ public class AppointmentEditor extends JPanel {
 
 				appointment.setOrganizationName(organizationDTO.getoptionsName());
 				appointment.setOrganizationID(organizationDTO.getoptionsID());
+				appointment.setOrganizationDTO(organizationDTO);
 
 				appointment.setDate(appointmentRow.getDate());
 				String hour = hourFormat.format(appointmentRow.getDate());

@@ -65,6 +65,25 @@ public PatientDTO getPatientDTO() {
 	private Date date;
 	@Column(name = "admissionnumber")
 	private String admissionýd;
+	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="admissiondto")
+	private AdmissionDTO admissionDTO;
+	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="organizationDTO")
+	private OrganizationDTO organizationDTO;
+	
+	public OrganizationDTO getOrganizationDTO() {
+		return organizationDTO;
+	}
+	public void setOrganizationDTO(OrganizationDTO organizationDTO) {
+		this.organizationDTO = organizationDTO;
+	}
+	public AdmissionDTO getAdmissionDTO() {
+		return admissionDTO;
+	}
+	public void setAdmissionDTO(AdmissionDTO admissionDTO) {
+		this.admissionDTO = admissionDTO;
+	}
 	public String getAdmissionýd() {
 		return admissionýd;
 	}

@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import com.erc.entities.StaffDTO;
 import com.erc.user.service.StaffService;
 import com.erc.view.MainApp;
+import com.erc.view.doctor.DoctorPanel;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -92,69 +93,43 @@ public class LoginPanel extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			// TODO Auto-generated method stub
 			String cmd = event.getActionCommand();
+			boolean login = false ;
 			int tmp = 0;
 			if (cmd.equals("Login")) {
 				StaffService staffService = new StaffService();
-//			List<StaffDTO> staffList = staffService.getOnlyStaff(textUsername.getText(),
-//						passwordField.getText());
+
 				ArrayList<StaffDTO> staffList = staffService.getAllStaff();
-				for(StaffDTO staffDTO : staffList) {
-					if(staffDTO.getUsername().equals(textUsername.getText()) && staffDTO.getPassword().equals(passwordField.getText())) {
+				for (StaffDTO staffDTO : staffList) {
+					if (staffDTO.getUsername().equals(textUsername.getText())
+							&& staffDTO.getPassword().equals(passwordField.getText())) {
 						AuthService.setStaffDTO(staffDTO);
-					}
-				}
-//				StaffDTO staffDTO = new StaffDTO();
-//				if (staffList != null) {
-//					for (StaffDTO staff : staffList) {
-//						staffDTO = staff;
-//					}
-//					AuthService.setStaffDTO(staffDTO);
-
-					JOptionPane.showMessageDialog(new JFrame(), "Login is success", "Alert",
-							JOptionPane.WARNING_MESSAGE);
-
-					MenuFrame menuFrame = new MenuFrame();
-					menuFrame.startApplication();
-//					new MainApp().setVisible(false);// bunu kullaniyormusun kullanýyordum
-					return;
-							
-							
-							
-				}else {
-					JOptionPane.showMessageDialog(new JFrame(), "Login is fail", "Alert",
-							JOptionPane.WARNING_MESSAGE);
-							return;
-				}
+						DoctorPanel.setStaffDTO(staffDTO);
 				
 
-				// For loop ile client uzerýnden yapmak iyi bir sey degil
-				// kullanýcý adi ve sifreyle veritabainindan where clause kullanarak cozmeye
-				// calis
+						MenuFrame menuFrame = new MenuFrame();
+						menuFrame.startApplication();
+						login = true;
+						JOptionPane.showMessageDialog(new JFrame(), "Login is success", "Alert",
+								JOptionPane.WARNING_MESSAGE);
 
-//				ArrayList<StaffDTO> staffList = staffService.getAllStaff();
-//				for (StaffDTO staff : staffList) {
-//					if (staff.getUsername().equals(textUsername.getText())
-//							&& staff.getPassword().equals(passwordField.getText())) {
-//						tmp = 1;
-//						 staffDTO = authService.loginInformation(textUsername.getText());
-						
-//						setStaffDTO(staffDTO);
-//						JOptionPane.showMessageDialog(new JFrame(), "Login is success", "Alert",
-//								JOptionPane.WARNING_MESSAGE);
-//						return;
-//						
-//					}
-//				}
+						return;
 
-//				if (tmp == 0) {
-//					JOptionPane.showMessageDialog(new JFrame(), "Login is fail", "Alert", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
+					} else if(!(staffDTO.getUsername().equals(textUsername.getText())
+							&& staffDTO.getPassword().equals(passwordField.getText()))) {
+						JOptionPane.showMessageDialog(new JFrame(), "Login is fail", "Alert",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+
+		
 			}
 
 		}
 
-//	}
+	}
+
+
 
 	public Object MenuFrame() {
 		// TODO Auto-generated method stub

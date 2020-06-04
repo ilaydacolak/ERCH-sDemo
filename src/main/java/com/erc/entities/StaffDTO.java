@@ -72,10 +72,11 @@ public class StaffDTO {
 		this.aktif = aktif;
 	}
 	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="staffnumber")
+	@JoinColumn(name="stafftypeid")
 	private StaffTypeDTO staffTypeDTO;
 	@Column(name = "personeltype")
 	private String personelType;
+
 	
 
 	public String getPersonelType() {
@@ -84,6 +85,7 @@ public class StaffDTO {
 	public void setPersonelType(String personelType) {
 		this.personelType = personelType;
 	}
+
 	public StaffTypeDTO getStaffTypeDTO() {
 		return staffTypeDTO;
 	}

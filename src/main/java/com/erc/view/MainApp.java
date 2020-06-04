@@ -32,6 +32,7 @@ public class MainApp extends JFrame {
 //		
 //		getContentPane().add(toolbarPanel, BorderLayout.NORTH);
 //		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
 	}
 	private static final long serialVersionUID = 1L;
 // 
@@ -46,6 +47,8 @@ public class MainApp extends JFrame {
 		frame.setSize(350, 200);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		
 		
 	}
 //
